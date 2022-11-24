@@ -19,8 +19,24 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import NavBar from '../NavBar/NavBar';
+import RecipientView from '../RecipientView/RecipientView';
+import Dashboard from '../Dashboard/Dashboard.jsx';
+import ContractDetails from '../ContractDetails/ContractDetails.jsx';
+import Notifications from '../Notifications/Notifications.jsx';
+import CounterOfferEdits from '../CounterOffer/CounterOfferEdits.jsx';
+import CounterOfferReview from '../CounterOffer/CounterOfferReview.jsx';
+import ContractRecipientAccess from '../ContractRecipientAccess/ContractRecipientAccess';
+import CreateContractDetails from '../CreateContract/CreateContractDetails.jsx';
+import CreateContractReview from '../CreateContract/CreateContractReview.jsx';
+import PartyType from '../CreateContract/PartyType.jsx';
+import SendToRecipient from '../CreateContract/SendToRecipient.jsx';
 
+import ContractComparison from '../ContractComparison/ContractComparison.jsx';
+import FinalContract from '../ContractAccepted/FinalContract.jsx';
+import ReviewAndSign from '../ContractAccepted/ReviewAndSign.jsx';
 import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +84,85 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
+      
+
+
+        {/* NEW COMPONENT PROTECTED ROUTES */}
+        <ProtectedRoute 
+          exact path = "/dashboard"
+        >
+          <Dashboard />
+        </ProtectedRoute>
+        
+        <ProtectedRoute 
+          exact path="/contract-details"
+        >
+          <ContractDetails />
+        </ProtectedRoute>
+
+        <ProtectedRoute 
+        exact path="/notifications"
+        >
+          <Notifications />
+        </ProtectedRoute>
+
+        <ProtectedRoute 
+          exact path="/counter-offer-edits"
+        >
+          <CounterOfferEdits />
+        </ProtectedRoute>
+
+        <ProtectedRoute 
+          exact path="/counter-offer-review"
+        >
+          <CounterOfferReview />
+        </ProtectedRoute>
+   
+        <ProtectedRoute
+          exact path="/create-contract-details"
+        >
+          <CreateContractDetails />
+        </ProtectedRoute> 
+        
+        <ProtectedRoute
+          exact path="/create-contract-review"
+        >
+          <CreateContractReview />
+        </ProtectedRoute> 
+
+        <ProtectedRoute
+          exact path="/party-type"
+        >
+          <PartyType />
+        </ProtectedRoute> 
+
+        <ProtectedRoute
+          exact path="/send-to-recipient"
+        >
+          <SendToRecipient />
+        </ProtectedRoute> 
+
+        <ProtectedRoute
+          exact
+          path="/contract-comparison"
+        >
+          <ContractComparison />
+        </ProtectedRoute>
+
+        <ProtectedRoute
+          path="/final-contract"
+          >
+            <FinalContract />
+        </ProtectedRoute>
+
+        <ProtectedRoute
+            path="/review-and-sign"
+          >
+             <ReviewAndSign />
+        </ProtectedRoute>
+        
+        {/* ----------------------- */}
+        
           <Route
             exact
             path="/login"
@@ -109,6 +204,21 @@ function App() {
               <LandingPage />
             }
           </Route>
+
+          {/* NEW COMPONENT UNPROTECTED ROUTES */}
+          <Route
+            exact
+            path="/contract-recipient-access"
+          >
+            <ContractRecipientAccess />
+          </Route>
+
+          <Route
+            exact path="/recipient-view"
+          >
+            <RecipientView />
+          </Route>
+         {/* ----------------------- */}
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
