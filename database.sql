@@ -8,7 +8,7 @@
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "email" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (40) NOT NULL,
+    "password" VARCHAR (1000) NOT NULL,
     "legal_name" VARCHAR (80) NOT NULL
 );
 
