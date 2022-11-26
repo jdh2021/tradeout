@@ -28,3 +28,5 @@ router.get('/:id', (req, res) => {
         res.sendStatus(403); // 403 forbidden (must log in)
     }
 });
+
+module.exports = router;
