@@ -27,6 +27,16 @@ const CreateContractDetails = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: date}});
   }
 
+  // checks length of the notes entry, alerts the user if the notes are longer than 600 char (database char max = 600)
+  const checkContractNotesLength = (key, contractNotes) => {
+    console.log('in checkLength');
+    if(contractNotes.length <= 600) {
+      dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: contractNotes}});
+    } else {
+        alert('Contract notes cannot be more than 600 characters.');
+    }
+}
+
   return (
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
@@ -83,7 +93,8 @@ const CreateContractDetails = () => {
             />
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contractNotes} onChange={handleChangeFor('contractNotes')}/>
+            <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contractNotes} onChange={(event) => checkContractNotesLength('contractNotes', event.target.value)}/>
+            <Typography>{newContractDetails.contractNotes.length}/600</Typography>
           </Grid>
           <br />
           <Grid item>
