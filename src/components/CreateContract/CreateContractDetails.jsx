@@ -62,8 +62,6 @@ const CreateContractDetails = () => {
             <TextField fullWidth label="Pickup Location" size="small" value={newContractDetails.pickupLocation} onChange={handleChangeFor('pickupLocation')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            {/* date picker here */}
-            {/* <TextField fullWidth label="Pickup Date" size="small" value={newContractDetails.pickupDate} onChange={handleChangeFor('pickupDate')}/> */}
             <DatePicker 
               value={newContractDetails.pickupDate}
               onChange={(newValue) => handleDate('pickupDate', newValue)}
@@ -75,7 +73,15 @@ const CreateContractDetails = () => {
           </Grid>
           <Grid item sx={{width: 400}}>
             {/* date picker here */}
-            <TextField fullWidth label="Contract Deadline" size="small" value={newContractDetails.contractDeadline} onChange={handleChangeFor('contractDeadline')}/>
+            {/* <TextField fullWidth label="Contract Deadline" size="small" value={newContractDetails.contractDeadline} onChange={handleChangeFor('contractDeadline')}/> */}
+            <DatePicker 
+              value={newContractDetails.contractDeadline}
+              onChange={(newValue) => handleDate('contractDeadline', newValue)}
+              label="Contract Deadline"
+              renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+              openTo="day"
+              views={['year', 'month', 'day']}
+            />
           </Grid>
           <Grid item sx={{width: 400}}>
             <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contractNotes} onChange={handleChangeFor('contractNotes')}/>
