@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function RegisterForm() {
   
-  // const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
+  
   const [email, setEmail] = useState('');
   const [legalName, setLegalName] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +34,7 @@ function RegisterForm() {
         </h3>
       )}
       <div>
-        {/* <label htmlFor="username">
+        <label htmlFor="username">
           Username:
           <input
             type="text"
@@ -42,10 +43,11 @@ function RegisterForm() {
             required
             onChange={(event) => setUsername(event.target.value)}
           />
-        </label> */}
+        </label>
       </div>
       <div>
-        <label htmlFor='email'>
+        {/* email will be used instead of username */}
+        {/* <label htmlFor='email'>
           Email:
           <input 
             type="text"
@@ -54,7 +56,7 @@ function RegisterForm() {
             required
             onChange={(event) => setEmail(event.target.value)}
           />
-        </label>
+        </label> */}
       </div>
       <div>
         <label htmlFor='legalName'>

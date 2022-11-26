@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
 function LoginForm() {
-  // not using a username in this application
-  // const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  // email will be used instead of username
+  // const [email, setEmail] = useState('');
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ function LoginForm() {
         </h3>
       )}
       <div>
-        {/* //Template user information
         <label htmlFor="username">
           Username:
           <input
@@ -45,10 +44,11 @@ function LoginForm() {
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </label> */}
+        </label>
       </div>
       <div>
-        <label htmlFor='email'>
+        {/* email will be used instead of username */}
+        {/* <label htmlFor='email'>
           Email:
           <input
             type='text'
@@ -57,7 +57,7 @@ function LoginForm() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-        </label>
+        </label> */}
       </div>
       <div>
         <label htmlFor="password">
