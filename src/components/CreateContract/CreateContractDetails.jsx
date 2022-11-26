@@ -21,6 +21,7 @@ const CreateContractDetails = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
+  // sets the key value in newContractDetails reducer for the pickup date and contract deadline  
   const handleDate = (key, date) => {
     console.log('in handleDate', key, date);
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: date}});
@@ -72,8 +73,6 @@ const CreateContractDetails = () => {
             />
           </Grid>
           <Grid item sx={{width: 400}}>
-            {/* date picker here */}
-            {/* <TextField fullWidth label="Contract Deadline" size="small" value={newContractDetails.contractDeadline} onChange={handleChangeFor('contractDeadline')}/> */}
             <DatePicker 
               value={newContractDetails.contractDeadline}
               onChange={(newValue) => handleDate('contractDeadline', newValue)}
@@ -86,16 +85,18 @@ const CreateContractDetails = () => {
           <Grid item sx={{width: 400}}>
             <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contractNotes} onChange={handleChangeFor('contractNotes')}/>
           </Grid>
+          <br />
           <Grid item>
             {/* the upload button does not work */}
             <Button variant="contained">Upload Item Image</Button>
           </Grid>
+          <br />
           <Grid item sx={{width: 400}}>
             <TextField fullWidth label="Your Signature" size="small" value={newContractDetails.firstPartySignature} onChange={handleChangeFor('firstPartySignature')}/>
           </Grid>
           <br />
           <Box>
-            <Grid item sx={{justifyContent: 'center', maxWidth: 400}}>
+            <Grid item sx={{justifyContent: 'center', textAlign: 'justify', maxWidth: 400}}>
               <Typography>By typing your name, you are agreeing that your typed signature has the same authority as a handwritten signature.</Typography>
             </Grid>
           </Box>
