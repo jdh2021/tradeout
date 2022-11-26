@@ -6,25 +6,31 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 
 const PartyType = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
+
   const [secondParty, setSecondParty] = useState('');
 
+  // firstPartyType is set in newContractDetails reducer, secondParty is set to opposite of firstPartyType
   const handleChangeFor = (key) => (event) => {
     console.log('in handleChangeFor', event.target.value);
+    // secondParty set to the opposite of the firstPartyType
     if (event.target.value === 'buyer') {
       setSecondParty('seller');
     } else if (event.target.value === 'seller') {
       setSecondParty('buyer');
     }
+    // dispatching to newContractDetails reducer
     dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
+  // secondPartyType is set in newContractDetails reducer, user is pushed to CreateContractDetails
   const handleChangeForSecondParty = (contractDetail, partyType) => {
     console.log('in handleChangeForSecondParty', contractDetail, partyType);
     if (partyType === 'buyer') {
@@ -32,36 +38,38 @@ const PartyType = () => {
     } else if (partyType === 'seller') {
       dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'seller'}});
     }
+    // user is pushed to CreateContractDetails
     history.push('/create-contract-details');
   }
 
-  // for testing the value being set onChange
-  // const [firstPartyType, setFirstPartyType] = useState('');
-  // const handleChange = (partyType) => {
-  //   console.log('in handleChange', partyType);
-  //   setFirstPartyType(partyType);
-  // }
-  // const toForm = () => {
-  //   console.log('firstPartyType', firstPartyType);
-  // }
-
   return (
     <div>
-        <h1>Are you a buyer or seller?</h1>
-        <FormControl>
-          <RadioGroup
-            value={newContractDetails.firstPartyType}
-            onChange={handleChangeFor('firstPartyType')}
-            // value={firstPartyType}
-            // onChange={(event) => handleChange(event.target.value)} 
-          >
-            <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
-            <FormControlLabel value="seller" control={<Radio />} label="Seller" />
-          </RadioGroup>
-        </FormControl>
+        <Typography variant="h3" sx={{textAlign: "center"}}>Are you a buyer or seller?</Typography>
         <br />
         <br />
-        <Button variant="contained" onClick={() => handleChangeForSecondParty('secondPartyType', secondParty)}>Next</Button>
+        <Grid
+          container
+          spacing={2}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Grid item>
+            <FormControl>
+            <RadioGroup
+              value={newContractDetails.firstPartyType}
+              onChange={handleChangeFor('firstPartyType')}
+            >
+              <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
+              <FormControlLabel value="seller" control={<Radio />} label="Seller" />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+          <Grid item>
+            {/* when user clicks 'Next' button, the secondPartyType is set and user is pushed to CreateContractDetails */}
+            <Button variant="contained" onClick={() => handleChangeForSecondParty('secondPartyType', secondParty)}>Next</Button>
+          </Grid>
+        </Grid>     
     </div>
   );
 
