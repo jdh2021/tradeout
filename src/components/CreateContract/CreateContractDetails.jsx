@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const CreateContractDetails = () => {
 
@@ -55,9 +56,19 @@ const CreateContractDetails = () => {
             <TextField fullWidth label="Pickup Location" size="small" value={newContractDetails.pickupLocation} onChange={handleChangeFor('pickupLocation')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Pickup Date" size="small" value={newContractDetails.pickupDate} onChange={handleChangeFor('pickupDate')}/>
+            {/* date picker here */}
+            {/* <TextField fullWidth label="Pickup Date" size="small" value={newContractDetails.pickupDate} onChange={handleChangeFor('pickupDate')}/> */}
+            <DatePicker 
+              value={newContractDetails.pickupDate}
+              onChange={handleChangeFor('pickupDate')}
+              label="Pickup Date"
+              renderInput={(params) => <TextField size="small" {...params} />}
+              openTo="day"
+              views={['year', 'month', 'day']}
+            />
           </Grid>
           <Grid item sx={{width: 400}}>
+            {/* date picker here */}
             <TextField fullWidth label="Contract Deadline" size="small" value={newContractDetails.contractDeadline} onChange={handleChangeFor('contractDeadline')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
