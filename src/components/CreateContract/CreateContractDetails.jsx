@@ -17,7 +17,13 @@ const CreateContractDetails = () => {
 
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
+    console.log('in handleChangeFor');
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
+  }
+
+  const handleDate = (key, date) => {
+    console.log('in handleDate', key, date);
+    dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: date}});
   }
 
   return (
@@ -60,9 +66,9 @@ const CreateContractDetails = () => {
             {/* <TextField fullWidth label="Pickup Date" size="small" value={newContractDetails.pickupDate} onChange={handleChangeFor('pickupDate')}/> */}
             <DatePicker 
               value={newContractDetails.pickupDate}
-              onChange={handleChangeFor('pickupDate')}
+              onChange={(newValue) => handleDate('pickupDate', newValue)}
               label="Pickup Date"
-              renderInput={(params) => <TextField size="small" {...params} />}
+              renderInput={(params) => <TextField fullWidth size="small" {...params} />}
               openTo="day"
               views={['year', 'month', 'day']}
             />
