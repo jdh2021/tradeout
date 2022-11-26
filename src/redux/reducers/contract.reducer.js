@@ -27,6 +27,17 @@ const newContractDetails = (state = defaultNewContract, action) => {
     return state;
 }
 
+const userContracts = (state = [], action) => {
+    console.log('in userContracts reducer');
+    if(action.type === 'SET_CONTRACTS') {
+        return action.payload;
+    } else if (action.type === 'UNSET_USER') {
+        return [];
+    }
+    return state;
+  };
+
 export default combineReducers({
-    newContractDetails
+    newContractDetails,
+    userContracts
 });
