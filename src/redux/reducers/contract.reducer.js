@@ -37,7 +37,18 @@ const userContracts = (state = [], action) => {
     return state;
   };
 
+  //reducer for specficic contract user selects
+  const selectedContract = (state = {}, action) => {
+    console.log('in selectefContract reducer');
+    if(action.type === 'SET_CONTRACT_DETAILS'){
+        return action.payload;
+    }else if (action.type === 'USET_USER'){
+        return {};
+    }
+  }
+
 export default combineReducers({
     newContractDetails,
-    userContracts
+    userContracts,
+    selectedContract,
 });
