@@ -25,10 +25,20 @@ function ContractDetails() {
   }, [contractId])
 
   //format dates on contract 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-  }
+
+  const dateContractCreation = new Date(contractDetails.dateContractCreation);
+  const formattedContractCreationDate = dateContractCreation.toLocaleDateString
+    ('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+
+
+  const pickupDate = new Date(contractDetails.pickupDate);
+  const formattedPickupDate = pickupDate.toLocaleDateString
+    ('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+
+  const deadlineDate = new Date(contractDetails.deadlineDate);
+  const formattedDeadlineDate = deadlineDate.toLocaleDateString
+    ('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+
 
   return (
     <div>
@@ -47,6 +57,12 @@ function ContractDetails() {
                 <TableCell sx={{ width: 150 }} align="left">
                   <Typography>Contract Title:</Typography></TableCell>
                 <TableCell align="left">{contractDetails.contractTitle}</TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell sx={{ width: 150 }} align="left">
+                  <Typography>Date of Contract Creation:</Typography></TableCell>
+                <TableCell align="left">{formattedContractCreationDate}</TableCell>
               </TableRow>
 
               <TableRow>
@@ -76,13 +92,13 @@ function ContractDetails() {
               <TableRow>
                 <TableCell sx={{ width: 150 }} align="left">
                   <Typography>Pickup Date:</Typography></TableCell>
-                <TableCell align="left">{formatDate(contractDetails.pickupDate)}</TableCell>
+                <TableCell align="left">{formattedPickupDate}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell sx={{ width: 150 }} align="left">
                   <Typography>Contract Deadline:</Typography></TableCell>
-                <TableCell align="left">{contractDetails.deadline}</TableCell>
+                <TableCell align="left">{formattedDeadlineDate}</TableCell>
               </TableRow>
 
               <TableRow>
