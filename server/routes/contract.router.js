@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
         //passing array = req.params.id
         pool.query(query, [req.user.id, req.params.id]) // user and contract id passed 
             .then(result => {
-                res.send(result.rows);
+                res.send(result.rows[0]);
                 console.log('success getting selected contract')
             })
             .catch(error => {
