@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function RegisterForm() {
   
   const [username, setUsername] = useState('');
-  
+
   const [email, setEmail] = useState('');
   const [legalName, setLegalName] = useState('');
   const [password, setPassword] = useState('');
@@ -17,8 +17,8 @@ function RegisterForm() {
     dispatch({
       type: 'REGISTER',
       payload: {
-        // username: username,
-        email: email,
+        username: username,
+        // email: email,
         password: password,
         legalName: legalName
       },
