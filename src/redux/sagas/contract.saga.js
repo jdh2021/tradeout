@@ -13,7 +13,7 @@ function* fetchContracts() {
 
 function* fetchContractDetails(action){
     try{
-        const contractDetails = yield axios.get(`/contract/${action.payload}`);
+        const contractDetails = yield axios.get(`/api/contract/${action.payload}`);
         yield put({ type: 'SET_CONTRACT_DETAILS', payload: contractDetails.data});
     } catch (error) {
         console.log('Error in fetchContractDetails (saga)', error);
@@ -21,9 +21,22 @@ function* fetchContractDetails(action){
     }
 }
 
+function* fetchRecipientContract(action) {
+    // payload is contract_key entered by recipient
+    try {
+        console.log('in fetchRecipientContract (saga)');
+        const recipientContract = yield axios.get(`/api/recipient/${action.payload}`);
+        yield put({ type: 'SET_RECIPIENT_CONTRACT', payload: recipientContract.data });
+    } catch (error) {
+        console.log('Error in fetchRecipientContract (saga)', error);
+        alert('Something went wrong fetching the recipient contract');
+    }     
+}
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
+    yield takeLatest('FETCH_RECIPIENT_CONTRACT', fetchRecipientContract);
 
 }
 

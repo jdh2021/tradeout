@@ -37,12 +37,14 @@ const userContracts = (state = [], action) => {
     return state;
   };
 
-//reducer for specficic contract user selects
+//reducer for specific contract user selects
 const selectedContract = (state = {}, action) => {
     console.log('in selectedContract reducer');
-    if(action.type === 'SET_CONTRACT_DETAILS'){
+    if(action.type === 'SET_CONTRACT_DETAILS') {
         return action.payload;
-    } else if (action.type === 'UNSET_USER'){
+    } else if (action.type === 'SET_RECIPIENT_CONTRACT') {
+        return action.payload;
+    } else if (action.type === 'UNSET_USER') {
         return {};
     }
     return state;
