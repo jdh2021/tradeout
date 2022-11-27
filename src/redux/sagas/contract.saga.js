@@ -11,15 +11,9 @@ function* fetchContracts() {
     }
 }
 
-function* contractSaga() {
-    yield takeLatest('FETCH_CONTRACTS', fetchContracts);
-    yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
-
-}
-
 function* fetchContractDetails(action){
     try{
-        const contractDetails = yield axios.get(`/contract-details/${action.payload}`);
+        const contractDetails = yield axios.get(`/contract/${action.payload}`);
         yield put({ type: 'SET_CONTRACT_DETAILS', payload: contractDetails.data});
     } catch (error) {
         console.log('Error in fetchContractDetails (saga)', error);
@@ -27,6 +21,10 @@ function* fetchContractDetails(action){
     }
 }
 
+function* contractSaga() {
+    yield takeLatest('FETCH_CONTRACTS', fetchContracts);
+    yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
 
+}
 
 export default contractSaga;
