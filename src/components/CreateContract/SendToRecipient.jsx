@@ -61,6 +61,13 @@ const SendToRecipient = () => {
             <Typography sx={{textAlign: 'center'}}>Notes regarding the above property:</Typography>
             <Typography sx={{textAlign: 'center'}}>{newContractDetails.contractNotes}</Typography>
             <br />
+            <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the seller:</Typography>
+            <br />
+            <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
+              {/* images will be the user-uploaded images once that functionality is implemented */}
+              <img src="https://images.unsplash.com/photo-1531104985437-603d6490e6d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1678&q=80" alt= "stereo" width="200"/>
+            </Box>
+            <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
             <Typography sx={{textAlign: 'center'}}>The seller and buyer will meet in {newContractDetails.pickupLocation} to transfer the above property.</Typography>
             <br />
