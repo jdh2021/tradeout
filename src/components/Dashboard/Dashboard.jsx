@@ -18,10 +18,11 @@ function Dashboard() {
   return (
     <div>
         <h1>Hello, {user.legal_name}</h1>
+        
+        <button onClick={() => {history.push(`/create-contract-details`)}}>New Contract</button>
 
         <h2>Your Accepted Contracts</h2>
 
-        <button onClick={() => {history.push(`/create-contract-details`)}}>New Contract</button>
 
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea>
