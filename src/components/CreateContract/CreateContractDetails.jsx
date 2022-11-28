@@ -114,8 +114,25 @@ const CreateContractDetails = () => {
             </Grid>
           </Box>
           <br />
-          <Button variant="contained" onClick={() => history.push('/create-contract-review')}>Review Contract</Button>  
+          {/* <Button variant="contained" onClick={() => history.push('/create-contract-review')}>Review Contract</Button>   */}
         </Grid>
+        <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <Button 
+              variant="contained"
+              onClick={(event) => history.push('/party-type')}
+              sx={{marginRight: 1, width: 200}}
+            >
+              Edit Party Type
+            </Button>
+            {/* Preview button here */}
+            <Button 
+              variant="contained"
+              onClick={(event) => history.push('/create-contract-review')}
+              sx={{marginLeft: 1, width: 200}}
+            >
+              Review Contract
+            </Button>
+          </Box>
     </div>
   );
 }
