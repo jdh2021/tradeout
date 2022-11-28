@@ -41,6 +41,8 @@ const CreateContractDetails = () => {
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <br />
+        <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.firstPartyType}.</Typography>
+        <br />
         <Grid
           container
           spacing={2}

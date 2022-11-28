@@ -23,15 +23,23 @@ const SendToRecipient = () => {
 
   return (
     <div>
+      
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography variant="h3" sx={{textAlign: "center"}}>Send to Recipient:</Typography>
+          <Typography variant="h3">Send to Recipient:</Typography>
           <TextField
             sx={{width: 300, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
           />
         </Box>
-
+        <br />
+        <br />
+        <Container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <Paper elevation={10} variant="outlined" sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
+            <Typography sx={{textAlign: 'center'}}>{newContractDetails.contractTitle} Agreement</Typography>
+            <Typography sx={{textAlign: 'center'}}></Typography>
+          </Paper>
+      </Container>
     </div>
   );
 
