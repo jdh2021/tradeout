@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 const SendToRecipient = () => {
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
 
@@ -22,6 +23,12 @@ const SendToRecipient = () => {
   const contractDeadline = new Date(newContractDetails.contractDeadline);
   const formattedContractDeadline = contractDeadline.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
+  // onChange in a textfield, the key value is set in the newContractDetails reducer
+  const handleChangeFor = (key) => (event) => {
+    console.log('in handleChangeFor');
+    dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
+  }
+
   return (
     <div>
       
@@ -32,6 +39,7 @@ const SendToRecipient = () => {
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.secondPartyEmail}
+            onChange={handleChangeFor('secondPartyEmail')}
           />
         </Box>
         <br />
