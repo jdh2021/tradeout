@@ -77,6 +77,23 @@ const SendToRecipient = () => {
             </Box>
           </Paper>
       </Container>
+      <br />
+      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <Button 
+              variant="contained"
+              onClick={() => history.push('/create-contract-review')}
+              sx={{marginRight: 1, width: 200}}
+            >
+              Review Contract Details
+            </Button>
+            <Button 
+              variant="contained"
+              // add onClick function that dispatches to new contract POST saga
+              sx={{marginLeft: 1, width: 200}}
+            >
+              Create Contract and Send to Recipient
+            </Button>
+          </Box>
     </div>
   );
 
