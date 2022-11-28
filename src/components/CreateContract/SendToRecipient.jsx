@@ -31,6 +31,7 @@ const SendToRecipient = () => {
             sx={{width: 300, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
+            value={newContractDetails.secondPartyEmail}
           />
         </Box>
         <br />
@@ -55,8 +56,10 @@ const SendToRecipient = () => {
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
             <Typography sx={{textAlign: 'center'}}>The seller and buyer will meet in {newContractDetails.pickupLocation} to transfer the above property.</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>{newContractDetails.firstPartyType} Signature: {newContractDetails.firstPartySignature}</Typography>
-            <Typography sx={{textAlign: 'center'}}>{newContractDetails.secondPartyType} Signature: {newContractDetails.secondPartySignature}</Typography>
+            <Box sx={{ p: 2, border: '1px solid grey' }}>
+              <Typography sx={{textAlign: 'center'}}>{newContractDetails.firstPartyType} Signature: {newContractDetails.firstPartySignature}</Typography>
+              <Typography sx={{textAlign: 'center'}}>{newContractDetails.secondPartyType} Signature: {newContractDetails.secondPartySignature}</Typography>
+            </Box>
           </Paper>
       </Container>
     </div>

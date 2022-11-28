@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 
 const defaultNewContract = {
     firstPartyType: '',
+    firstPartyEmail: '',
     secondPartyType: '',
+    secondPartyEmail: '',
     contractTitle: '',
     itemName: '',
     itemDescription: '',
