@@ -29,6 +29,15 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
+  // dispatching newContractDetails and the SendGrid email function to the addNewContract saga
+  const submitNewContract = () => {
+    console.log('in submitNewContract', newContractDetails);
+    // the SendGrid email function will be passed in the dispatch after the payload
+    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
+  }
+
+  // SendGrid email function that fires from the addNewContract saga
+
   return (
     <div>
       
@@ -45,7 +54,7 @@ const SendToRecipient = () => {
         <br />
         <br />
         <Container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Paper elevation={10} variant="outlined" sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
+          <Paper elevation={10} sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
             <Typography variant="h6" sx={{textAlign: 'center'}}>{newContractDetails.contractTitle} Agreement</Typography>
             {/* user.username will be changed to user.legalName when registration/login is working */}
             <Typography sx={{textAlign: 'center'}}>{user.username} (the "{newContractDetails.firstPartyType}") does hereby sell, assign, and transfer to</Typography>
@@ -89,6 +98,7 @@ const SendToRecipient = () => {
             <Button 
               variant="contained"
               // add onClick function that dispatches to new contract POST saga
+              onClick={submitNewContract}
               sx={{marginLeft: 1, width: 200}}
             >
               Create Contract and Send to Recipient
