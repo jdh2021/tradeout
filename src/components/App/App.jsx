@@ -19,7 +19,6 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import NavBar from '../NavBar/NavBar';
 import RecipientView from '../RecipientView/RecipientView';
 import Dashboard from '../Dashboard/Dashboard.jsx';
 import ContractDetails from '../ContractDetails/ContractDetails.jsx';
