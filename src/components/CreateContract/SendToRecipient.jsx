@@ -22,7 +22,7 @@ const SendToRecipient = () => {
   const formattedPickupDate = pickupDate.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
   // unqiue random string for contract_key
-  const token = cryptoRandomString({ length: 64, type: 'hex' });
+  const token = cryptoRandomString({ length: 40, type: 'hex' });
 
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
