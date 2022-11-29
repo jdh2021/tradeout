@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import cryptoRandomString from 'crypto-random-string';
 
 const SendToRecipient = () => {
 
@@ -19,9 +20,14 @@ const SendToRecipient = () => {
   const pickupDate = new Date(newContractDetails.pickupDate);
   const formattedPickupDate = pickupDate.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
-  // date formatting for contract deadline
-  const contractDeadline = new Date(newContractDetails.contractDeadline);
-  const formattedContractDeadline = contractDeadline.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+  // unqiue random string for contract_key
+  const token = cryptoRandomString({ length: 64, type: 'hex' });
+
+  // defining the value of contract_key in newContractDetails reducer
+  const setContractKey = (key, value) => {
+    console.log('in setContractKey', key, value);
+    dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: value}});
+  }
 
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
@@ -30,17 +36,17 @@ const SendToRecipient = () => {
   }
 
   // dispatching newContractDetails and the SendGrid email function to the addNewContract saga
-  const submitNewContract = () => {
+  const submitNewContract = async () => {
     console.log('in submitNewContract', newContractDetails);
+    setContractKey('contractKey', token);
     // the SendGrid email function will be passed in the dispatch after the payload
-    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
   }
 
   // SendGrid email function that fires from the addNewContract saga
 
   return (
     <div>
-      
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
           <TextField

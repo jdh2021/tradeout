@@ -38,8 +38,8 @@ function* addNewContract(action) {
     // the SendGrid email function is passed to addNewContract in the dispatch
     try {
         console.log('in addNewContract (saga)');
-        yield axios.post('/api/contract', action.payload);
-        yield put ({type: 'FETCH_CONTRACTS'});
+        // yield axios.post('/api/contract', action.payload);
+        // yield put ({type: 'FETCH_CONTRACTS'});
         // call SendGrid email function, for example:
         // action.sendRecipientEmail();
     } catch (error) {
