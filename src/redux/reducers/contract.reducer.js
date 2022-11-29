@@ -3,8 +3,10 @@ import { combineReducers } from 'redux';
 const defaultNewContract = {
     firstPartyType: '',
     firstPartyEmail: '',
+    firstPartyName: '',
     secondPartyType: '',
     secondPartyEmail: '',
+    secondPartyName: '',
     contractTitle: '',
     itemName: '',
     itemDescription: '',
@@ -16,7 +18,8 @@ const defaultNewContract = {
     itemImage: '',
     itemImageDescription: '',
     firstPartySignature: '',
-    contractKey: ''
+    contractKey: '',
+    contractStatus: ''
 };
 
 const newContractDetails = (state = defaultNewContract, action) => {
