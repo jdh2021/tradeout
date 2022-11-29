@@ -8,20 +8,30 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import contractReducer from '../../redux/reducers/contract.reducer';
+import ContractCard from '../ContractCard/ContractCard';
 
 
 function Dashboard() {
 
   const history = useHistory();
   const user = useSelector((store) => store.user);
+  const contracts = useSelector((store) => store.contract);
+  
+
+
 
   return (
     <div>
         <h1>Hello, {user.legal_name}</h1>
-        
         <button onClick={() => {history.push(`/create-contract-details`)}}>New Contract</button>
 
         <h2>Your Accepted Contracts</h2>
+
+        
+        <ContractCard contract={contracts}/>
+
+
 
 
         <Card sx={{ maxWidth: 345 }}>

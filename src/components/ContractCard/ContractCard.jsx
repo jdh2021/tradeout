@@ -13,7 +13,6 @@ import { CardActionArea } from '@mui/material';
 function ContractCard(contract) {
 
   const history = useHistory();
-  const user = useSelector((store) => store.user);
 
   return (
     <div>
