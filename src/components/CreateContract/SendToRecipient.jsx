@@ -97,7 +97,7 @@ const SendToRecipient = () => {
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
         <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token</Button>
         {
-          tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Created!</Typography> : 
+          tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
           <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
             Click to generate contract token for recipient access.
           </Typography>
