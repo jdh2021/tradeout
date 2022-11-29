@@ -19,7 +19,6 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import NavBar from '../NavBar/NavBar';
 import RecipientView from '../RecipientView/RecipientView';
 import Dashboard from '../Dashboard/Dashboard.jsx';
 import ContractDetails from '../ContractDetails/ContractDetails.jsx';
@@ -57,7 +56,7 @@ function App() {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/dashboard" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
             <Route
