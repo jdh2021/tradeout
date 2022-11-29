@@ -15,6 +15,7 @@ const SendToRecipient = () => {
   const dispatch = useDispatch();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
+  
 
   // date formatting for pickup date
   const pickupDate = new Date(newContractDetails.pickupDate);
@@ -36,9 +37,8 @@ const SendToRecipient = () => {
   }
 
   // dispatching newContractDetails and the SendGrid email function to the addNewContract saga
-  const submitNewContract = async () => {
+  const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
-    setContractKey('contractKey', token);
     // the SendGrid email function will be passed in the dispatch after the payload
     dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
   }
@@ -92,6 +92,10 @@ const SendToRecipient = () => {
             </Box>
           </Paper>
       </Container>
+      <br />
+      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)}>Generate Contract Token</Button>
+      </Box>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
             <Button 
