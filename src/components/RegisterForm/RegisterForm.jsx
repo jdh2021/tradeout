@@ -17,10 +17,10 @@ function RegisterForm() {
     dispatch({
       type: 'REGISTER',
       payload: {
-        username: username,
-        // email: email,
-        password: password,
-        legalName: legalName
+        // username: username,
+        email: email,
+        legalName: legalName,
+        password: password
       },
     });
   }; // end registerUser
@@ -33,7 +33,7 @@ function RegisterForm() {
           {errors.registrationMessage}
         </h3>
       )}
-      <div>
+      {/* <div>
         <label htmlFor="username">
           Username:
           <input
@@ -44,10 +44,10 @@ function RegisterForm() {
             onChange={(event) => setUsername(event.target.value)}
           />
         </label>
-      </div>
+      </div> */}
       <div>
         {/* email will be used instead of username */}
-        {/* <label htmlFor='email'>
+        <label htmlFor='email'>
           Email:
           <input 
             type="text"
@@ -56,7 +56,7 @@ function RegisterForm() {
             required
             onChange={(event) => setEmail(event.target.value)}
           />
-        </label> */}
+        </label>
       </div>
       <div>
         <label htmlFor='legalName'>
