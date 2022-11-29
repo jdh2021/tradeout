@@ -15,6 +15,19 @@ const ContractRecipientAccess = () => {
   // local state for changeable values of contract key being searched
   const [searchContractKey, setSearchContractKey] = useState('');
 
+  // dispatches 'FETCH_RECIPIENT_CONTRACT'. payload is contract key and function goToRecipientView 
+  const retrieveContractByKey = (event) => {
+    event.preventDefault();
+    console.log('in retrieveContractByKey. Contract key to search is:', searchContractKey);
+    dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey, goToRecipientView });
+  }
+
+  // after successful 'FETCH_RECIPIENT_CONTRACT', navigates user to recipient view
+  const goToRecipientView = () => {
+    console.log('in goToRecipientView');
+    history.push('/recipient-view');
+  }
+
   return (
     <div>
       <Typography variant="h3" sx={{ textAlign: "center" }}>Access Contract</Typography>
@@ -22,7 +35,7 @@ const ContractRecipientAccess = () => {
       <br />
       <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
         <Grid item>
-          <form>
+          <form onSubmit={retrieveContractByKey}>
             <TextField
               required
               fullWidth
