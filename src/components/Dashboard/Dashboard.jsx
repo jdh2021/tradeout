@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,} from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+
 import {useSelector} from 'react-redux';
 
 import Card from '@mui/material/Card';
@@ -10,6 +12,7 @@ import { CardActionArea } from '@mui/material';
 
 function Dashboard() {
 
+  const history = useHistory();
   const user = useSelector((store) => store.user);
 
   return (
@@ -18,8 +21,8 @@ function Dashboard() {
 
         <h2>Your Accepted Contracts</h2>
 
-        <button>New Contract</button>
-        
+        <button onClick={() => {history.push(`/create-contract-details`)}}>New Contract</button>
+
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia

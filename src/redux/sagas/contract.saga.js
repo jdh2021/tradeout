@@ -33,11 +33,26 @@ function* fetchRecipientContract(action) {
     }     
 }
 
+function* addNewContract(action) {
+    // payload is the newContractDetails object
+    // the SendGrid email function is passed to addNewContract in the dispatch
+    try {
+        console.log('in addNewContract (saga)');
+        yield axios.post('/api/contract', action.payload);
+        yield put ({type: 'FETCH_CONTRACTS'});
+        // call SendGrid email function, for example:
+        // action.sendRecipientEmail();
+    } catch (error) {
+        console.log('Error in addNewContract (saga)', error);
+        alert('Something went wrong creating a new contract.');
+    }
+}
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
     yield takeLatest('FETCH_RECIPIENT_CONTRACT', fetchRecipientContract);
-
+    yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
 }
 
 export default contractSaga;
