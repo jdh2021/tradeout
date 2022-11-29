@@ -13,11 +13,11 @@ import { CardActionArea } from '@mui/material';
 function ContractCard(contract) {
 
   const history = useHistory();
-
+  
   return (
     <div>
 
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, margin:3}}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -27,11 +27,10 @@ function ContractCard(contract) {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Goat
+                {contract.contract.contract_title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Goats are a widespread group of squamate reptiles, with over 6,000
-                species, ranging across all continents except Antarctica
+                {contract.contract.item_description}
               </Typography>
             </CardContent>
           </CardActionArea>
