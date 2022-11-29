@@ -37,6 +37,8 @@ const CreateContractDetails = () => {
     }
 }
 
+
+
   return (
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
@@ -101,7 +103,9 @@ const CreateContractDetails = () => {
           <br />
           <Grid item>
             {/* the upload button does not work */}
-            <Button variant="contained">Upload Item Image</Button>
+            {/* <Button variant="contained">Upload Item Image</Button> */}
+            <h4>Upload Item Image</h4>
+            <input type="file" name="picture"></input>
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
