@@ -15,7 +15,7 @@ const SendToRecipient = () => {
   const dispatch = useDispatch();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
-  
+  const [tokenCreated, setTokenCreated] = useState(false);
 
   // date formatting for pickup date
   const pickupDate = new Date(newContractDetails.pickupDate);
@@ -27,6 +27,7 @@ const SendToRecipient = () => {
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
     console.log('in setContractKey', key, value);
+    setTokenCreated(true);
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: value}});
   }
 
@@ -94,7 +95,13 @@ const SendToRecipient = () => {
       </Container>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)}>Generate Contract Token</Button>
+        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token</Button>
+        {
+          tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Created!</Typography> : 
+          <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
+            Click to generate contract token for recipient access.
+          </Typography>
+        }
       </Box>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
