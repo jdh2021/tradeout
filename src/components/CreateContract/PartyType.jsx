@@ -14,6 +14,7 @@ const PartyType = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
+  const user = useSelector((store) => store.user);
 
   const [secondParty, setSecondParty] = useState('');
 
