@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import cryptoRandomString from 'crypto-random-string';
 
 const SendToRecipient = () => {
 
@@ -14,14 +15,21 @@ const SendToRecipient = () => {
   const dispatch = useDispatch();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
+  const [tokenCreated, setTokenCreated] = useState(false);
 
   // date formatting for pickup date
   const pickupDate = new Date(newContractDetails.pickupDate);
   const formattedPickupDate = pickupDate.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
-  // date formatting for contract deadline
-  const contractDeadline = new Date(newContractDetails.contractDeadline);
-  const formattedContractDeadline = contractDeadline.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
+  // unqiue random string for contract_key
+  const token = cryptoRandomString({ length: 40, type: 'hex' });
+
+  // defining the value of contract_key in newContractDetails reducer
+  const setContractKey = (key, value) => {
+    console.log('in setContractKey', key, value);
+    setTokenCreated(true);
+    dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: value}});
+  }
 
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
@@ -33,14 +41,13 @@ const SendToRecipient = () => {
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
     // the SendGrid email function will be passed in the dispatch after the payload
-    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
   }
 
   // SendGrid email function that fires from the addNewContract saga
 
   return (
     <div>
-      
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
           <TextField
@@ -86,6 +93,16 @@ const SendToRecipient = () => {
             </Box>
           </Paper>
       </Container>
+      <br />
+      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token</Button>
+        {
+          tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
+          <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
+            Click to generate contract token for recipient access.
+          </Typography>
+        }
+      </Box>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
             <Button 
