@@ -6,10 +6,14 @@ const router = express.Router();
 router.get('/:id', (req, res) => {
     console.log('in /api/recipient GET contract by contract key');
     console.log('contract key is:', req.params.id);
-    const queryText =   `SELECT * FROM "contract"
+    const queryText = `SELECT * FROM "contract"
                         WHERE "contract"."contract_key" = $1;`;
     pool.query(queryText, [req.params.id]).then(result => {
-        res.send(result.rows[0]);
+        if (result.rows.length > 0) {
+            res.send(result.rows[0]); //single contract object
+        } else {
+            res.send({});
+        }
     }).catch(error => {
         console.log('Error in /api/recipient GET contract by contract key:', error);
         res.sendStatus(500);
