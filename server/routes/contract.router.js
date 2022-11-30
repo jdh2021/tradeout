@@ -56,4 +56,76 @@ router.get('/:id', (req, res) => {
     }
 });
 
+// POST new contract
+router.post('/', async (req, res) => {
+	console.log('in /api/contract POST. user id is:', req.user.id);
+	console.log('is authenticated?', req.isAuthenticated());
+    if (req.isAuthenticated()) {
+    	const db = await pool.connect();
+    	try {
+    		await db.query('BEGIN');
+    		// INSERT INTO "contract"
+    		const addContractQuery = `INSERT INTO "contract" (
+										    "contract_key",
+										    "contract_status",
+										    "contract_title",
+										    "first_party_type",
+										    "first_party_email",
+										    "first_party_name",
+										    "second_party_type",
+										    "second_party_email",
+										    "item_name",
+										    "item_description",
+										    "item_price",
+										    "item_pickup_date",
+										    "item_pickup_location",
+										    "contract_deadline",
+										    "contract_notes",
+										    "first_party_signature"
+										) 
+										VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+										RETURNING "id";`
+			const result = await db.query(addContractQuery, [
+				req.body.contractKey,
+				req.body.contractStatus,				
+                req.body.contractTitle,
+				req.body.firstPartyType,
+				req.user.email,
+				req.user.legal_name,
+				req.body.secondPartyType,
+				req.body.secondPartyEmail,
+				req.body.itemName,
+				req.body.itemDescription,
+				req.body.itemPrice,
+				req.body.pickupDate,
+				req.body.pickupLocation,
+				req.body.contractDeadline,
+				req.body.contractNotes,
+				req.body.firstPartySignature,
+			]);
+			// the returned id of the new contract
+			const newContractId = result.rows[0].id;
+			console.log('newContractId: ', newContractId);
+			// INSERT INTO "user_contract"
+			const userContractQuery =   `INSERT INTO "user_contract" ("user_id", "contract_id")
+									    VALUES ($1, $2);`
+			await db.query(userContractQuery, [req.user.id, newContractId]);
+			// INSERT INTO "photo"
+			const addImageQuery =   `INSERT INTO "photo" ("contract_id", "item_image")
+									VALUES ($1, $2);`
+			await db.query(addImageQuery, [newContractId, req.body.itemImage]);
+			await db.query('COMMIT');
+			res.sendStatus(201);
+    	} catch (error) {
+    		await db.query('ROLLBACK');
+            console.log('Something went wrong posting the new contract.', error);
+    	    res.sendStatus(500);
+    	} finally {
+            db.release();
+        }
+    } else {
+    	res.sendStatus(403); // forbidden
+    }
+});
+
 module.exports = router;

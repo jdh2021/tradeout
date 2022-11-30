@@ -35,13 +35,13 @@ function* fetchRecipientContract(action) {
 
 function* addNewContract(action) {
     // payload is the newContractDetails object
-    // the SendGrid email function is passed to addNewContract in the dispatch
+    // SendGrid request will be called after successful new contract post
     try {
         console.log('in addNewContract (saga)', action.payload);
-        // yield axios.post('/api/contract', action.payload);
-        // yield put ({type: 'FETCH_CONTRACTS'});
-        // call SendGrid email function, for example:
-        // action.sendRecipientEmail();
+        yield axios.post('/api/contract', action.payload);
+        yield put ({type: 'FETCH_CONTRACTS'});
+        // SendGrid email request:
+        // yield axios.get('/api/recipient/email', action.payload);
     } catch (error) {
         console.log('Error in addNewContract (saga)', error);
         alert('Something went wrong creating a new contract.');
