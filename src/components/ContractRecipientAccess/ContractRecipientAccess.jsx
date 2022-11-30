@@ -8,24 +8,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 const ContractRecipientAccess = () => {
-
-  const dispatch = useDispatch();
   const history = useHistory();
 
   // local state for changeable values of contract key being searched
   const [searchContractKey, setSearchContractKey] = useState('');
 
-  // dispatches 'FETCH_RECIPIENT_CONTRACT'. payload is contract key and function goToRecipientView 
   const retrieveContractByKey = (event) => {
     event.preventDefault();
     console.log('in retrieveContractByKey. Contract key to search is:', searchContractKey);
-    dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey, goToRecipientView });
-  }
-
-  // after successful 'FETCH_RECIPIENT_CONTRACT', navigates user to recipient view
-  const goToRecipientView = () => {
-    console.log('in goToRecipientView');
-    history.push('/recipient-view');
+    history.push(`/recipient-view/${searchContractKey}`);
   }
 
   return (
