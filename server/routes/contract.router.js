@@ -111,9 +111,9 @@ router.post('/', async (req, res) => {
 									    VALUES ($1, $2);`
 			await db.query(userContractQuery, [req.user.id, newContractId]);
 			// INSERT INTO "photo"
-			const addImageQuery =   `INSERT INTO "photo" ("contract_id", "item_image")
-									VALUES ($1, $2);`
-			await db.query(addImageQuery, [newContractId, req.body.itemImage]);
+			const addImageQuery =   `INSERT INTO "photo" ("contract_id", "item_image", "item_image_description")
+									VALUES ($1, $2, $3);`
+			await db.query(addImageQuery, [newContractId, req.body.itemImage, req.body.itemImageDescription]);
 			await db.query('COMMIT');
 			res.sendStatus(201);
     	} catch (error) {
