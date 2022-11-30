@@ -37,14 +37,19 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
-  // dispatching newContractDetails and the SendGrid email function to the addNewContract saga
+  // dispatching newContractDetails
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
-    // the SendGrid email function will be passed in the dispatch after the payload
-    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
+    // the SendGrid email server request is called from within the addNewContract saga
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
 
-  // SendGrid email function that fires from the addNewContract saga
+  // success alert
+  const userAlert = () => {
+    console.log('in userAlert');
+    alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
+    history.push('/dashboard');
+  }
 
   return (
     <div>
@@ -64,7 +69,7 @@ const SendToRecipient = () => {
           <Paper elevation={10} sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
             <Typography variant="h6" sx={{textAlign: 'center'}}>{newContractDetails.contractTitle} Agreement</Typography>
             {/* user.username will be changed to user.legalName when registration/login is working */}
-            <Typography sx={{textAlign: 'center'}}>{user.username} (the "{newContractDetails.firstPartyType}") does hereby sell, assign, and transfer to</Typography>
+            <Typography sx={{textAlign: 'center'}}>{user.legal_name} (the "{newContractDetails.firstPartyType}") does hereby sell, assign, and transfer to</Typography>
             <Typography sx={{textAlign: 'center'}}>*recipient legal name* (the "{newContractDetails.secondPartyType}") the following property:</Typography>
             <br />
             <Typography sx={{textAlign: 'center'}}>{newContractDetails.itemName}: {newContractDetails.itemDescription}</Typography>
