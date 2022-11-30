@@ -42,6 +42,8 @@ function* addNewContract(action) {
         yield put ({type: 'FETCH_CONTRACTS'});
         // SendGrid email request:
         // yield axios.get('/api/recipient/email', action.payload);
+        // user is told the contract post and email were successfull
+        action.userAlert();
     } catch (error) {
         console.log('Error in addNewContract (saga)', error);
         alert('Something went wrong creating a new contract.');

@@ -41,7 +41,14 @@ const SendToRecipient = () => {
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
     // the SendGrid email server request is called from within the addNewContract saga
-    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails});
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
+  }
+
+  // success alert
+  const userAlert = () => {
+    console.log('in userAlert');
+    alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
+    history.push('/dashboard');
   }
 
   return (
