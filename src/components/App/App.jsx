@@ -219,7 +219,7 @@ function App() {
             </Route>
 
             <Route
-              exact path="/recipient-view"
+              exact path="/recipient-view/:searchContractKey"
             >
               <RecipientView />
             </Route>
