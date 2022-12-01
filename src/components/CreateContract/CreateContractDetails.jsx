@@ -68,7 +68,7 @@ const CreateContractDetails = () => {
   return (
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
-        <div onClick={autofillForm}><h5>magic button</h5></div>
+        <div style={{width: 100}} onClick={autofillForm}><h5>magic button</h5></div>
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.firstPartyType}.</Typography>
         <br />

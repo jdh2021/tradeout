@@ -73,7 +73,8 @@ const SendToRecipient = () => {
             value={newContractDetails.secondPartyEmail}
             onChange={handleChangeFor('secondPartyEmail')}
           />
-          <div onClick={autofillEmail}><h5>magic button</h5></div>
+          {/* used to autofill recipient email during demo */}
+          <div style={{width: 100}} onClick={autofillEmail}><h5>magic button</h5></div>
         </Box>
         <br />
         <br />
