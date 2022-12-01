@@ -100,7 +100,7 @@ function App() {
           </ProtectedRoute>
           
           <ProtectedRoute 
-            exact path="/contract-details"
+            exact path="/contract-details/:contractId"
           >
             <ContractDetails />
           </ProtectedRoute>
