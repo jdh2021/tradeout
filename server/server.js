@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const contractRouter = require('./routes/contract.router');
 const recipientContractRouter = require('./routes/recipient.router');
+const sendgridRouter = require('./routes/sendgrid.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/contract', contractRouter);
 app.use('/api/recipient', recipientContractRouter);
+app.use('/api/sendgrid', sendgridRouter)
 
 // Serve static files
 app.use(express.static('build'));
