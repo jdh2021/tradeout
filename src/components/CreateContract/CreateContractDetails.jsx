@@ -37,6 +37,7 @@ const CreateContractDetails = () => {
     }
   }
 
+  // validating that the required fields have a value
   const validateForm = () => {
     console.log('in validateForm');
     if (!newContractDetails.contractTitle || !newContractDetails.itemName || !newContractDetails.itemDescription || !newContractDetails.itemPrice || !newContractDetails.pickupLocation || !newContractDetails.pickupDate || !newContractDetails.firstPartySignature) {
@@ -47,9 +48,27 @@ const CreateContractDetails = () => {
     }
   }
 
+  // filling the form textfields for demo purposes
+  const autofillForm = () => {
+    console.log('in autofillForm');
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {
+      ...newContractDetails, 
+      contractTitle: 'Car Purchase',
+      itemName: 'Honda Accord',
+      itemDescription: '2008, blue',
+      itemPrice: 1500,
+      pickupLocation: 'St. Paul, MN',
+      pickupDate: '12/15/2022',
+      contractDeadline: '12/13/2022',
+      contractNotes: 'payment in cash, new tires as of October 2022, no know mechanical issues',
+      firstPartySignature: 'Eliot Winter'
+    }});
+  }
+
   return (
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
+        <div onClick={autofillForm}><h5>magic button</h5></div>
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.firstPartyType}.</Typography>
         <br />
