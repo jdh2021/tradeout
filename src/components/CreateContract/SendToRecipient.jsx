@@ -55,6 +55,12 @@ const SendToRecipient = () => {
     history.push('/dashboard');
   }
 
+  // autofill email for demo purposes
+  const autofillEmail = () => {
+    console.log('in autofillEmail');
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, secondPartyEmail: 'christmascactus@gmail.com'}});
+  }
+
   return (
     <div>
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
@@ -67,6 +73,7 @@ const SendToRecipient = () => {
             value={newContractDetails.secondPartyEmail}
             onChange={handleChangeFor('secondPartyEmail')}
           />
+          <div onClick={autofillEmail}><h5>magic button</h5></div>
         </Box>
         <br />
         <br />
