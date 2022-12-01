@@ -40,6 +40,10 @@ const SendToRecipient = () => {
   // dispatching newContractDetails
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
+    if (!newContractDetails.secondPartyEmail || !newContractDetails.contractKey) {
+      alert('Please make sure you have entered the recipient email AND click the "Generate Contract Token" button.');
+      return;
+    }
     // the SendGrid email server request is called from within the addNewContract saga
     dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
@@ -51,17 +55,26 @@ const SendToRecipient = () => {
     history.push('/dashboard');
   }
 
+  // autofill email for demo purposes
+  const autofillEmail = () => {
+    console.log('in autofillEmail');
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, secondPartyEmail: 'christmascactus@gmail.com'}});
+  }
+
   return (
     <div>
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
           <TextField
+            required
             sx={{width: 300, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.secondPartyEmail}
             onChange={handleChangeFor('secondPartyEmail')}
           />
+          {/* used to autofill recipient email during demo */}
+          <div style={{width: 100}} onClick={autofillEmail}><h5>magic button</h5></div>
         </Box>
         <br />
         <br />
@@ -100,7 +113,7 @@ const SendToRecipient = () => {
       </Container>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token</Button>
+        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token*</Button>
         {
           tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
           <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>

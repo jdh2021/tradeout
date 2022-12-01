@@ -35,13 +35,40 @@ const CreateContractDetails = () => {
     } else {
         alert('Contract notes cannot be more than 600 characters.');
     }
-}
+  }
 
+  // validating that the required fields have a value
+  const validateForm = () => {
+    console.log('in validateForm');
+    if (!newContractDetails.contractTitle || !newContractDetails.itemName || !newContractDetails.itemDescription || !newContractDetails.itemPrice || !newContractDetails.pickupLocation || !newContractDetails.pickupDate || !newContractDetails.firstPartySignature) {
+      alert('Please completed all required fields (those with a *).');
+      return;
+    } else {
+      history.push('/create-contract-review');
+    }
+  }
 
+  // filling the form textfields for demo purposes
+  const autofillForm = () => {
+    console.log('in autofillForm');
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {
+      ...newContractDetails, 
+      contractTitle: 'Car Purchase',
+      itemName: 'Honda Accord',
+      itemDescription: '2008, blue',
+      itemPrice: 1500,
+      pickupLocation: 'St. Paul, MN',
+      pickupDate: '12/15/2022',
+      contractDeadline: '12/13/2022',
+      contractNotes: 'payment in cash, new tires as of October 2022, no know mechanical issues',
+      firstPartySignature: 'Eliot Winter'
+    }});
+  }
 
   return (
     <div>
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
+        <div style={{width: 100}} onClick={autofillForm}><h5>magic button</h5></div>
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.firstPartyType}.</Typography>
         <br />
@@ -53,17 +80,18 @@ const CreateContractDetails = () => {
           justifyContent="center"
         >
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Contract Title" size="small" value={newContractDetails.contractTitle} onChange={handleChangeFor('contractTitle')}/>
+            <TextField required fullWidth label="Contract Title" size="small" value={newContractDetails.contractTitle} onChange={handleChangeFor('contractTitle')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Item Name" size="small" value={newContractDetails.itemName} onChange={handleChangeFor('itemName')}/>
+            <TextField required fullWidth label="Item Name" size="small" value={newContractDetails.itemName} onChange={handleChangeFor('itemName')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Item Description" size="small" value={newContractDetails.itemDescription} onChange={handleChangeFor('itemDescription')}/>
+            <TextField required fullWidth label="Item Description" size="small" value={newContractDetails.itemDescription} onChange={handleChangeFor('itemDescription')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
             <TextField
               fullWidth 
+              required
               label="Item Price" 
               size="small"
               value={newContractDetails.itemPrice}
@@ -74,11 +102,12 @@ const CreateContractDetails = () => {
               />
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Pickup Location" size="small" value={newContractDetails.pickupLocation} onChange={handleChangeFor('pickupLocation')}/>
+            <TextField required fullWidth label="Pickup Location" size="small" value={newContractDetails.pickupLocation} onChange={handleChangeFor('pickupLocation')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
             <DatePicker 
               value={newContractDetails.pickupDate}
+              required
               onChange={(newValue) => handleDate('pickupDate', newValue)}
               label="Pickup Date"
               renderInput={(params) => <TextField fullWidth size="small" {...params} />}
@@ -91,7 +120,7 @@ const CreateContractDetails = () => {
               value={newContractDetails.contractDeadline}
               onChange={(newValue) => handleDate('contractDeadline', newValue)}
               label="Contract Deadline"
-              renderInput={(params) => <TextField fullWidth size="small" {...params} />}
+              renderInput={(params) => <TextField {...params} fullWidth size="small" />}
               openTo="day"
               views={['year', 'month', 'day']}
             />
@@ -109,7 +138,7 @@ const CreateContractDetails = () => {
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Your Signature" size="small" value={newContractDetails.firstPartySignature} onChange={handleChangeFor('firstPartySignature')}/>
+            <TextField required fullWidth label="Your Signature" size="small" value={newContractDetails.firstPartySignature} onChange={handleChangeFor('firstPartySignature')}/>
           </Grid>
           <br />
           <Box>
@@ -131,7 +160,7 @@ const CreateContractDetails = () => {
             {/* Preview button here */}
             <Button 
               variant="contained"
-              onClick={(event) => history.push('/create-contract-review')}
+              onClick={validateForm}
               sx={{marginLeft: 1, width: 200}}
             >
               Review Contract
