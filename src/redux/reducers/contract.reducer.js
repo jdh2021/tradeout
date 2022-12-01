@@ -55,8 +55,19 @@ const selectedContract = (state = {}, action) => {
     return state;
   }
 
+const contractKey = (state = '', action) => {
+    console.log('in contractKey reducer');
+    if (action.type === 'SET_CONTRACT_KEY') {
+        return action.payload;
+    } else if (action.type === 'UNSET_USER') {
+        return '';
+    }
+    return state;
+}  
+
 export default combineReducers({
     newContractDetails,
     userContracts,
     selectedContract,
+    contractKey,
 });
