@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function RegisterForm() {
+  // retrieve contract key from reducer 
+  const contractKey = useSelector(store => store.contract.contractKey);
   
   const [username, setUsername] = useState('');
 
@@ -20,7 +22,8 @@ function RegisterForm() {
         // username: username,
         email: email,
         legalName: legalName,
-        password: password
+        password: password,
+        contractKey: contractKey
       },
     });
   }; // end registerUser
