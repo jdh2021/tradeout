@@ -17,7 +17,7 @@ function ContractCard(contract) {
   return (
     <div>
 
-        <Card sx={{ maxWidth: 345, margin:3}}>
+        <Card sx={{ maxWidth: 345, margin:3}} onClick = {() => {history.push(`/contract-details/${contract.contract.id}`)}}>
           <CardActionArea>
             <CardMedia
               component="img"
