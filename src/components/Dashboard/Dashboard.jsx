@@ -1,7 +1,7 @@
-import React, { useState,} from 'react';
+import React, { useState, useEffect} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,15 +15,18 @@ import ContractCard from '../ContractCard/ContractCard';
 function Dashboard() {
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const userContracts = useSelector((store) => store.contract.userContracts);
   
 
-
+  useEffect(() => {
+    dispatch({ type: 'FETCH_CONTRACTS' });
+  }, [dispatch]);
 
   return (
     <div>
-        <h1>Hello, {user.legal_name}</h1>
+        <h1>Hello, {user.email}</h1>
         
         <button onClick={() => {history.push(`/party-type`)}}>New Contract</button>
 

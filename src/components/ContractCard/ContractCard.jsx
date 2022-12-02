@@ -26,6 +26,7 @@ function ContractCard({contract}) {
   
   return (
     <div>
+
         <Card sx={{ maxWidth: 345, margin:3}} onClick={() => selectedContract(contract)}>
           <CardActionArea>
             <CardMedia
