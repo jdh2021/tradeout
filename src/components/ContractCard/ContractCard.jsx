@@ -1,7 +1,7 @@
 import React, { useState,} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,14 +10,24 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
 
-function ContractCard(contract) {
+function ContractCard({contract}) {
 
   const history = useHistory();
+  
+  
+
+
+  //contract clicked on dashboard will direct user to specific contract details
+  //useEffect in ContractDetails dispatches 'FETCH_CONTRACT_DETAILS' and sets the contract via url param of contractId
+  const selectedContract = (contractToDisplay) => {
+    console.log('in selectedContract click function', contractToDisplay.id);
+    history.push(`/contract-details/${contractToDisplay.id}`);
+  }
   
   return (
     <div>
 
-        <Card sx={{ maxWidth: 345, margin:3}} onClick = {() => {history.push(`/contract-details/${contract.contract.id}`)}}>
+        <Card sx={{ maxWidth: 345, margin:3}} onClick={() => selectedContract(contract)}>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -27,10 +37,10 @@ function ContractCard(contract) {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {contract.contract.contract_title}
+                {contract.contract_title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {contract.contract.item_description}
+                {contract.item_description}
               </Typography>
             </CardContent>
           </CardActionArea>
