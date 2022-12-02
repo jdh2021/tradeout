@@ -17,34 +17,21 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register', async (req, res, next) => {
-  try {
-    // const username = req.body.username
-    const email = req.body.email;
-    const legalName = req.body.legalName;
-    const password = encryptLib.encryptPassword(req.body.password);
-    const contractKey = req.body.contractKey;
-    // TODO: COMMIT AND ROLLBACK
-    const queryText = `INSERT INTO "user" (email, legal_name, password)
-      VALUES ($1, $2, $3) RETURNING id`;
-    const createdUser = await pool.query(queryText, [email, legalName, password]);
-    
-    if (contractKey) {
-      // Go fetch the contract with that key using SELECT
-      const foundContract = await pool.query('SELECT * FROM "contract" WHERE "contract_key" = $1', [contractKey]);
-      // If found, attach the new user to the contract with an INSERT INTO
-      if (foundContract.rows > 0) {
-        const contract = foundContract[0].id;
-        const userId = createdUser.id;
-        // INSERT INTO user_contract ...
-      }
-    }
-    res.sendStatus(201);
-  } catch (e) {
-    console.log('User registration failed: ', err);
-    res.sendStatus(500);
-  }
+router.post('/register', (req, res, next) => {
+  // const username = req.body.username
+  const email = req.body.email;
+  const legalName = req.body.legalName;
+  const password = encryptLib.encryptPassword(req.body.password);
 
+  const queryText = `INSERT INTO "user" (email, legal_name, password)
+    VALUES ($1, $2, $3) RETURNING id`;
+  pool
+    .query(queryText, [email, legalName, password])
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.log('User registration failed: ', err);
+      res.sendStatus(500);
+    });
 });
 
 // Handles login form authenticate/login POST
