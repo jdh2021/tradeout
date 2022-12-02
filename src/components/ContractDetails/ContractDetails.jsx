@@ -21,15 +21,21 @@ function ContractDetails() {
   }, [contractId])
 
 
+
   return (
     <div>
-      {/* page heading. May be useful to pass contract status in heading with reducer ex:" PendingContract Details" */}
+      {/* page heading. May be a better way to handle this but it will be useful for the user to see the contract status in the heading */}
+      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
+        {contractDetails.contract_status} </Typography>
+
       <Typography variant="h3" sx={{ textAlign: "center" }}>
-        {contractDetails.contractStatus}Contract Details</Typography>
+        Contract Details  </Typography>
       <br />
       <br />
 
+
       <ContractPreview contractDetails={contractDetails} />
+
       <br />
       <br />
 
@@ -43,7 +49,7 @@ function ContractDetails() {
         </Button>
       </Box>
 
-      {/* <pre>{JSON.stringify(selectedContract)}</pre> */}
+
 
     </div>
   );

@@ -34,6 +34,10 @@ const PartyType = () => {
   // secondPartyType is set in newContractDetails reducer, user is pushed to CreateContractDetails
   const handleChangeForSecondParty = (contractDetail, partyType) => {
     console.log('in handleChangeForSecondParty', contractDetail, partyType);
+    if (!newContractDetails.firstPartyType) {
+      alert('Please select whether you are the buyer or seller.');
+      return;
+    }
     if (partyType === 'buyer') {
       dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'buyer'}});
     } else if (partyType === 'seller') {
