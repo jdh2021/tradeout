@@ -26,7 +26,7 @@ function Dashboard() {
 
   return (
     <div>
-        <h1>Hello, {user.legal_name}</h1>
+        <h1>Hello, {user.email}</h1>
         
         <button onClick={() => {history.push(`/party-type`)}}>New Contract</button>
 
