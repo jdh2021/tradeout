@@ -41,10 +41,15 @@ function* addNewContract(action) {
         yield axios.post('/api/contract', action.payload);
         yield put ({type: 'FETCH_CONTRACTS'});
         // SendGrid email request:
+
+        yield axios.post('/api/sendgrid', action.payload);
+        // user is told the contract post and email were successful
+
         // yield axios.post('/api/sendgrid', action.payload);
         // clearing contract details from newContractDetails reducer
-        yield put ({type: 'SET_DEFAULT_CONTRACT'});
+          yield put ({type: 'SET_DEFAULT_CONTRACT'});
         // user is told the contract post and email were successfull
+
         action.userAlert();
     } catch (error) {
         console.log('Error in addNewContract (saga)', error);
