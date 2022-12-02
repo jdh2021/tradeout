@@ -8,6 +8,11 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import cryptoRandomString from 'crypto-random-string';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 
 const SendToRecipient = () => {
 
@@ -63,6 +68,25 @@ const SendToRecipient = () => {
 
   return (
     <div>
+        <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Your Role
+          </Typography>
+          <Typography underline sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Contract Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <EditIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Review Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <SendIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Submit Contract & Email Recipient</Typography>
+          </Typography>
+        </Breadcrumbs>     
+        <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
           <TextField

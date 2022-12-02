@@ -8,6 +8,11 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 
 const PartyType = () => {
 
@@ -49,6 +54,25 @@ const PartyType = () => {
 
   return (
     <div>
+        <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <PersonIcon sx={{ mr: 0.5, color: '#6622CC'}} />
+            <Typography sx={{ textDecoration: 'italics', fontWeight: '500', color: '#6622CC'}}>Your Role</Typography>
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <SummarizeIcon sx={{ mr: 0.5 }} />
+            Contract Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <EditIcon sx={{ mr: 0.5 }} />
+            Review Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <SendIcon sx={{ mr: 0.5 }} />
+            Submit Contract & Email Recipient
+          </Typography>
+        </Breadcrumbs>
+        <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Are you a buyer or seller?</Typography>
         <br />
         <br />

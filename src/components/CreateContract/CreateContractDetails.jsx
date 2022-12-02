@@ -8,6 +8,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 
 const CreateContractDetails = () => {
 
@@ -67,6 +72,25 @@ const CreateContractDetails = () => {
 
   return (
     <div>
+        <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Your Role
+          </Typography>
+          <Typography underline sx={{display: 'flex', alignItems: 'center'}}>
+            <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Contract Details</Typography>
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <EditIcon sx={{ mr: 0.5 }} />
+            Review Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <SendIcon sx={{ mr: 0.5 }} />
+            Submit Contract & Email Recipient
+          </Typography>
+        </Breadcrumbs>
+        <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <div style={{width: 100}} onClick={autofillForm}><h5>magic button</h5></div>
         <br />
