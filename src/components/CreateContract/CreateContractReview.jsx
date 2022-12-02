@@ -11,6 +11,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 
 const CreateContractReview = () => {
 
@@ -27,6 +32,25 @@ const CreateContractReview = () => {
 
   return (
     <div>
+        <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Your Role
+          </Typography>
+          <Typography underline sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+            <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            Contract Details
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <EditIcon sx={{ mr: 0.5, color: '#6622CC' }} />
+            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Review Details</Typography>
+          </Typography>
+          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+            <SendIcon sx={{ mr: 0.5 }} />
+            Submit Contract & Email Recipient
+          </Typography>
+        </Breadcrumbs>
+        <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Review New Contract Details</Typography>
         <br />
         <br />
