@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
             from: process.env.SENDGRID_EMAIL, // Change to your verified sender
             subject: 'Sending with SendGrid is Fun',
             text: `${contractKey}`,
-            html: `<a href="http://localhost:5007/recipient-view/${contractKey}">Click here</a> to view your contract.
+            html: `<a href="http://localhost:3000/#/recipient-view/${contractKey}">Click here</a> to view your contract.
             <strong>Here is your contract code</strong>
             <p>${contractKey}</p>
             `
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
             console.error(error)
         })
     } else {
-        console.log(`Code http://localhost:5007/recipient-view/${contractKey}`);
+        console.log(`Code http://localhost:3000/#/recipient-view/${contractKey}`);
     }
 
 })
