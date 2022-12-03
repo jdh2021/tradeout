@@ -52,6 +52,8 @@ router.post('/register', async (req, res, next) => {
       const result = await pool.query(insertUser, [email, legalName, password]);
       const userId = result.rows[0].id;
       console.log('userId is:', result.rows[0].id);
+      // update "contract" table and set second_party_name to legal name entered by contract recipient
+      await pool.query(`UPDATE "contract" SET "second_party_name" = $1 WHERE "contract_key" = $2;`, [legalName, contractKey]);
       // insert into "user_contract" table with returned values of user id and contract id
       await pool.query(`INSERT INTO "user_contract" ("user_id", "contract_id")
                         VALUES($1, $2);`, [userId, contractId]);
