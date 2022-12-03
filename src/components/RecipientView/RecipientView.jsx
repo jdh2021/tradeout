@@ -18,6 +18,25 @@ function RecipientView() {
     <div>
       <h1>RecipientView</h1>
       <ContractPreview contractDetails={contractDetails} />
+      <div>
+          <br></br>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button 
+              variant="contained"
+              onClick={(event) => history.push('/registration')}
+              sx={{marginLeft: 1, width: 200}}
+              >
+              Accept
+            </Button>
+            <Button 
+              variant="contained"
+              // onClick={(event) => history.push('/registration')}
+              sx={{marginLeft: 1, width: 200}}
+              >
+              Decline
+            </Button>
+          </Box>
+        </div>
     </div>
   );
 }
