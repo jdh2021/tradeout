@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 function RecipientView() {
   const dispatch = useDispatch();
