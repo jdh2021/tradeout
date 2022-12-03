@@ -25,7 +25,7 @@ import ContractDetails from '../ContractDetails/ContractDetails.jsx';
 import Notifications from '../Notifications/Notifications.jsx';
 import CounterOfferEdits from '../CounterOffer/CounterOfferEdits.jsx';
 import CounterOfferReview from '../CounterOffer/CounterOfferReview.jsx';
-import ContractRecipientAccess from '../ContractRecipientAccess/ContractRecipientAccess';
+
 import CreateContractDetails from '../CreateContract/CreateContractDetails.jsx';
 import CreateContractReview from '../CreateContract/CreateContractReview.jsx';
 import PartyType from '../CreateContract/PartyType.jsx';
@@ -210,13 +210,6 @@ function App() {
             </Route>
 
             {/* NEW COMPONENT UNPROTECTED ROUTES */}
-            <Route
-              exact
-              path="/contract-recipient-access"
-            >
-              <ContractRecipientAccess />
-            </Route>
-
             <Route
               exact path="/recipient-view/:searchContractKey"
             >
