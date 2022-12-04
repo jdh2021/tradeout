@@ -55,9 +55,9 @@ const PartyType = () => {
   return (
     <div>
         <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
-          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', fontWeight: '500', color: '#6622CC'}}>
             <PersonIcon sx={{ mr: 0.5, color: '#6622CC'}} />
-            <Typography sx={{ textDecoration: 'italics', fontWeight: '500', color: '#6622CC'}}>Your Role</Typography>
+            Your Role
           </Typography>
           <Typography sx={{display: 'flex', alignItems: 'center'}}>
             <SummarizeIcon sx={{ mr: 0.5 }} />
