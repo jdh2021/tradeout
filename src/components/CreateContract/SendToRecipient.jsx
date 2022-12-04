@@ -153,7 +153,7 @@ const SendToRecipient = () => {
             Click to generate contract token for recipient access.
           </Typography>
         }
-        <Typography onClick={contractTokenAlert}><HelpOutlineIcon /></Typography>
+        <Typography sx={{ml: 2}} onClick={contractTokenAlert}><HelpOutlineIcon /></Typography>
       </Box>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
