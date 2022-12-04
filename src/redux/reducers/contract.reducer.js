@@ -1,25 +1,25 @@
 import { combineReducers } from 'redux';
 
 const defaultNewContract = {
-    firstPartyType: '',
-    firstPartyEmail: '',
-    firstPartyName: '',
-    secondPartyType: '',
-    secondPartyEmail: '',
-    secondPartyName: '',
-    contractTitle: '',
-    itemName: '',
-    itemDescription: '',
-    itemPrice: 0,
-    pickupLocation: '',
-    pickupDate: '',
-    contractDeadline: '',
-    contractNotes: '',
-    itemImage: '',
-    itemImageDescription: '',
-    firstPartySignature: '',
-    contractKey: '',
-    contractStatus: 'pending'
+    first_party_type: '',
+    first_party_email: '',
+    first_party_name: '',
+    second_party_type: '',
+    second_party_email: '',
+    second_party_email: '',
+    contract_title: '',
+    item_name: '',
+    item_description: '',
+    item_price: 0,
+    item_pickup_location: '',
+    item_pickup_date: '',
+    contract_deadline: '',
+    contract_notes: '',
+    item_image: '',
+    item_image_description: '',
+    first_party_signature: '',
+    contract_key: '',
+    contract_status: 'pending'
 };
 
 const newContractDetails = (state = defaultNewContract, action) => {
