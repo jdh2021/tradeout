@@ -45,8 +45,8 @@ const CreateContractDetails = () => {
   // validating that the required fields have a value
   const validateForm = () => {
     console.log('in validateForm');
-    if (!newContractDetails.contractTitle || !newContractDetails.itemName || !newContractDetails.itemDescription || !newContractDetails.itemPrice || !newContractDetails.pickupLocation || !newContractDetails.pickupDate || !newContractDetails.firstPartySignature) {
-      alert('Please completed all required fields (those with a *).');
+    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature) {
+      alert('Please complete all required fields (those with a *).');
       return;
     } else {
       history.push('/create-contract-review');
@@ -58,15 +58,15 @@ const CreateContractDetails = () => {
     console.log('in autofillForm');
     dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {
       ...newContractDetails, 
-      contractTitle: 'Car Purchase',
-      itemName: 'Honda Accord',
-      itemDescription: '2008, blue',
-      itemPrice: 1500,
-      pickupLocation: 'St. Paul, MN',
-      pickupDate: '12/15/2022',
-      contractDeadline: '12/13/2022',
-      contractNotes: 'payment in cash, new tires as of October 2022, no know mechanical issues',
-      firstPartySignature: 'Eliot Winter'
+      contract_title: 'Car Purchase',
+      item_name: 'Honda Accord',
+      item_description: '2008, blue',
+      item_price: 1500,
+      item_pickup_location: 'St. Paul, MN',
+      item_pickup_date: '12/15/2022',
+      contract_deadline: '12/13/2022',
+      contract_notes: 'payment in cash, new tires as of October 2022, no know mechanical issues',
+      first_party_signature: 'Eliot Winter'
     }});
   }
 
@@ -77,9 +77,9 @@ const CreateContractDetails = () => {
             <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Your Role
           </Typography>
-          <Typography underline sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', fontWeight: '500', color: '#6622CC'}}>
             <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
-            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Contract Details</Typography>
+            Contract Details
           </Typography>
           <Typography sx={{display: 'flex', alignItems: 'center'}}>
             <EditIcon sx={{ mr: 0.5 }} />
@@ -94,7 +94,7 @@ const CreateContractDetails = () => {
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <div style={{width: 100}} onClick={autofillForm}><h5>magic button</h5></div>
         <br />
-        <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.firstPartyType}.</Typography>
+        <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.first_party_type}.</Typography>
         <br />
         <Grid
           container
@@ -104,13 +104,13 @@ const CreateContractDetails = () => {
           justifyContent="center"
         >
           <Grid item sx={{width: 400}}>
-            <TextField required fullWidth label="Contract Title" size="small" value={newContractDetails.contractTitle} onChange={handleChangeFor('contractTitle')}/>
+            <TextField required fullWidth label="Contract Title" size="small" value={newContractDetails.contract_title} onChange={handleChangeFor('contract_title')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField required fullWidth label="Item Name" size="small" value={newContractDetails.itemName} onChange={handleChangeFor('itemName')}/>
+            <TextField required fullWidth label="Item Name" size="small" value={newContractDetails.item_name} onChange={handleChangeFor('item_name')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField required fullWidth label="Item Description" size="small" value={newContractDetails.itemDescription} onChange={handleChangeFor('itemDescription')}/>
+            <TextField required fullWidth label="Item Description" size="small" value={newContractDetails.item_description} onChange={handleChangeFor('item_description')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
             <TextField
@@ -118,21 +118,21 @@ const CreateContractDetails = () => {
               required
               label="Item Price" 
               size="small"
-              value={newContractDetails.itemPrice}
-              onChange={handleChangeFor('itemPrice')}
+              value={newContractDetails.item_price}
+              onChange={handleChangeFor('item_price')}
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>
               }}
               />
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField required fullWidth label="Pickup Location" size="small" value={newContractDetails.pickupLocation} onChange={handleChangeFor('pickupLocation')}/>
+            <TextField required fullWidth label="Pickup Location" size="small" value={newContractDetails.item_pickup_location} onChange={handleChangeFor('item_pickup_location')}/>
           </Grid>
           <Grid item sx={{width: 400}}>
             <DatePicker 
-              value={newContractDetails.pickupDate}
+              value={newContractDetails.item_pickup_date}
               required
-              onChange={(newValue) => handleDate('pickupDate', newValue)}
+              onChange={(newValue) => handleDate('item_pickup_date', newValue)}
               label="Pickup Date"
               renderInput={(params) => <TextField fullWidth size="small" {...params} />}
               openTo="day"
@@ -141,8 +141,8 @@ const CreateContractDetails = () => {
           </Grid>
           <Grid item sx={{width: 400}}>
             <DatePicker 
-              value={newContractDetails.contractDeadline}
-              onChange={(newValue) => handleDate('contractDeadline', newValue)}
+              value={newContractDetails.contract_deadline}
+              onChange={(newValue) => handleDate('contract_deadline', newValue)}
               label="Contract Deadline"
               renderInput={(params) => <TextField {...params} fullWidth size="small" />}
               openTo="day"
@@ -150,8 +150,8 @@ const CreateContractDetails = () => {
             />
           </Grid>
           <Grid item sx={{width: 400}}>
-            <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contractNotes} onChange={(event) => checkContractNotesLength('contractNotes', event.target.value)}/>
-            <Typography>{newContractDetails.contractNotes.length}/600</Typography>
+            <TextField fullWidth label="Notes" size="small" multiline rows={4} value={newContractDetails.contract_notes} onChange={(event) => checkContractNotesLength('contract_notes', event.target.value)}/>
+            <Typography>{newContractDetails.contract_notes.length}/600</Typography>
           </Grid>
           <br />
           <Grid item>
@@ -162,7 +162,7 @@ const CreateContractDetails = () => {
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
-            <TextField required fullWidth label="Your Signature" size="small" value={newContractDetails.firstPartySignature} onChange={handleChangeFor('firstPartySignature')}/>
+            <TextField required fullWidth label="Your Signature" size="small" value={newContractDetails.first_party_signature} onChange={handleChangeFor('first_party_signature')}/>
           </Grid>
           <br />
           <Box>
