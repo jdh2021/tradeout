@@ -35,7 +35,7 @@ function RecipientView() {
     }
   };
 
-  // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object, alerts contract recipient that contract has been declined
+  // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
   const declineContract = () => {
     console.log('in declineContract. Contract id to decline is:', contractDetails.id);
     dispatch({
@@ -45,8 +45,15 @@ function RecipientView() {
         contract_status: 'declined',
         contract_approval: false,
         second_party_signature: null
-      }
+      },
+      handleContractStatusUpdate
     });
+  }
+
+  // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
+  const handleContractStatusUpdate = () => {
+    console.log('in handleContractStatusUpdate');
+    dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
     alert('Thank you! The contract has been declined.');
   }
 

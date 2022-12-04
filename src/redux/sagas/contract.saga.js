@@ -62,6 +62,7 @@ function* updateContractStatus(action) {
     try {
         console.log('in updateContractStatus (saga). Contract object to update is:', action.payload);
         yield axios.put('/api/contract', action.payload);
+        action.handleContractStatusUpdate();
     } catch (error) {
         console.log('Error in updateContractStatus (saga)', error);
         alert('Something went wrong updating the contract status.');
