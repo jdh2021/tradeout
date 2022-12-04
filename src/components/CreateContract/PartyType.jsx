@@ -39,7 +39,7 @@ const PartyType = () => {
   // secondPartyType is set in newContractDetails reducer, user is pushed to CreateContractDetails
   const handleChangeForSecondParty = (contractDetail, partyType) => {
     console.log('in handleChangeForSecondParty', contractDetail, partyType);
-    if (!newContractDetails.firstPartyType) {
+    if (!newContractDetails.first_party_type) {
       alert('Please select whether you are the buyer or seller.');
       return;
     }
@@ -87,7 +87,7 @@ const PartyType = () => {
             <FormControl>
             <RadioGroup
               value={newContractDetails.firstPartyType}
-              onChange={handleChangeFor('firstPartyType')}
+              onChange={handleChangeFor('first_party_type')}
             >
               <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
               <FormControlLabel value="seller" control={<Radio />} label="Seller" />
@@ -96,7 +96,7 @@ const PartyType = () => {
           </Grid>
           <Grid item>
             {/* when user clicks 'Next' button, the secondPartyType is set and user is pushed to CreateContractDetails */}
-            <Button variant="contained" onClick={() => handleChangeForSecondParty('secondPartyType', secondParty)}>Next</Button>
+            <Button variant="contained" onClick={() => handleChangeForSecondParty('second_party_type', secondParty)}>Next</Button>
           </Grid>
         </Grid>     
     </div>
