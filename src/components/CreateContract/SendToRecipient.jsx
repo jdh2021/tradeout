@@ -103,23 +103,24 @@ const SendToRecipient = () => {
         <br />
         <br />
         <Container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <Paper elevation={10} sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
-            <Typography variant="h6" sx={{textAlign: 'center'}}>{newContractDetails.contract_title} Agreement</Typography>
-            {/* user.username will be changed to user.legalName when registration/login is working */}
-            <Typography sx={{textAlign: 'center'}}>{user.legal_name} (the "{newContractDetails.first_party_type}") does hereby sell, assign, and transfer to</Typography>
-            <Typography sx={{textAlign: 'center'}}>*recipient legal name* (the "{newContractDetails.second_party_type}") the following property:</Typography>
+          <Paper elevation={10} sx={{width: 700, padding: 4, display: 'flex', flexDirection: 'column'}}>
+            <Typography sx={{textAlign: 'center'}}>Legal Contract for {newContractDetails.contract_title}</Typography>
+            <Typography variant="h6" sx={{textAlign: 'center'}}>Bill of Sale</Typography>
+            <Typography sx={{textAlign: 'center'}}>THIS BILL OF SALE is executed on {newContractDetails.item_pickup_date} by and between {user.legal_name} (hereinafter referred to as the "{newContractDetails.first_party_type}")</Typography>
+            <Typography sx={{textAlign: 'center'}}>and RECIPIENT LEGAL NAME (hereinafter referred to as the "{newContractDetails.second_party_type}").</Typography>
             <br />
+            <Typography sx={{textAlign: 'center'}}>The Seller hereby agrees to transfer to Buyer all rights of the seller in the following property:</Typography>
             <Typography sx={{textAlign: 'center'}}>{newContractDetails.item_name}: {newContractDetails.item_description}</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>for a TOTAL AMOUNT OF ${newContractDetails.item_price}</Typography>
+            <Typography sx={{textAlign: 'center'}}>For and in consideration of a total purchase price of ${newContractDetails.item_price}, receipt of which is hereby acknowledged by Seller. The form of payment used will be cash and sales tax is included in the purchase price of the above-mentioned property.</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>The seller warrants that they are the legal owner of the property and that it is being transferred to the buyer free and clear of any liens or encumbrances.</Typography>
-            <Typography sx={{textAlign: 'center'}}>The above property is sold on an "AS IS" basis. The seller makes no warranites, express or implied (except as specially stated in this document).</Typography>
+            <Typography sx={{textAlign: 'center'}}>The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they see fit.</Typography>
+            <Typography sx={{textAlign: 'center'}}>The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with no recourse to the Seller, provided that Seller can issue proof that they have the title to the property without any liens or encumbrances. The Buyer has been given the opportunity to inspect, or has inspected, the property as described above. The Buyer agree to accept all property in its existing state.</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>Notes regarding the above property:</Typography>
+            <Typography sx={{textAlign: 'center'}}>Notes made by {newContractDetails.first_party_type} regarding the above property:</Typography>
             <Typography sx={{textAlign: 'center'}}>{newContractDetails.contract_notes}</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the seller:</Typography>
+            <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the {newContractDetails.first_party_type}:</Typography>
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
               {/* images will be the user-uploaded images once that functionality is implemented */}
@@ -130,6 +131,7 @@ const SendToRecipient = () => {
             <Typography sx={{textAlign: 'center'}}>The seller and buyer will meet in {newContractDetails.item_pickup_location} to transfer the above property.</Typography>
             <br />
             <Box sx={{ p: 2, border: '1px solid grey' }}>
+              <Typography sx={{textAlign: 'center'}}>IN WITNESS THEREOF, the parties executed this Bill of Sale on {newContractDetails.item_pickup_date},</Typography>
               <Typography sx={{textAlign: 'center'}}>{newContractDetails.first_party_type} Signature: {newContractDetails.first_party_signature}</Typography>
               <Typography sx={{textAlign: 'center'}}>{newContractDetails.second_party_type} Signature: {newContractDetails.second_party_signature}</Typography>
             </Box>
