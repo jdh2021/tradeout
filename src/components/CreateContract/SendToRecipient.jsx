@@ -13,6 +13,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const SendToRecipient = () => {
 
@@ -58,6 +59,12 @@ const SendToRecipient = () => {
     console.log('in userAlert');
     alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
     history.push('/dashboard');
+  }
+
+  // explanation of what the contract token is used for
+  const contractTokenAlert = () => {
+    console.log('in contractTokenAlert');
+    alert('The contract token is a unique key that is associated with this contract. The recipient will receive an email with a link to view the details of this contract. The contract token is used in that link to ensure that they access this document securely.')
   }
 
   // autofill email for demo purposes
@@ -146,6 +153,7 @@ const SendToRecipient = () => {
             Click to generate contract token for recipient access.
           </Typography>
         }
+        <Typography onClick={contractTokenAlert}><HelpOutlineIcon /></Typography>
       </Box>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
