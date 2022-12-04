@@ -23,7 +23,7 @@ const SendToRecipient = () => {
   const [tokenCreated, setTokenCreated] = useState(false);
 
   // date formatting for pickup date
-  const pickupDate = new Date(newContractDetails.pickupDate);
+  const pickupDate = new Date(newContractDetails.item_pickup_date);
   const formattedPickupDate = pickupDate.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
   // unqiue random string for contract_key
@@ -45,8 +45,8 @@ const SendToRecipient = () => {
   // dispatching newContractDetails
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
-    if (!newContractDetails.secondPartyEmail || !newContractDetails.contractKey) {
-      alert('Please make sure you have entered the recipient email AND click the "Generate Contract Token" button.');
+    if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
+      alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
       return;
     }
     // the SendGrid email server request is called from within the addNewContract saga
@@ -63,7 +63,7 @@ const SendToRecipient = () => {
   // autofill email for demo purposes
   const autofillEmail = () => {
     console.log('in autofillEmail');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, secondPartyEmail: 'christmascactus@gmail.com'}});
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'christmascactus@gmail.com'}});
   }
 
   return (
@@ -73,7 +73,7 @@ const SendToRecipient = () => {
             <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Your Role
           </Typography>
-          <Typography underline sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
             <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Contract Details
           </Typography>
@@ -81,9 +81,9 @@ const SendToRecipient = () => {
             <EditIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Review Details
           </Typography>
-          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', fontWeight: '500', color: '#6622CC'}}>
             <SendIcon sx={{ mr: 0.5, color: '#6622CC' }} />
-            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Submit Contract & Email Recipient</Typography>
+            Submit Contract & Email Recipient
           </Typography>
         </Breadcrumbs>     
         <br />
@@ -94,7 +94,7 @@ const SendToRecipient = () => {
             sx={{width: 300, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
-            value={newContractDetails.secondPartyEmail}
+            value={newContractDetails.second_party_email}
             onChange={handleChangeFor('secondPartyEmail')}
           />
           {/* used to autofill recipient email during demo */}
@@ -104,20 +104,20 @@ const SendToRecipient = () => {
         <br />
         <Container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <Paper elevation={10} sx={{width: 700, padding: 2, display: 'flex', flexDirection: 'column'}}>
-            <Typography variant="h6" sx={{textAlign: 'center'}}>{newContractDetails.contractTitle} Agreement</Typography>
+            <Typography variant="h6" sx={{textAlign: 'center'}}>{newContractDetails.contract_title} Agreement</Typography>
             {/* user.username will be changed to user.legalName when registration/login is working */}
-            <Typography sx={{textAlign: 'center'}}>{user.legal_name} (the "{newContractDetails.firstPartyType}") does hereby sell, assign, and transfer to</Typography>
-            <Typography sx={{textAlign: 'center'}}>*recipient legal name* (the "{newContractDetails.secondPartyType}") the following property:</Typography>
+            <Typography sx={{textAlign: 'center'}}>{user.legal_name} (the "{newContractDetails.first_party_type}") does hereby sell, assign, and transfer to</Typography>
+            <Typography sx={{textAlign: 'center'}}>*recipient legal name* (the "{newContractDetails.second_party_type}") the following property:</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>{newContractDetails.itemName}: {newContractDetails.itemDescription}</Typography>
+            <Typography sx={{textAlign: 'center'}}>{newContractDetails.item_name}: {newContractDetails.item_description}</Typography>
             <br />
-            <Typography sx={{textAlign: 'center'}}>for a TOTAL AMOUNT OF ${newContractDetails.itemPrice}</Typography>
+            <Typography sx={{textAlign: 'center'}}>for a TOTAL AMOUNT OF ${newContractDetails.item_price}</Typography>
             <br />
             <Typography sx={{textAlign: 'center'}}>The seller warrants that they are the legal owner of the property and that it is being transferred to the buyer free and clear of any liens or encumbrances.</Typography>
             <Typography sx={{textAlign: 'center'}}>The above property is sold on an "AS IS" basis. The seller makes no warranites, express or implied (except as specially stated in this document).</Typography>
             <br />
             <Typography sx={{textAlign: 'center'}}>Notes regarding the above property:</Typography>
-            <Typography sx={{textAlign: 'center'}}>{newContractDetails.contractNotes}</Typography>
+            <Typography sx={{textAlign: 'center'}}>{newContractDetails.contract_notes}</Typography>
             <br />
             <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the seller:</Typography>
             <br />
@@ -127,17 +127,17 @@ const SendToRecipient = () => {
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
-            <Typography sx={{textAlign: 'center'}}>The seller and buyer will meet in {newContractDetails.pickupLocation} to transfer the above property.</Typography>
+            <Typography sx={{textAlign: 'center'}}>The seller and buyer will meet in {newContractDetails.item_pickup_location} to transfer the above property.</Typography>
             <br />
             <Box sx={{ p: 2, border: '1px solid grey' }}>
-              <Typography sx={{textAlign: 'center'}}>{newContractDetails.firstPartyType} Signature: {newContractDetails.firstPartySignature}</Typography>
-              <Typography sx={{textAlign: 'center'}}>{newContractDetails.secondPartyType} Signature: {newContractDetails.secondPartySignature}</Typography>
+              <Typography sx={{textAlign: 'center'}}>{newContractDetails.first_party_type} Signature: {newContractDetails.first_party_signature}</Typography>
+              <Typography sx={{textAlign: 'center'}}>{newContractDetails.second_party_type} Signature: {newContractDetails.second_party_signature}</Typography>
             </Box>
           </Paper>
       </Container>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={() => setContractKey('contractKey', token)} sx={{mr: 2}}>Generate Contract Token*</Button>
+        <Button variant="contained" color="secondary" onClick={() => setContractKey('contract_key', token)} sx={{mr: 2}}>Generate Contract Token*</Button>
         {
           tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
           <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
