@@ -59,33 +59,39 @@ function RecipientView() {
 
   return (
     <div>
+      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
+        {contractDetails.contract_status}
+      </Typography>
+      <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
       </Typography>
       <br />
-      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        contract {contractDetails.contract_status}
-      </Typography>
       <br />
       <ContractPreview contractDetails={contractDetails} />
+      <br />
+      <br />
       <div>
-        <br></br>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={acceptContract}
-            sx={{ marginRight: 1, width: 200 }}
-          >
-            Accept
-          </Button>
-          <Button
-            variant="contained"
-            onClick={confirmDecline}
-            sx={{ marginLeft: 1, width: 200 }}
-          >
-            Decline
-          </Button>
-        </Box>
+        {/* conditional checks that contract status is pending and renders Accept, Decline buttons */}
+        {contractDetails.contract_status === 'pending' ?
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              onClick={acceptContract}
+              sx={{ marginRight: 1, width: 200 }}
+            >
+              Accept
+            </Button>
+            <Button
+              variant="contained"
+              onClick={confirmDecline}
+              sx={{ marginLeft: 1, width: 200 }}
+            >
+              Decline
+            </Button>
+          </Box> :
+          <></>
+        }
       </div>
     </div>
   );
