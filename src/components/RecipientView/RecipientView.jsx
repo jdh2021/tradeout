@@ -31,18 +31,33 @@ function RecipientView() {
   const confirmDecline = () => {
     console.log('in confirmDecline');
     if (window.confirm('Are you sure you want to decline this contract?')) {
-
+      declineContract();
     }
   };
+
+  // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object, alerts contract recipient that contract has been declined
+  const declineContract = () => {
+    console.log('in declineContract. Contract id to decline is:', contractDetails.id);
+    dispatch({
+      type: 'UPDATE_CONTRACT_STATUS',
+      payload: {
+        id: contractDetails.id,
+        contract_status: 'declined',
+        contract_approval: false,
+        second_party_signature: null
+      }
+    });
+    alert('Thank you! The contract has been declined.');
+  }
 
   return (
     <div>
       <Typography variant="h3" sx={{ textAlign: "center" }}>
-        Recipient View 
+        Recipient View
       </Typography>
       <br />
       <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        contract {contractDetails.contract_status} 
+        contract {contractDetails.contract_status}
       </Typography>
       <br />
       <ContractPreview contractDetails={contractDetails} />
