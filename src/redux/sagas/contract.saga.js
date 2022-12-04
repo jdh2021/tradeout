@@ -68,7 +68,6 @@ function* updateContractStatus(action) {
     }   
 }
 
-
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);

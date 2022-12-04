@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function RecipientView() {
   const history = useHistory();
@@ -26,9 +27,24 @@ function RecipientView() {
     history.push('/registration');
   }
 
+  // prompts recipient to confirm before contract is declined
+  const confirmDecline = () => {
+    console.log('in confirmDecline');
+    if (window.confirm('Are you sure you want to decline this contract?')) {
+
+    }
+  };
+
   return (
     <div>
-      <h1>RecipientView</h1>
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        Recipient View 
+      </Typography>
+      <br />
+      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
+        contract {contractDetails.contract_status} 
+      </Typography>
+      <br />
       <ContractPreview contractDetails={contractDetails} />
       <div>
         <br></br>
@@ -42,6 +58,7 @@ function RecipientView() {
           </Button>
           <Button
             variant="contained"
+            onClick={confirmDecline}
             sx={{ marginLeft: 1, width: 200 }}
           >
             Decline
