@@ -39,7 +39,7 @@ const PartyType = () => {
   // secondPartyType is set in newContractDetails reducer, user is pushed to CreateContractDetails
   const handleChangeForSecondParty = (contractDetail, partyType) => {
     console.log('in handleChangeForSecondParty', contractDetail, partyType);
-    if (!newContractDetails.firstPartyType) {
+    if (!newContractDetails.first_party_type) {
       alert('Please select whether you are the buyer or seller.');
       return;
     }
@@ -55,9 +55,9 @@ const PartyType = () => {
   return (
     <div>
         <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
-          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', fontWeight: '500', color: '#6622CC'}}>
             <PersonIcon sx={{ mr: 0.5, color: '#6622CC'}} />
-            <Typography sx={{ textDecoration: 'italics', fontWeight: '500', color: '#6622CC'}}>Your Role</Typography>
+            Your Role
           </Typography>
           <Typography sx={{display: 'flex', alignItems: 'center'}}>
             <SummarizeIcon sx={{ mr: 0.5 }} />
@@ -87,7 +87,7 @@ const PartyType = () => {
             <FormControl>
             <RadioGroup
               value={newContractDetails.firstPartyType}
-              onChange={handleChangeFor('firstPartyType')}
+              onChange={handleChangeFor('first_party_type')}
             >
               <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
               <FormControlLabel value="seller" control={<Radio />} label="Seller" />
@@ -96,7 +96,7 @@ const PartyType = () => {
           </Grid>
           <Grid item>
             {/* when user clicks 'Next' button, the secondPartyType is set and user is pushed to CreateContractDetails */}
-            <Button variant="contained" onClick={() => handleChangeForSecondParty('secondPartyType', secondParty)}>Next</Button>
+            <Button variant="contained" onClick={() => handleChangeForSecondParty('second_party_type', secondParty)}>Next</Button>
           </Grid>
         </Grid>     
     </div>

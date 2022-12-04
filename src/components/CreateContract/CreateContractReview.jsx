@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -23,11 +23,11 @@ const CreateContractReview = () => {
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
 
   // date formatting for pickup date
-  const pickupDate = new Date(newContractDetails.pickupDate);
+  const pickupDate = new Date(newContractDetails.item_pickup_date);
   const formattedPickupDate = pickupDate.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
   // date formatting for contract deadline
-  const contractDeadline = new Date(newContractDetails.contractDeadline);
+  const contractDeadline = new Date(newContractDetails.contract_deadline);
   const formattedContractDeadline = contractDeadline.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
 
   return (
@@ -37,13 +37,13 @@ const CreateContractReview = () => {
             <PersonIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Your Role
           </Typography>
-          <Typography underline sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', color: '#6622CC'}}>
             <SummarizeIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Contract Details
           </Typography>
-          <Typography sx={{display: 'flex', alignItems: 'center'}}>
+          <Typography sx={{display: 'flex', alignItems: 'center', fontWeight: '500', color: '#6622CC'}}>
             <EditIcon sx={{ mr: 0.5, color: '#6622CC' }} />
-            <Typography sx={{fontWeight: '500', color: '#6622CC'}}>Review Details</Typography>
+            Review Details
           </Typography>
           <Typography sx={{display: 'flex', alignItems: 'center'}}>
             <SendIcon sx={{ mr: 0.5 }} />
@@ -60,23 +60,23 @@ const CreateContractReview = () => {
               <TableBody>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Contract Title:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.contractTitle}</TableCell>
+                  <TableCell align="left">{newContractDetails.contract_title}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Item Name:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.itemName}</TableCell>
+                  <TableCell align="left">{newContractDetails.item_name}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Item Description:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.itemDescription}</TableCell>
+                  <TableCell align="left">{newContractDetails.item_description}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Item Price:</Typography></TableCell>
-                  <TableCell align="left">${newContractDetails.itemPrice}</TableCell>
+                  <TableCell align="left">${newContractDetails.item_price}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Pickup Location:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.pickupLocation}</TableCell>
+                  <TableCell align="left">{newContractDetails.item_pickup_location}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Pickup Date:</Typography></TableCell>
@@ -88,11 +88,11 @@ const CreateContractReview = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Notes:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.contractNotes}</TableCell>
+                  <TableCell align="left">{newContractDetails.contract_notes}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Your Signature:</Typography></TableCell>
-                  <TableCell align="left">{newContractDetails.firstPartySignature}</TableCell>
+                  <TableCell align="left">{newContractDetails.first_party_signature}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Images:</Typography></TableCell>

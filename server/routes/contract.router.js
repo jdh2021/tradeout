@@ -86,22 +86,22 @@ router.post('/', async (req, res) => {
 										VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
 										RETURNING "id";`
 			const result = await db.query(addContractQuery, [
-				req.body.contractKey,
-				req.body.contractStatus,				
-                req.body.contractTitle,
-				req.body.firstPartyType,
+				req.body.contract_key,
+				req.body.contract_status,				
+                req.body.contract_title,
+				req.body.first_party_type,
 				req.user.email,
 				req.user.legal_name,
-				req.body.secondPartyType,
-				req.body.secondPartyEmail,
-				req.body.itemName,
-				req.body.itemDescription,
-				req.body.itemPrice,
-				req.body.pickupDate,
-				req.body.pickupLocation,
-				req.body.contractDeadline,
-				req.body.contractNotes,
-				req.body.firstPartySignature,
+				req.body.second_party_type,
+				req.body.second_party_email,
+				req.body.item_name,
+				req.body.item_description,
+				req.body.item_price,
+				req.body.item_pickup_date,
+				req.body.item_pickup_location,
+				req.body.contract_deadline,
+				req.body.contract_notes,
+				req.body.first_party_signature,
 			]);
 			// the returned id of the new contract
 			const newContractId = result.rows[0].id;
@@ -113,7 +113,7 @@ router.post('/', async (req, res) => {
 			// INSERT INTO "photo"
 			const addImageQuery =   `INSERT INTO "photo" ("contract_id", "item_image", "item_image_description")
 									VALUES ($1, $2, $3);`
-			await db.query(addImageQuery, [newContractId, req.body.itemImage, req.body.itemImageDescription]);
+			await db.query(addImageQuery, [newContractId, req.body.item_image, req.body.item_image_description]);
 			await db.query('COMMIT');
 			res.sendStatus(201);
     	} catch (error) {
