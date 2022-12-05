@@ -81,9 +81,10 @@ router.post('/', async (req, res) => {
 										    "item_pickup_location",
 										    "contract_deadline",
 										    "contract_notes",
-										    "first_party_signature"
+										    "first_party_signature", 
+                                            "created_by_user_id"
 										) 
-										VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+										VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
 										RETURNING "id";`
 			const result = await db.query(addContractQuery, [
 				req.body.contract_key,
@@ -102,6 +103,7 @@ router.post('/', async (req, res) => {
 				req.body.contract_deadline,
 				req.body.contract_notes,
 				req.body.first_party_signature,
+                req.user.id
 			]);
 			// the returned id of the new contract
 			const newContractId = result.rows[0].id;
