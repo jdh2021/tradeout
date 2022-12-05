@@ -56,7 +56,7 @@ function App() {
         <div>
           <Nav />
           <Switch>
-            {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
+            {/* Visiting localhost:3000 will redirect to localhost:3000/dashboard */}
             <Redirect exact from="/" to="/dashboard" />
 
             {/* Visiting localhost:3000/about will show the about page. */}
@@ -174,7 +174,7 @@ function App() {
               {user.id ?
                 // If the user is already logged in, 
                 // redirect to the /user page
-                <Redirect to="/user" />
+                <Redirect to="/dashboard" />
                 :
                 // Otherwise, show the login page
                 <LoginPage />
