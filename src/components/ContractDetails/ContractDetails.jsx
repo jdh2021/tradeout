@@ -13,14 +13,24 @@ function ContractDetails() {
   const history = useHistory();
   const contractDetails = useSelector(store => store.contract.selectedContract)
   const { contractId } = useParams();
+  const user = useSelector(store => store.user);
   // need user reducer in the case we need to pull out the user's email? 
   // const user = useSelector((store) => store.user)
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId })
+    dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId, checkForUserAction: checkForUserAction});
   }, [contractId])
 
+  const [userAction, setUserAction] = useState(false);
 
+  const checkForUserAction = () => {
+    console.log('in checkForUserAction', contractDetails.contract_status);
+    if(contractDetails.contract_status === 'pending_first_party_response' && contractDetails.first_party_name === user.legal_name) {
+      setUserAction(true);
+    } else if (contractDetails.contract_status === 'pending_second_party_response' && contractDetails.second_party_name === user.legal_name) {
+      setUserAction(true);
+    }
+  }
 
   return (
     <div>
@@ -40,13 +50,18 @@ function ContractDetails() {
       <br />
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
-          onClick={(event) => history.push('/dashboard')}
-          sx={{ marginRight: 1, width: 200 }}
-        >
-          Back to Dashboard
-        </Button>
+
+        {
+          userAction ? <Typography>needs accept and decline buttons</Typography> : 
+          <Button
+            variant="contained"
+            onClick={(event) => history.push('/dashboard')}
+            sx={{ marginRight: 1, width: 200 }}
+          >
+            Back to Dashboard
+          </Button>
+        }
+
       </Box>
 
 
