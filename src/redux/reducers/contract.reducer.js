@@ -19,7 +19,7 @@ const defaultNewContract = {
     item_image_description: '',
     first_party_signature: '',
     contract_key: '',
-    contract_status: 'pending'
+    contract_status: 'pending_second_party_response'
 };
 
 const newContractDetails = (state = defaultNewContract, action) => {
