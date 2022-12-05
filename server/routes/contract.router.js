@@ -131,17 +131,35 @@ router.post('/', async (req, res) => {
 // UPDATE contract status
 router.put('/', (req, res) => {
     console.log('in /api/contract UPDATE. Contract object to update is:', req.body);
-      // a user is not required to be logged in to update contract status (e.g., declining from RecipientView)
-      const queryText = `UPDATE "contract"
+    console.log('Contract status is:', req.body.contract_status);
+    console.log('is authenticated?', req.isAuthenticated());
+    if (req.isAuthenticated()) { 
+        console.log('User id is:', req.user.id);
+        const query =   `UPDATE "contract"
                         SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
-                        WHERE "id" = $4;`;
-      pool.query(queryText, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id]).then(result => {
-        console.log('/contract UPDATE success');
-        res.sendStatus(200); // OK
-      }).catch(error => {
-        console.log('Error in UPDATE contract by contract id:', error);
-        res.sendStatus(500);
-      })
+                        FROM "user_contract"
+                        WHERE "contract"."id" = $4 AND "user_contract"."user_id" = $5;`;
+        pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id, req.user.id]).then(result => {
+            console.log('/contract UPDATE success');
+            res.sendStatus(200); // OK
+        }).catch(error => {
+            console.log('Error in UPDATE contract by contract id:', error);
+            res.sendStatus(500);
+        })
+    } else if (req.body.contract_status === 'declined') { 
+        const queryText =   `UPDATE "contract"
+                            SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
+                            WHERE "id" = $4;`;
+        pool.query(queryText, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id]).then(result => {
+            console.log('/contract UPDATE success');
+            res.sendStatus(200); // OK
+        }).catch(error => {
+            console.log('Error in UPDATE contract by contract id:', error);
+            res.sendStatus(500);
+        })
+    } else { 
+        res.sendStatus(403); // 403 forbidden (must log in) 
+    };
 });
 
 
