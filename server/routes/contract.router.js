@@ -136,10 +136,10 @@ router.put('/', (req, res) => {
     if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
         console.log('User id is:', req.user.id);
         const query =   `UPDATE "contract"
-                        SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
-                        FROM "user_contract"
-                        WHERE "contract"."id" = $4 AND "user_contract"."user_id" = $5;`;
-        pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id, req.user.id]).then(result => {
+						SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
+						FROM "user_contract"
+						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
+        pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
             console.log('/contract UPDATE success');
             res.sendStatus(200); // OK
         }).catch(error => {
