@@ -27,10 +27,10 @@ const PartyType = () => {
   const handleChangeFor = (key) => (event) => {
     console.log('in handleChangeFor', event.target.value);
     // secondParty set to the opposite of the firstPartyType
-    if (event.target.value === 'buyer') {
-      setSecondParty('seller');
-    } else if (event.target.value === 'seller') {
-      setSecondParty('buyer');
+    if (event.target.value === 'Buyer') {
+      setSecondParty('Seller');
+    } else if (event.target.value === 'Seller') {
+      setSecondParty('Buyer');
     }
     // dispatching to newContractDetails reducer
     dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
@@ -43,10 +43,10 @@ const PartyType = () => {
       alert('Please select whether you are the buyer or seller.');
       return;
     }
-    if (partyType === 'buyer') {
-      dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'buyer'}});
-    } else if (partyType === 'seller') {
-      dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'seller'}});
+    if (partyType === 'Buyer') {
+      dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'Buyer'}});
+    } else if (partyType === 'Seller') {
+      dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [contractDetail]: 'Seller'}});
     }
     // user is pushed to CreateContractDetails
     history.push('/create-contract-details');
@@ -89,8 +89,8 @@ const PartyType = () => {
               value={newContractDetails.firstPartyType}
               onChange={handleChangeFor('first_party_type')}
             >
-              <FormControlLabel value="buyer" control={<Radio />} label="Buyer" />
-              <FormControlLabel value="seller" control={<Radio />} label="Seller" />
+              <FormControlLabel value="Buyer" control={<Radio />} label="Buyer" />
+              <FormControlLabel value="Seller" control={<Radio />} label="Seller" />
               </RadioGroup>
             </FormControl>
           </Grid>
