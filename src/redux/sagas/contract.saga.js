@@ -57,11 +57,24 @@ function* addNewContract(action) {
     }
 }
 
+function* updateContractStatus(action) {
+    // payload is contract object that includes updated properties for signature and contract status
+    try {
+        console.log('in updateContractStatus (saga). Contract object to update is:', action.payload);
+        yield axios.put('/api/contract', action.payload);
+        action.handleContractStatusUpdate();
+    } catch (error) {
+        console.log('Error in updateContractStatus (saga)', error);
+        alert('Something went wrong updating the contract status.');
+    }   
+}
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
     yield takeLatest('FETCH_RECIPIENT_CONTRACT', fetchRecipientContract);
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
+    yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
 }
 
 export default contractSaga;

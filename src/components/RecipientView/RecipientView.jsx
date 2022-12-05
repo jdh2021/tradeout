@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 function RecipientView() {
   const history = useHistory();
@@ -26,27 +27,71 @@ function RecipientView() {
     history.push('/registration');
   }
 
+  // prompts recipient to confirm before contract is declined
+  const confirmDecline = () => {
+    console.log('in confirmDecline');
+    if (window.confirm('Are you sure you want to decline this contract?')) {
+      declineContract();
+    }
+  };
+
+  // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
+  const declineContract = () => {
+    console.log('in declineContract. Contract id to decline is:', contractDetails.id);
+    dispatch({
+      type: 'UPDATE_CONTRACT_STATUS',
+      payload: {
+        id: contractDetails.id,
+        contract_status: 'declined',
+        contract_approval: false,
+        second_party_signature: null
+      },
+      handleContractStatusUpdate
+    });
+  }
+
+  // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
+  const handleContractStatusUpdate = () => {
+    console.log('in handleContractStatusUpdate');
+    dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
+    alert('Thank you! The contract has been declined.');
+  }
+
   return (
     <div>
-      <h1>RecipientView</h1>
+      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
+        {contractDetails.contract_status}
+      </Typography>
+      <br />
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        Recipient View
+      </Typography>
+      <br />
+      <br />
       <ContractPreview contractDetails={contractDetails} />
+      <br />
+      <br />
       <div>
-        <br></br>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={acceptContract}
-            sx={{ marginRight: 1, width: 200 }}
-          >
-            Accept
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ marginLeft: 1, width: 200 }}
-          >
-            Decline
-          </Button>
-        </Box>
+        {/* conditional checks that contract status is pending and renders Accept, Decline buttons */}
+        {contractDetails.contract_status === 'pending' ?
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              onClick={acceptContract}
+              sx={{ marginRight: 1, width: 200 }}
+            >
+              Accept
+            </Button>
+            <Button
+              variant="contained"
+              onClick={confirmDecline}
+              sx={{ marginLeft: 1, width: 200 }}
+            >
+              Decline
+            </Button>
+          </Box> :
+          <></>
+        }
       </div>
     </div>
   );
