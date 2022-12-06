@@ -54,7 +54,7 @@ function ContractDetails() {
           userAction ?  <div>
                           <Button
                             variant="contained"
-                            onClick={(event) => history.push('/dashboard')}
+                            // onClick to updated contract_status and trigger PDF generation
                             sx={{ marginRight: 1, width: 200, height: 60 }}
                           >
                             Sign and Finalize Contract
@@ -62,7 +62,7 @@ function ContractDetails() {
                           <Button
                             variant="contained"
                             color="error"
-                            onClick={(event) => history.push('/dashboard')}
+                            // onClick to update contract_status and return user to /dashboard
                             sx={{ marginLeft: 1, width: 200, height: 60 }}
                           >
                             Decline Contract
