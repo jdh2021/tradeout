@@ -15,7 +15,8 @@ function* fetchContractDetails(action){
     try{
         const contractDetails = yield axios.get(`/api/contract/${action.payload}`);
         yield put({ type: 'SET_CONTRACT_DETAILS', payload: contractDetails.data});
-        action.checkForUserAction();
+        console.log('before checkForUserAction');
+        action.checkForUserAction(contractDetails.data);
     } catch (error) {
         console.log('Error in fetchContractDetails (saga)', error);
         alert('Something went wrong fetching the selected contract details');

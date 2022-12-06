@@ -23,11 +23,11 @@ function ContractDetails() {
 
   const [userAction, setUserAction] = useState(false);
 
-  const checkForUserAction = () => {
-    console.log('in checkForUserAction', contractDetails.contract_status);
-    if(contractDetails.contract_status === 'pending_first_party_response' && contractDetails.first_party_name === user.legal_name) {
+  const checkForUserAction = (contractInput) => {
+    console.log('in checkForUserAction', contractInput.contract_status);
+    if(contractInput.contract_status === 'pending_first_party_response' && contractInput.first_party_name === user.legal_name) {
       setUserAction(true);
-    } else if (contractDetails.contract_status === 'pending_second_party_response' && contractDetails.second_party_name === user.legal_name) {
+    } else if (contractInput.contract_status === 'pending_second_party_response' && contractInput.second_party_name === user.legal_name) {
       setUserAction(true);
     }
   }
@@ -50,7 +50,6 @@ function ContractDetails() {
       <br />
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-
         {
           userAction ? <Typography>needs accept and decline buttons</Typography> : 
           <Button
