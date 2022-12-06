@@ -51,7 +51,23 @@ function ContractDetails() {
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         {
-          userAction ? <Typography>needs accept and decline buttons</Typography> : 
+          userAction ?  <div>
+                          <Button
+                            variant="contained"
+                            onClick={(event) => history.push('/dashboard')}
+                            sx={{ marginRight: 1, width: 200, height: 60 }}
+                          >
+                            Sign and Finalize Contract
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={(event) => history.push('/dashboard')}
+                            sx={{ marginLeft: 1, width: 200, height: 60 }}
+                          >
+                            Decline Contract
+                          </Button> 
+                      </div> : 
           <Button
             variant="contained"
             onClick={(event) => history.push('/dashboard')}
