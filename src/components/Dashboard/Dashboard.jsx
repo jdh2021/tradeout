@@ -43,7 +43,7 @@ function Dashboard() {
         <div>
           {userContracts.map(contract => {
             //renders pending contracts
-            if (contract.contract_status === 'pending')
+            if (contract.contract_status === 'pending_second_party_response')
               return <ContractCard contract={contract} key={contract.id}/>
           })}
         </div>

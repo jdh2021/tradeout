@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 import Button from '@mui/material/Button';
 
@@ -13,14 +15,32 @@ function ContractDetails() {
   const history = useHistory();
   const contractDetails = useSelector(store => store.contract.selectedContract)
   const { contractId } = useParams();
+  const user = useSelector(store => store.user);
   // need user reducer in the case we need to pull out the user's email? 
   // const user = useSelector((store) => store.user)
 
+  const [secondPartySignature, setSecondPartySignature] = useState('');
+
   useEffect(() => {
-    dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId })
+    dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId, checkForUserAction: checkForUserAction});
   }, [contractId])
 
+  const [userAction, setUserAction] = useState(false);
 
+  // checking if action is required from the logged in user
+  const checkForUserAction = (contractInput) => {
+    console.log('in checkForUserAction', contractInput.contract_status);
+    if(contractInput.contract_status === 'pending_first_party_response' && contractInput.first_party_name === user.legal_name) {
+      setUserAction(true);
+    } else if (contractInput.contract_status === 'pending_second_party_response' && contractInput.second_party_name === user.legal_name) {
+      setUserAction(true);
+    }
+  }
+
+  const finalizeContract = () => {
+    console.log('in finalizeContract, second party signature:', secondPartySignature);
+    // dispatch to contract saga to update contract status and second party signature
+  }
 
   return (
     <div>
@@ -34,23 +54,53 @@ function ContractDetails() {
       <br />
 
 
-      <ContractPreview contractDetails={contractDetails} />
+      <ContractPreview 
+        contractDetails={contractDetails} 
+      />
 
       <br />
       <br />
-
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
-          onClick={(event) => history.push('/dashboard')}
-          sx={{ marginRight: 1, width: 200 }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
-
-
-
+        {
+          userAction ?  <>
+                          <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
+                            <Grid item>
+                              <TextField required fullWidth label='Your Signature' size='small' sx={{width: 400}} onChange={(event) => setSecondPartySignature(event.target.value)}/> 
+                            </Grid>
+                          </Grid>
+                          <br />
+                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Typography sx={{width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>By typing your name, you are agreeing that your typed signature has the same authority as a handwritten signature.</Typography>
+                          </Box>
+                          <br />
+                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button
+                              variant="contained"
+                              // onClick to update contract_status to 'accepted' and add second party signature, trigger PDF generation, and show success alert to user
+                              onClick={(event) => finalizeContract()}
+                              sx={{ marginRight: 1, width: 200, height: 60 }}
+                            >
+                              Sign and Finalize Contract
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              // onClick to update contract_status to 'declined', trigger a declined contract confirmation alert, and return user to /dashboard
+                              sx={{ marginLeft: 1, width: 200, height: 60 }}
+                            >
+                              Decline Contract
+                            </Button> 
+                          </Box>
+                      </> : 
+                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                          variant="contained"
+                          onClick={(event) => history.push('/dashboard')}
+                          sx={{ marginRight: 1, width: 200 }}
+                        >
+                          Back to Dashboard
+                        </Button>
+                      </Box>
+        }
     </div>
   );
 }
