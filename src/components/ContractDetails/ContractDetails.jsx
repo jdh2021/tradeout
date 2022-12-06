@@ -56,7 +56,6 @@ function ContractDetails() {
 
       <ContractPreview 
         contractDetails={contractDetails} 
-        userAction={userAction}
       />
 
       <br />
