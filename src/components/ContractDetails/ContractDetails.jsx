@@ -44,7 +44,10 @@ function ContractDetails() {
       <br />
 
 
-      <ContractPreview contractDetails={contractDetails} />
+      <ContractPreview 
+        contractDetails={contractDetails} 
+        userAction={userAction}
+      />
 
       <br />
       <br />
