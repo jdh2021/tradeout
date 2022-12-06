@@ -19,6 +19,8 @@ function ContractDetails() {
   // need user reducer in the case we need to pull out the user's email? 
   // const user = useSelector((store) => store.user)
 
+  const [secondPartySignature, setSecondPartySignature] = useState('');
+
   useEffect(() => {
     dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId, checkForUserAction: checkForUserAction});
   }, [contractId])
@@ -33,6 +35,11 @@ function ContractDetails() {
     } else if (contractInput.contract_status === 'pending_second_party_response' && contractInput.second_party_name === user.legal_name) {
       setUserAction(true);
     }
+  }
+
+  const finalizeContract = () => {
+    console.log('in finalizeContract, second party signature:', secondPartySignature);
+    // dispatch to contract saga to update contract status and second party signature
   }
 
   return (
@@ -56,21 +63,9 @@ function ContractDetails() {
       <br />
         {
           userAction ?  <>
-                          <Grid
-                            container
-                            spacing={2}
-                            direction="column"
-                            alignItems="center"
-                            justifyContent="center"
-                          >
+                          <Grid container spacing={2} direction="column" alignItems="center" justifyContent="center">
                             <Grid item>
-                              <TextField 
-                                required
-                                fullWidth
-                                label='Your Signature'
-                                size='small'
-                                sx={{width: 400}}
-                              /> 
+                              <TextField required fullWidth label='Your Signature' size='small' sx={{width: 400}} onChange={(event) => setSecondPartySignature(event.target.value)}/> 
                             </Grid>
                           </Grid>
                           <br />
@@ -81,7 +76,8 @@ function ContractDetails() {
                           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Button
                               variant="contained"
-                              // onClick to update contract_status to 'accepted', trigger PDF generation, and show success alert to user
+                              // onClick to update contract_status to 'accepted' and add second party signature, trigger PDF generation, and show success alert to user
+                              onClick={(event) => finalizeContract()}
                               sx={{ marginRight: 1, width: 200, height: 60 }}
                             >
                               Sign and Finalize Contract
@@ -105,7 +101,6 @@ function ContractDetails() {
                           Back to Dashboard
                         </Button>
                       </Box>
-
         }
     </div>
   );

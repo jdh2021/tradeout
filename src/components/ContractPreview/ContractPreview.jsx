@@ -107,20 +107,7 @@ function ContractPreview({contractDetails, userAction}) {
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
                             <Typography>Second Party's Signature:</Typography></TableCell>
-                            <TableCell align="left">
-                                {userAction ?   <div>
-                                                    <TextField 
-                                                        required
-                                                        label='Your Signature'
-                                                        size='small'
-                                                        // value={newContractDetails.second_party_signature}
-                                                        // onChange={handleChangeFor('second_party_signature')}
-                                                    /> 
-                                                    <Typography>By typing your name, you are agreeing that your typed signature has the same authority as a handwritten signature.</Typography>
-                                                </div>
-                                                :
-                                contractDetails.second_party_signature}
-                            </TableCell>
+                            <TableCell align="left">{contractDetails.second_party_signature}</TableCell>
                         </TableRow>
 
                         <TableRow>
