@@ -58,7 +58,7 @@ function ContractDetails() {
           userAction ?  <div>
                           <Button
                             variant="contained"
-                            // onClick to update contract_status to 'accepted' and trigger PDF generation
+                            // onClick to update contract_status to 'accepted', trigger PDF generation, and show success alert to user
                             sx={{ marginRight: 1, width: 200, height: 60 }}
                           >
                             Sign and Finalize Contract
