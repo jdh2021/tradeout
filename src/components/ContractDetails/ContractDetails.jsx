@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 import Button from '@mui/material/Button';
 
@@ -52,39 +54,59 @@ function ContractDetails() {
 
       <br />
       <br />
-
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         {
-          userAction ?  <div>
-                          <Button
-                            variant="contained"
-                            // onClick to update contract_status to 'accepted', trigger PDF generation, and show success alert to user
-                            sx={{ marginRight: 1, width: 200, height: 60 }}
+          userAction ?  <>
+                          <Grid
+                            container
+                            spacing={2}
+                            direction="column"
+                            alignItems="center"
+                            justifyContent="center"
                           >
-                            Sign and Finalize Contract
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="error"
-                            // onClick to update contract_status to 'declined', trigger a declined contract confirmation alert, and return user to /dashboard
-                            sx={{ marginLeft: 1, width: 200, height: 60 }}
-                          >
-                            Decline Contract
-                          </Button> 
-                      </div> : 
-          <Button
-            variant="contained"
-            onClick={(event) => history.push('/dashboard')}
-            sx={{ marginRight: 1, width: 200 }}
-          >
-            Back to Dashboard
-          </Button>
+                            <Grid item>
+                              <TextField 
+                                required
+                                fullWidth
+                                label='Your Signature'
+                                size='small'
+                                sx={{width: 400}}
+                              /> 
+                            </Grid>
+                          </Grid>
+                          <br />
+                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Typography sx={{width: 400, display:"flex", alignItems:"center", justifyContent:"center"}}>By typing your name, you are agreeing that your typed signature has the same authority as a handwritten signature.</Typography>
+                          </Box>
+                          <br />
+                          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button
+                              variant="contained"
+                              // onClick to update contract_status to 'accepted', trigger PDF generation, and show success alert to user
+                              sx={{ marginRight: 1, width: 200, height: 60 }}
+                            >
+                              Sign and Finalize Contract
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              // onClick to update contract_status to 'declined', trigger a declined contract confirmation alert, and return user to /dashboard
+                              sx={{ marginLeft: 1, width: 200, height: 60 }}
+                            >
+                              Decline Contract
+                            </Button> 
+                          </Box>
+                      </> : 
+                      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                          variant="contained"
+                          onClick={(event) => history.push('/dashboard')}
+                          sx={{ marginRight: 1, width: 200 }}
+                        >
+                          Back to Dashboard
+                        </Button>
+                      </Box>
+
         }
-
-      </Box>
-
-
-
     </div>
   );
 }
