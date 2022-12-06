@@ -38,7 +38,8 @@ CREATE TABLE "contract" (
     "second_party_signature_created_at" TIMESTAMP,
     "contract_approval" BOOLEAN NOT NULL DEFAULT FALSE,
     "contract_finalized_at" TIMESTAMP,
-    "contract_receipt" VARCHAR (1200)
+    "contract_receipt" VARCHAR (1200),
+    "created_by_user_id" INT NOT NULL
 );
 
 CREATE TABLE "user_contract" (
