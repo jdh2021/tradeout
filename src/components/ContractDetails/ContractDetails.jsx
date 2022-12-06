@@ -23,6 +23,7 @@ function ContractDetails() {
 
   const [userAction, setUserAction] = useState(false);
 
+  // checking if action is required from the logged in user
   const checkForUserAction = (contractInput) => {
     console.log('in checkForUserAction', contractInput.contract_status);
     if(contractInput.contract_status === 'pending_first_party_response' && contractInput.first_party_name === user.legal_name) {
