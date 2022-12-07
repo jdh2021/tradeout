@@ -102,10 +102,10 @@ const SendToRecipient = () => {
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.second_party_email}
-            onChange={handleChangeFor('secondPartyEmail')}
+            onChange={handleChangeFor('second_party_email')}
           />
           {/* used to autofill recipient email during demo */}
-          <div style={{width: 100}} onClick={autofillEmail}><h5>magic button</h5></div>
+          <div style={{width: 100, height: 100}} onClick={autofillEmail} />
         </Box>
         <br />
         <br />
