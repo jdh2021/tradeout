@@ -70,12 +70,27 @@ function* updateContractStatus(action) {
     }   
 }
 
+function* finalizeContract(action) {
+    // payload is contract object that includes updated properties for signature and contract status
+    try {
+        console.log('in finalizeContract (saga). Contract object to update is:', action.payload);
+        yield axios.put('/api/contract', action.payload);
+        // trigger PDF generation, payload is the selected contract's id
+        // yield put ({type: 'GENERATE_PDF', payload: action.payload.id});
+        action.userAlert();
+    } catch (error) {
+        console.log('Error in finalizeContract saga', error);
+        alert('Something went wrong finalizing this contract.');
+    }
+}
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
     yield takeLatest('FETCH_RECIPIENT_CONTRACT', fetchRecipientContract);
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
     yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
+    yield takeLatest('FINALIZE_CONTRACT', finalizeContract);
 }
 
 export default contractSaga;
