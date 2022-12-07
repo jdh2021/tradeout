@@ -86,7 +86,6 @@ function ContractDetails() {
   // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
-    // dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
     alert('Thank you! The contract has been declined.');
     history.push('/dashboard');
   }
