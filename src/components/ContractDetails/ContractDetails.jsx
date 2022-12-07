@@ -60,6 +60,37 @@ function ContractDetails() {
     history.push('/dashboard');
   }
 
+  // prompts recipient to confirm before contract is declined
+  const confirmDecline = () => {
+    console.log('in confirmDecline');
+    if (window.confirm('Are you sure you want to decline this contract?')) {
+      declineContract();
+    }
+  };
+
+  // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
+  const declineContract = () => {
+    console.log('in declineContract. Contract id to decline is:', contractDetails.id);
+    dispatch({
+      type: 'UPDATE_CONTRACT_STATUS',
+      payload: {
+        id: contractDetails.id,
+        contract_status: 'declined',
+        contract_approval: false,
+        second_party_signature: null
+      },
+      handleContractStatusUpdate
+    });
+  }
+
+  // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
+  const handleContractStatusUpdate = () => {
+    console.log('in handleContractStatusUpdate');
+    // dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
+    alert('Thank you! The contract has been declined.');
+    history.push('/dashboard');
+  }
+
   return (
     <div>
       {/* page heading. May be a better way to handle this but it will be useful for the user to see the contract status in the heading */}
@@ -102,7 +133,7 @@ function ContractDetails() {
                             <Button
                               variant="contained"
                               color="error"
-                              // onClick to update contract_status to 'declined', trigger a declined contract confirmation alert, and return user to /dashboard
+                              onClick={confirmDecline}
                               sx={{ marginLeft: 1, width: 200, height: 60 }}
                             >
                               Decline Contract
