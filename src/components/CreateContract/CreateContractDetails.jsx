@@ -13,6 +13,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 const CreateContractDetails = () => {
 
@@ -155,10 +156,11 @@ const CreateContractDetails = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* the upload button does not work */}
-            {/* <Button variant="contained">Upload Item Image</Button> */}
+           
             <h4>Upload Item Image</h4>
-            <input type="file" name="picture"></input>
+            {/* <input type="file" name="picture"></input> */}
+            <ImageUpload />
+
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
