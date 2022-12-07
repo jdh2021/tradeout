@@ -123,8 +123,7 @@ function ContractDetails() {
                           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Button
                               variant="contained"
-                              // onClick to update contract_status to 'accepted' and add second party signature, trigger PDF generation, and show success alert to user
-                              onClick={(event) => finalizeContract()}
+                              onClick={finalizeContract}
                               sx={{ marginRight: 1, width: 200, height: 60 }}
                             >
                               Sign and Finalize Contract
