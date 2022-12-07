@@ -41,7 +41,15 @@ function ContractPreview({contractDetails}) {
                 <TableContainer elevation={10} component={Paper} sx={{ width: 700 }}>
                     <Table>
                         <TableBody>
-
+                        {
+                            contractDetails.contract_status === 'accepted' ? 
+                            <TableRow>
+                                <TableCell sx={{ width: 150 }} align="left">
+                                <Typography>Contract PDF:</Typography></TableCell>
+                                <TableCell align="left"><Typography sx={{textDecoration: 'underline'}}>Contract PDF Link</Typography></TableCell>
+                            </TableRow> :
+                            <></>
+                        }
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
                             <Typography>Contract Title:</Typography></TableCell>
