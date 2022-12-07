@@ -91,7 +91,7 @@ const CreateContractReview = () => {
                   <TableCell align="left">{newContractDetails.contract_notes}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{width: 150}} align="left"><Typography>Your Signature:</Typography></TableCell>
+                  <TableCell sx={{width: 150}} align="left"><Typography>{newContractDetails.first_party_type} Signature:</Typography></TableCell>
                   <TableCell align="left">{newContractDetails.first_party_signature}</TableCell>
                 </TableRow>
                 <TableRow>

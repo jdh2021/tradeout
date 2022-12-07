@@ -98,13 +98,13 @@ function ContractPreview({contractDetails}) {
 
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
-                            <Typography>Your Signature:</Typography></TableCell>
+                            <Typography>{contractDetails.first_party_type} Signature:</Typography></TableCell>
                             <TableCell align="left">{contractDetails.first_party_signature}</TableCell>
                         </TableRow>
 
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
-                            <Typography>Second Party's Signature:</Typography></TableCell>
+                            <Typography>{contractDetails.second_party_type} Signature:</Typography></TableCell>
                             <TableCell align="left">{contractDetails.second_party_signature}</TableCell>
                         </TableRow>
 
