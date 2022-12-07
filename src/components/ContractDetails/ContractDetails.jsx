@@ -37,9 +37,27 @@ function ContractDetails() {
     }
   }
 
+  // dispatches 'FINALIZE_CONTRACT' with payload of contract object and the function userAlert
   const finalizeContract = () => {
     console.log('in finalizeContract, second party signature:', secondPartySignature);
-    // dispatch to contract saga to update contract status and second party signature
+    // dispatch to contract saga to update contract details in database
+    dispatch({
+      type: 'FINALIZE_CONTRACT',
+      payload: {
+        id: contractDetails.id,
+        contract_status: 'accepted',
+        contract_approval: true,
+        second_party_signature: secondPartySignature
+      },
+      userAlert
+    });
+  }
+
+  // alerts user to successful contract finalization and navigates the user to /dashboard
+  const userAlert = () => {
+    console.log('in userAlert');
+    alert('Congratulations! This contract is now finalized. You can download a PDF of the final document by selecting this contract on your Dashboard.')
+    history.push('/dashboard');
   }
 
   return (
