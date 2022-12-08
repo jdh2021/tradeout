@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
+import Typography from '@mui/material/Typography';
+
 function LogOutButton(props) {
   const dispatch = useDispatch();
   return (
@@ -11,7 +13,7 @@ function LogOutButton(props) {
       className={props.className}
       onClick={() => dispatch({ type: 'LOGOUT' })}
     >
-      Log Out
+      <Typography>Log Out</Typography>
     </button>
   );
 }

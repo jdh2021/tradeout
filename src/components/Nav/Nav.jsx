@@ -4,15 +4,19 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { useSelector } from 'react-redux';
 
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 function Nav() {
   const user = useSelector((store) => store.user);
 
   return (
-    <div className="nav">
+    <AppBar position="sticky" className="nav" style={{backgroundColor:'#4BC975'}}>
+      <Toolbar disableGutters>
       <Link to="/dashboard">
-        <h2 className="nav-title">Tradeout</h2>
+        <img src="images/tradeout_logo.jpg" alt="tradeout logo" width='150' height='100' style={{margin: 10}}/>
+        {/* <h2 className="nav-title">Tradeout</h2> */}
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -27,11 +31,11 @@ function Nav() {
         {user.id && (
           <>
             <Link className="navLink" to="/dashboard">
-              Dashboard
+              <Typography>Dashboard</Typography>
             </Link>
 
             <Link className="navLink" to="/notifications">
-              Notifications
+              <Typography>Notifications</Typography>
             </Link>
 {/* 
             <Link className="navLink" to="/info">
@@ -46,7 +50,8 @@ function Nav() {
           About
         </Link> */}
       </div>
-    </div>
+      </Toolbar>
+    </AppBar>
   );
 }
 
