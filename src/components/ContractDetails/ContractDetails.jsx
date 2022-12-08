@@ -40,6 +40,10 @@ function ContractDetails() {
   // dispatches 'FINALIZE_CONTRACT' with payload of contract object and the function userAlert
   const finalizeContract = () => {
     console.log('in finalizeContract, second party signature:', secondPartySignature);
+    if (!secondPartySignature) {
+      alert('You must enter your signature in order to finalize this contract.');
+      return;
+    }
     // dispatch to contract saga to update contract details in database
     dispatch({
       type: 'FINALIZE_CONTRACT',
