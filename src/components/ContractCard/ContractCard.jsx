@@ -27,7 +27,7 @@ function ContractCard({contract}) {
   return (
     <div>
 
-        <Card sx={{ maxWidth: 345, margin:3}} onClick={() => selectedContract(contract)}>
+        <Card sx={{ width: 300, height: 300, margin:3}} onClick={() => selectedContract(contract)}>
           <CardActionArea>
             <CardMedia
               component="img"

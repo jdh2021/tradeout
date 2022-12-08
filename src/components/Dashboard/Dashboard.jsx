@@ -3,14 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import contractReducer from '../../redux/reducers/contract.reducer';
+import Grid from '@mui/material/Grid';
 import ContractCard from '../ContractCard/ContractCard';
-
 
 function Dashboard() {
 
@@ -31,31 +25,40 @@ function Dashboard() {
         <button onClick={() => {history.push(`/party-type`)}}>New Contract</button>
 
         <h2>Accepted Contracts</h2>
-        <div>
+
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders accepted contracts
             if (contract.contract_status === 'accepted')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item>
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
+        </Grid>
 
         <h2 >Pending Contracts</h2>
-        <div>
+
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders pending contracts
             if (contract.contract_status === 'pending_second_party_response')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item> 
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
+        </Grid>
 
         <h2>Declined Contracts</h2>
-        <div>
+
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders declined contracts
             if (contract.contract_status === 'declined')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item>
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
+        </Grid>
 
 
     </div>
