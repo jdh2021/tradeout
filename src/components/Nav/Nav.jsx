@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
-
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -29,7 +29,7 @@ function Nav() {
           {!user.id && (
             // If there's no user, show login/registration links
             <Link className="navLink" to="/login">
-              <Typography variant="h6">Login / Register</Typography>
+              <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><LoginRoundedIcon sx={{mr: 1}}/>Login / Register</Typography>
             </Link>
           )}
 
