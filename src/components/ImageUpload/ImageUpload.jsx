@@ -28,6 +28,7 @@ const ImageUpload = () => {
             <h4>Upload Item Image</h4>
             <input type="file" name="picture" accept="image/*" onChange={fileSelectedHandler}></input>
             <button type="submit">Upload</button>
+            <img src='https://tradeout-bucket.s3.amazonaws.com/submissions/images/original/4_chrome-edge.jpg'></img>
         </form>
     </div>
   );

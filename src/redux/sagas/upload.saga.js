@@ -4,14 +4,12 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 
 function* uploadImage(action) {
-    // payload is the newContractDetails object
-    // SendGrid request will be called after successful new contract post
     try {
         console.log('in addNewContract (saga)', action.payload);
         const submissionData = Object.assign({}, action.payload);
         if (action.fileToUpload) {
             const selectedFile = action.fileToUpload;
-            const fileName = encodeURIComponent(selectedFile.fileName);
+            const fileName = encodeURIComponent(selectedFile.name);
             const fileType = encodeURIComponent(selectedFile.type);
             const fileSize = encodeURIComponent(selectedFile.size);
             const formData = new FormData();

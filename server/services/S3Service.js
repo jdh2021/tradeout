@@ -108,6 +108,8 @@ class S3Service {
 
 S3Service.FileCategories = {
     Submissions: 'submissions/images',
+    Contracts: 'contract/pdfs',
+    Photos: 'contract/images',
 };
 
 S3Service.FileSize = {
