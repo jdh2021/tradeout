@@ -12,7 +12,7 @@ const ImageUpload = () => {
   
   //Handle Image Upload
   const fileSelectedHandler = event  => {
-    console.log(event.target.files[0]);
+    console.log('Image to upload', event.target.files[0]);
     setImageUpload(event.target.files[0]);
   }
 

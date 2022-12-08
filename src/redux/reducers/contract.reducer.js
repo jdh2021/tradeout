@@ -15,7 +15,7 @@ const defaultNewContract = {
     item_pickup_date: '',
     contract_deadline: '',
     contract_notes: '',
-    item_image: '',
+    item_image: null,
     item_image_description: '',
     first_party_signature: '',
     contract_key: '',

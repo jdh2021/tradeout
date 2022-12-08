@@ -20,6 +20,7 @@ const CreateContractDetails = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
+  const [imageUpload, setImageUpload] = useState(null);
 
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
@@ -70,6 +71,15 @@ const CreateContractDetails = () => {
       first_party_signature: 'Eliot Winter'
     }});
   }
+
+    //Handle Image Upload
+    const fileSelectedHandler = event  => {
+      console.log(event.target.files[0]);
+      setImageUpload(event.target.files[0]);
+      console.log('in fileSelectedHandler')
+      dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, item_image: event.target.files[0]}});
+
+    }
 
   return (
     <div>
@@ -158,8 +168,8 @@ const CreateContractDetails = () => {
           <Grid item>
            
             <h4>Upload Item Image</h4>
-            {/* <input type="file" name="picture"></input> */}
-            <ImageUpload />
+            <input type="file" name="picture" accept="image/*" onChange={fileSelectedHandler}></input>
+            {/* <ImageUpload /> */}
 
           </Grid>
           <br />
