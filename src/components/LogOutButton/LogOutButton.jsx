@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import Typography from '@mui/material/Typography';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 function LogOutButton(props) {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function LogOutButton(props) {
       className={props.className}
       onClick={() => dispatch({ type: 'LOGOUT' })}
     >
-      <Typography variant="h6">Log Out</Typography>
+      <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><LogoutRoundedIcon sx={{mr: 1}}/>Log Out</Typography>
     </button>
   );
 }

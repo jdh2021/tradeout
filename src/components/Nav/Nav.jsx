@@ -8,6 +8,9 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
+
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -34,11 +37,11 @@ function Nav() {
           {user.id && (
             <>
               <Link className="navLink" to="/dashboard">
-                <Typography variant="h6">Dashboard</Typography>
+                <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><HomeRoundedIcon sx={{mr: 1}}/>Dashboard</Typography>
               </Link>
 
               <Link className="navLink" to="/notifications">
-                <Typography variant="h6">Notifications</Typography>
+                <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><NotificationsActiveRoundedIcon sx={{mr: 1}}/>Notifications</Typography>
               </Link>
   {/* 
               <Link className="navLink" to="/info">
