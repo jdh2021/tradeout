@@ -1,11 +1,21 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import {useSelector} from 'react-redux';
+import { select, put, takeLatest } from 'redux-saga/effects';
+
 
 
 
 function* uploadImage(action) {
+
+    //gets newContractDetails from redux store
+    const getNewContractDetails = (store) => store.contract.newContractDetails;
+    let newContractDetails = yield select(getNewContractDetails);
+    console.log('newContractDetails:', newContractDetails);
+    
     try {
-        console.log('in addNewContract (saga)', action.payload);
+        
+
+        console.log('in uploadImage (saga)', action.payload);
         const submissionData = Object.assign({}, action.payload);
         if (action.fileToUpload) {
             const selectedFile = action.fileToUpload;
@@ -16,6 +26,9 @@ function* uploadImage(action) {
             formData.append('fileToUpload', selectedFile);
             const imageResponse = yield axios.post(`/api/s3/image?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
             submissionData.image = imageResponse.data.imagePath;
+            console.log(submissionData.image);
+            //reset item_image to s3 image url
+            yield put({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, item_image: submissionData.image}});
         }
 
         // action.userAlert();

@@ -1,4 +1,5 @@
 const express = require('express');
+const useDispatch = require('react-redux');
 const {
     rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
@@ -29,6 +30,7 @@ router.post('/image', rejectUnauthenticated, async (req, res) => {
             fileCategory: S3Service.FileCategories.Photos,
         });
         console.log(url);
+        
         res.send({ message: 'success', imagePath: url });
     } catch (error) {
         console.log(error);
@@ -57,7 +59,6 @@ router.post('/pdf', rejectUnauthenticated, async (req, res) => {
             fileCategory: S3Service.FileCategories.Contacts,
         });
         console.log(url);
-        res.send({ message: 'success', imagePath: url });
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
