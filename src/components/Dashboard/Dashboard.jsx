@@ -3,14 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import contractReducer from '../../redux/reducers/contract.reducer';
 import ContractCard from '../ContractCard/ContractCard';
-
 
 function Dashboard() {
 
@@ -25,40 +22,48 @@ function Dashboard() {
   }, [dispatch]);
 
   return (
-    <div>
-        <h1>Hello, {user.email}</h1>
-        
-        <button onClick={() => {history.push(`/party-type`)}}>New Contract</button>
-
-        <h2>Accepted Contracts</h2>
-        <div>
+    <Container>
+        <Typography variant="h3">Hello, {user.email}</Typography>
+        <br />
+        <Button variant="contained" onClick={() => {history.push(`/party-type`)}}>New Contract</Button>
+        <br />
+        <br />
+        <Typography variant="h5">Accepted Contracts</Typography>
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders accepted contracts
             if (contract.contract_status === 'accepted')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item>
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
-
-        <h2 >Pending Contracts</h2>
-        <div>
+        </Grid>
+        <br />
+        <Typography variant="h5" >Pending Contracts</Typography>
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders pending contracts
             if (contract.contract_status === 'pending_second_party_response')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item> 
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
+        </Grid>
+        <br />
+        <Typography variant="h5">Declined Contracts</Typography>
 
-        <h2>Declined Contracts</h2>
-        <div>
+        <Grid container direction="row">
           {userContracts.map(contract => {
             //renders declined contracts
             if (contract.contract_status === 'declined')
-              return <ContractCard contract={contract} key={contract.id}/>
+              return  <Grid item>
+                        <ContractCard contract={contract} key={contract.id}/>
+                      </Grid>
           })}
-        </div>
+        </Grid>
 
 
-    </div>
+    </Container>
   );
 }
 export default Dashboard;
