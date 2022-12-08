@@ -48,11 +48,11 @@ function Dashboard() {
           })}
         </div>
 
-        <h2>Expired or Declined Contracts</h2>
+        <h2>Declined Contracts</h2>
         <div>
           {userContracts.map(contract => {
-            //renders expired or declined contracts
-            if (contract.contract_status === 'expired' || contract.contract_status === 'declined')
+            //renders declined contracts
+            if (contract.contract_status === 'declined')
               return <ContractCard contract={contract} key={contract.id}/>
           })}
         </div>
