@@ -62,8 +62,6 @@ const SendToRecipient = () => {
     //Dispatch Image to S3 Bucket
     sendImageToServer();
 
-    //Store image url in contract details 
-
     // the SendGrid email server request is called from within the addNewContract saga
     // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
@@ -145,7 +143,7 @@ const SendToRecipient = () => {
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
               {/* images will be the user-uploaded images once that functionality is implemented */}
-              <img src="https://images.unsplash.com/photo-1531104985437-603d6490e6d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1678&q=80" alt= "stereo" width="200"/>
+              <img src={newContractDetails.item_image}/>
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
