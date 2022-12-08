@@ -47,7 +47,7 @@ const CreateContractDetails = () => {
   // validating that the required fields have a value
   const validateForm = () => {
     console.log('in validateForm');
-    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature) {
+    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature || !newContractDetails.item_image) {
       alert('Please complete all required fields (those with a *).');
       return;
     } else {
