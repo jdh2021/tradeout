@@ -147,6 +147,7 @@ function ContractDetails() {
                           variant="contained"
                           onClick={(event) => history.push('/dashboard')}
                           sx={{ marginRight: 1, width: 200 }}
+                          color='green'
                         >
                           Back to Dashboard
                         </Button>
