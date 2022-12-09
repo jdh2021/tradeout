@@ -219,14 +219,15 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 			// contract terms
 				{style: 'sectionHeading', text: 'Terms'},
 				{style: 'contractBody', 
-				 text: `The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property
-						${foundContract.item_name}: ${foundContract.item_description}
-				
-						For and in consideration of a total purchase price of`},
-						
-						{text: `$${foundContract.item_price}`, fontSize: 12, background: '#ffff66'},
+				 text: 'The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property'},
 
-						{style:'contractBody', text:`an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and sales tax is included in the purchase price of the above-mentioned property.
+				 		{style: 'contractBody', text:`PROPERTY: ${foundContract.item_name},
+													 PROPERTY DETAILS: ${foundContract.item_description}`},
+						
+						{style: 'contractBody', text: 'for and in consideration of a total purchase price of'},{text: `$${foundContract.item_price}`, fontSize: 9, background: '#ffff66'},
+
+						{style:'contractBody', text:`an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and 
+						sales tax is included in the purchase price of the above-mentioned property.
 					
 						The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, 
 						and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they 
@@ -276,7 +277,6 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 				
 				contractBody: {
 					fontSize: 9,
-					margin:[1,10,1,1],
 					
 				},
 				contractSignatures: {
@@ -288,10 +288,8 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 					fontSize:10,
 					bold: true,
 					decoration: 'underline',
-					margin:[1,5,1,1],
-				}
-				
-
+					margin:[1,2,1,1],
+				},
 			},
 			
 			footer: {
