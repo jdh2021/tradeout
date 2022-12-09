@@ -193,13 +193,48 @@ const fonts = {
 			console.log(results.rows)
 		const foundContract = results.rows[0];			
 		//contract values inserted into "content"
+		
+		const d = new Date()
+		const year = d.getFullYear() 
+		const date = d.getDate() 
 		const dd = {
-			content: [
-				`Legal Contract for ${foundContract.contract_title}`,
-				`THIS BILL OF SALE is executed on ${foundContract.item_pickup_date} by and between (hereinafter referred to as the "${foundContract.first_party_type}"),
-            	and RECIPIENT LEGAL NAME (hereinafter referred to as the "${foundContract.second_party_type}").`,
+			content: 
+			[
+			
+				`	
+					Bill of Sale
+
+					Legal Contract for ${foundContract.contract_title}
+					
+					THIS BILL OF SALE is executed on ${foundContract.item_pickup_date}.getDate()by and between {user.legal_name} (hereinafter referred to as the "${foundContract.first_party_type}")
+					and RECIPIENT LEGAL NAME (hereinafter referred to as the "${foundContract.second_party_type}").
+					
+					The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property
+					${foundContract.item_name}: ${foundContract.item_description}
+					
+					For and in consideration of a total purchase price of ${foundContract.item_price}, an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and sales tax is included in the purchase price of the above-mentioned property.
+					
+					The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they see fit.
+					The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with no recourse to the Seller, provided that the Seller can issue proof that they have the title to the property without any liens or encumbrances. The Buyer agrees to accept all property in its existing state.
+					
+					Notes regarding the above property and/or the transaction:
+					${foundContract.contract_notes}
+					
+					"AS IS" images of the above property provided by the ${foundContract.first_party_type}:
+					
 				
-				'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
+				
+					<img src="https://i.ebayimg.com/images/g/l3sAAOSweURjjW1j/s-l500.jpg" alt= "red 2018 Honda Accord" width="200"/>
+				
+				
+					The above property will be transferred on: {formattedPickupDate}
+					The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.
+				
+				
+					IN WITNESS THEREOF, the parties execute this Bill of Sale:</Typography>
+					${foundContract.first_party_type} Signature: ${foundContract.first_party_signature}
+					${foundContract.second_party_type} Signature: ${foundContract.second_party_signature}
+				`
 			]
 			
 		}
