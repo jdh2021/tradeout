@@ -111,8 +111,8 @@ function* contractSaga() {
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
     yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
     yield takeLatest('FINALIZE_CONTRACT', finalizeContract);
-    yield takeLatest('GENERATE_PDF',generatePDF);
-    yield takeLatest('FETCH_PDF_DETAILS',fetchPDFDetails);
+    // yield takeLatest('GENERATE_PDF',generatePDF);
+    // yield takeLatest('FETCH_PDF_DETAILS',fetchPDFDetails);
 
 }
 

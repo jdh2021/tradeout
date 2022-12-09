@@ -176,6 +176,8 @@ const fonts = {
 };
   
   const PdfPrinter = require('pdfmake');
+const { style } = require('@mui/system');
+const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
   const printer = new PdfPrinter(fonts);
 
 //PDF Generation
@@ -198,46 +200,111 @@ const fonts = {
 		const year = d.getFullYear() 
 		const date = d.getDate() 
 		const dd = {
+			pageSize:'LETTER',
 			content: 
 			[
-			
-				`	
-					Bill of Sale
+			//contract heading
+				{ style: 'header', alignment: 'center', text: 'Bill of Sale'  }, 
 
-					Legal Contract for ${foundContract.contract_title}
+			// contract title
+				{style: 'contractTitle', alignment: 'center', text: 'Legal Contract for '},
+				{style: 'contractTitle', alignment: 'center', text: `${foundContract.contract_title}`, decoration: 'underline' },
+				 
 					
-					THIS BILL OF SALE is executed on ${foundContract.item_pickup_date}.getDate()by and between {user.legal_name} (hereinafter referred to as the "${foundContract.first_party_type}")
-					and RECIPIENT LEGAL NAME (hereinafter referred to as the "${foundContract.second_party_type}").
 					
-					The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property
-					${foundContract.item_name}: ${foundContract.item_description}
-					
-					For and in consideration of a total purchase price of ${foundContract.item_price}, an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and sales tax is included in the purchase price of the above-mentioned property.
-					
-					The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they see fit.
-					The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with no recourse to the Seller, provided that the Seller can issue proof that they have the title to the property without any liens or encumbrances. The Buyer agrees to accept all property in its existing state.
-					
-					Notes regarding the above property and/or the transaction:
-					${foundContract.contract_notes}
-					
-					"AS IS" images of the above property provided by the ${foundContract.first_party_type}:
-					
+			// contract roles/parties involved
+				{style: 'sectionHeading', text: 'Involved Parties'},
+				{style: 'contractSubHead', 
+				text: `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date} by and between ${foundContract.first_party_name},(hereinafter referred to as the "${foundContract.first_party_type}")and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`, 
+				},
 				
+				{style: 'sectionHeading', text: 'Terms'},
+				{style: 'contractBody', 
+				 text: `The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property
+						${foundContract.item_name}: ${foundContract.item_description}
+					
+						For and in consideration of a total purchase price of`},
+						
+						{text: `$${foundContract.item_price}`, fontSize: 12, background: '#ffff66'},
+
+						{style:'contractBody', text:`an amount agreed upon by the Seller and the Buyer. The form of payment used will be 
+						cash and sales tax is included in the purchase price of the above-mentioned property.
+					
+						The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, 
+						and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they 
+						see fit.
+
+						The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with 
+						no recourse to the Seller, provided that the Seller can issue proof that they have the title to the property without any 
+						liens or encumbrances. The Buyer agrees to accept all property in its existing state.
+
+						`},
+					
+						{style: 'sectionHeading', text: 'Notes regarding the above property and/or the transaction:'},
+						
+						{style: 'contractBody', text: `${foundContract.contract_notes},
+					
+						"AS IS" images of the property provided by the ${foundContract.first_party_type}:
+					
+						*IMAGE HERE* `},
+					
+						{style: 'contractBody', background: '#ffff66', text: `The above property will be transferred on: ${foundContract.item_pickup_date}`},
+						{style: 'contractBody', background: 'yellow', text:`The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.`},
+						 
+					
+						{style: 'contractSignatures', text: 'IN WITNESS THEREOF, the parties execute this Bill of Sale', alignment:'left'},
+
+						//first party signature
+						{style: 'contractSignatures', 
+							alignment: 'left', 
+							text: ` ${foundContract.first_party_type} Signature: ${foundContract.first_party_signature},
+						`},
+						//second party signature
+						{style: 'contractSignatures', 
+							alignment: 'left', 
+							text: `${foundContract.second_party_type} Signature: ${foundContract.second_party_signature},
+						`},
+			],
+
+			styles: {
+				header: {
+				  fontSize: 24,
+				  bold: true
+				},
+				contractTitle: {
+					fontSize: 16,
+					bold: true,
+					margin: [1,10,1,1],
+				},
+				contractSubHead: {
+					fontSize: 10, 
+					italics: true,
+					bold:true,
+					alignment: 'justify',
+					margin: [1,10,1,1],
+				},
+				contractBody: {
+					fontSize: 10,
+					margin: [1,20,1,1],
+				},
+				contractSignatures: {
+					fontsize: 16,
+					bold: true,
+					margin:[1,10,1,1],
+				},
+				sectionHeading:{
+					fontSize:12,
+					bold:true,
+					decoration: 'underline',
+				}
 				
-					<img src="https://i.ebayimg.com/images/g/l3sAAOSweURjjW1j/s-l500.jpg" alt= "red 2018 Honda Accord" width="200"/>
-				
-				
-					The above property will be transferred on: {formattedPickupDate}
-					The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.
-				
-				
-					IN WITNESS THEREOF, the parties execute this Bill of Sale:</Typography>
-					${foundContract.first_party_type} Signature: ${foundContract.first_party_signature}
-					${foundContract.second_party_type} Signature: ${foundContract.second_party_signature}
-				`
-			]
+
+			},
 			
+			footer: {
+				  text: 'Contract created using TradeOut® ', alignment: 'center', fontSize: 9 },
 		}
+
 		//generate pdf document
 		const binaryResult = await printer.createPdfKitDocument(dd, {});
 		// send document back to client as file download
