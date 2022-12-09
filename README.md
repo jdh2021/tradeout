@@ -19,7 +19,19 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - [Nodemon](https://nodemon.io/)
 - [SendGrid](https://sendgrid.com)
 
-## Create database and table
+## Installation
+1. Create a new database named `tradeout`, and execute the queries from `database.sql` to create the needed tables. 
+2. Within a code editor, open a terminal window and install the dependencies by running: `npm install`.
+3. Create a `.env` file with values for the following variables:
+  ```
+  SERVER_SESSION_SECRET=random string containing more than eight characters
+  SENDGRID_API_KEY=key provided with SendGrid account
+  SENDGRID_EMAIL=verified sender email
+  ```
+4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was built and designed for compatibility with Google Chrome. 
+
+
+Create database and table
 
 Create a new database called `prime_app` and create a `user` table:
 
