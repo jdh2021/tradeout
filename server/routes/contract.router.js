@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const path = require('path');
 
 // GET all contracts for logged in user
 router.get('/', (req, res) => {
@@ -194,7 +195,10 @@ const fonts = {
 		//contract values inserted into "content"
 		const dd = {
 			content: [
-				`${foundContract.contract_title}`,
+				`Legal Contract for ${foundContract.contract_title}`,
+				`THIS BILL OF SALE is executed on ${foundContract.item_pickup_date} by and between ${user.legal_name} (hereinafter referred to as the "${foundContract.first_party_type}"),
+            	and RECIPIENT LEGAL NAME (hereinafter referred to as the "${foundContract.second_party_type}").`,
+				
 				'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
 			]
 			
