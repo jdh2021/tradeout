@@ -164,6 +164,56 @@ router.put('/', (req, res) => {
     };
 });
 
+//PDF creation
+const fonts = {
+	Roboto: {
+		normal: path.join(__dirname, '../fonts/Roboto-Regular.ttf'),
+		bold: path.join(__dirname, '../fonts/Roboto-Medium.ttf'),
+		italics: path.join(__dirname,  '../fonts/Roboto-Italic.ttf'),
+		bolditalics: path.join(__dirname, '../fonts/Roboto-MediumItalic.ttf')
+	}
+};
+  
+  const PdfPrinter = require('pdfmake');
+  const printer = new PdfPrinter(fonts);
+
+//PDF Generation
+//move this code into 'put' that updates the status to accepedted
+  router.get('/make/pdf/:id', async (req, res) => {
+	try {
+
+		const query =   `SELECT "contract".* FROM "contract"
+						JOIN "user_contract" 
+						ON "user_contract"."contract_id"="contract"."id"
+						WHERE "user_contract"."user_id" = $1 
+						AND "user_contract"."contract_id" = $2;`;
+
+		const results = await pool.query(query, [req.user.id, req.params.id]) // user and contract id passed 
+			console.log(results.rows)
+		const foundContract = results.rows[0];			
+		//contract values inserted into "content"
+		const dd = {
+			content: [
+				`${foundContract.contract_title}`,
+				'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
+			]
+			
+		}
+		//generate pdf document
+		const binaryResult = await printer.createPdfKitDocument(dd, {});
+		// send document back to client as file download
+		res.setHeader('Content-Type', 'application/pdf');
+		//change file name=contract name.pdf template literal with contract name
+		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
+			binaryResult.pipe(res); // download to respsonse stream
+			binaryResult.end(); // end of the stream
+	} catch(err){
+		
+		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
+	}
+
+});
+
 
 
 module.exports = router;
