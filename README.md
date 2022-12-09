@@ -4,19 +4,20 @@
 ## Description
 
 Conducting transactions in an online marketplace can be risky, and, unfortunately, scams and falsely advertised products are quite common. TradeOut is a platform that gives people greater transaction security by providing a quick and simple way to generate a digital contract between buyer and seller. Whether you’re the buyer or the seller, in TradeOut you can:
-  - Initiate a contract for a transaction, including uploading item images
-  - Send the contract to the other party
-  - Sign the contract once you agree with the terms
-  - Always access a copy of the final, signed contract
-  - View all accepted, pending, and declined contracts
+- Initiate a contract for a transaction, including uploading item images
+- Send the contract to the other party
+- Sign the contract once you agree with the terms
+- Always access a copy of the final, signed contract
+- View all accepted, pending, and declined contracts
+
+## Screenshots
 
 ## Prerequisites
-
-Before you get started, make sure you have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
+- [SendGrid](https://sendgrid.com)
 
 ## Create database and table
 
