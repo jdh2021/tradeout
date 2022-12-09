@@ -132,7 +132,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE contract status
-router.put('/', (req, res) => {
+router.put('/', async (req, res) => {
     console.log('in /api/contract UPDATE. Contract object to update is:', req.body);
     console.log('Contract status is:', req.body.contract_status);
     console.log('is authenticated?', req.isAuthenticated());
@@ -144,6 +144,8 @@ router.put('/', (req, res) => {
 						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
         pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
             console.log('/contract UPDATE success');
+			const binaryResult = generatePDF(req.user.id, req.body.id);
+			// upload binaryResult to AWS
             res.sendStatus(200); // OK
         }).catch(error => {
             console.log('Error in UPDATE contract by contract id:', error);
@@ -175,131 +177,136 @@ const fonts = {
 	}
 };
   
-  const PdfPrinter = require('pdfmake');
+const PdfPrinter = require('pdfmake');
 const { style } = require('@mui/system');
 const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
   const printer = new PdfPrinter(fonts);
 
+
+const generatePDF = async (userId, contractId) => {
+	const query =   `SELECT "contract".* FROM "contract"
+		JOIN "user_contract" 
+		ON "user_contract"."contract_id"="contract"."id"
+		WHERE "user_contract"."user_id" = $1 
+		AND "user_contract"."contract_id" = $2;`;
+
+	const results = await pool.query(query, [userId, contractId]) // user and contract id passed 
+	console.log(results.rows)
+	const foundContract = results.rows[0];			
+	//contract values inserted into "content"
+
+	const dd = {
+	pageSize:'LETTER',
+	content: 
+	[
+	//contract heading
+	{ style: 'header', alignment: 'center', text: 'Bill of Sale'  }, 
+
+	// contract title
+	{style: 'contractTitle', alignment: 'center', text: 'Legal Contract for '},
+	{style: 'contractTitle', alignment: 'center', text: `${foundContract.contract_title}`, decoration: 'underline' },
+
+	// involved parties
+	{style: 'sectionHeading', text: 'Date of Bill Involved Parties'},
+	{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date.toDateString()} by and between ${foundContract.first_party_name}
+	(hereinafter referred to as the "${foundContract.first_party_type}") and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`
+	},
+
+	// contract terms
+	{style: 'sectionHeading', text: 'Terms'},
+	{style: 'contractBody', 
+	text: 'The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property'},
+
+		{style: 'contractBody', text:`PROPERTY: ${foundContract.item_name},
+									PROPERTY DETAILS: ${foundContract.item_description}`},
+		
+		{style: 'contractBody', text: 'for and in consideration of a total purchase price of'},{text: `$${foundContract.item_price}`, fontSize: 9, background: '#ffff66'},
+
+		{style:'contractBody', text:`an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and 
+		sales tax is included in the purchase price of the above-mentioned property.
+
+		The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, 
+		and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they 
+		see fit.
+
+		The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with 
+		no recourse to the Seller, provided that the Seller can issue proof that they have the title to the property without any 
+		liens or encumbrances. The Buyer agrees to accept all property in its existing state.
+
+		`},
+
+		{style: 'sectionHeading', text: 'Notes regarding the above property and/or the transaction:'},
+		
+		{style: 'contractBody', text: `${foundContract.contract_notes},`},
+
+		{style: 'sectionHeading', text: 'Product Image'},
+		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}:
+
+		*IMAGE HERE* `},
+		
+	// transfer of goods
+		{style: 'sectionHeading', text: 'Transfer of goods'},
+		{style: 'contractBody', 
+		text: `The above property will be transferred on: ${foundContract.item_pickup_date.toDateString()}.
+				The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.`},
+		
+	//signatures
+		{style: 'sectionHeading', text: 'Witnesses'},
+		{style: 'contractBody', text: 'IN WITNESS THEREOF, the parties execute this Bill of Sale', alignment:'left'},
+		{style: 'contractSignatures', 
+			alignment: 'left', 
+			text: ` ${foundContract.first_party_type} Signature: ${foundContract.first_party_signature},
+			${foundContract.second_party_type} Signature: ${foundContract.second_party_signature},
+		`},
+		
+	],
+
+	styles: {
+	header: {
+	fontSize: 18,
+	bold: true
+	},
+	contractTitle: {
+	fontSize: 12,
+	bold: true,
+	margin: [1,10,1,1],
+	},
+
+	contractBody: {
+	fontSize: 9,
+
+	},
+	contractSignatures: {
+	fontsize: 12,
+	bold: true,
+	margin:[1,5,1,1],
+	},
+	sectionHeading:{
+	fontSize:10,
+	bold: true,
+	decoration: 'underline',
+	margin:[1,2,1,1],
+	},
+	},
+
+	footer: {
+	text: 'Contract created using TradeOut® ', alignment: 'center', fontSize: 9 },
+	}
+
+	//generate pdf document
+	const binaryResult = await printer.createPdfKitDocument(dd, {});
+	return binaryResult;
+}
 //PDF Generation
 //move this code into 'put' that updates the status to accepedted
   router.get('/make/pdf/:id', async (req, res) => {
 	try {
 
-		const query =   `SELECT "contract".* FROM "contract"
-						JOIN "user_contract" 
-						ON "user_contract"."contract_id"="contract"."id"
-						WHERE "user_contract"."user_id" = $1 
-						AND "user_contract"."contract_id" = $2;`;
-
-		const results = await pool.query(query, [req.user.id, req.params.id]) // user and contract id passed 
-			console.log(results.rows)
-		const foundContract = results.rows[0];			
-		//contract values inserted into "content"
-		
-		const dd = {
-			pageSize:'LETTER',
-			content: 
-			[
-			//contract heading
-				{ style: 'header', alignment: 'center', text: 'Bill of Sale'  }, 
-
-			// contract title
-				{style: 'contractTitle', alignment: 'center', text: 'Legal Contract for '},
-				{style: 'contractTitle', alignment: 'center', text: `${foundContract.contract_title}`, decoration: 'underline' },
-				 
-			// involved parties
-				{style: 'sectionHeading', text: 'Date of Bill Involved Parties'},
-				{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date.toDateString()} by and between ${foundContract.first_party_name}
-				(hereinafter referred to as the "${foundContract.first_party_type}") and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`
-				},
-				
-			// contract terms
-				{style: 'sectionHeading', text: 'Terms'},
-				{style: 'contractBody', 
-				 text: 'The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property'},
-
-				 		{style: 'contractBody', text:`PROPERTY: ${foundContract.item_name},
-													 PROPERTY DETAILS: ${foundContract.item_description}`},
-						
-						{style: 'contractBody', text: 'for and in consideration of a total purchase price of'},{text: `$${foundContract.item_price}`, fontSize: 9, background: '#ffff66'},
-
-						{style:'contractBody', text:`an amount agreed upon by the Seller and the Buyer. The form of payment used will be cash and 
-						sales tax is included in the purchase price of the above-mentioned property.
-					
-						The Seller hereby affirms that the above information about this property is accurate to the best of their knowledge, 
-						and by their signature below certifies they are the lawful owner of the property with the ability to sell it as they 
-						see fit.
-
-						The sale and transfer of property is hereby made on an "AS IS" condition, without any express or implied warranties, with 
-						no recourse to the Seller, provided that the Seller can issue proof that they have the title to the property without any 
-						liens or encumbrances. The Buyer agrees to accept all property in its existing state.
-
-						`},
-					
-						{style: 'sectionHeading', text: 'Notes regarding the above property and/or the transaction:'},
-						
-						{style: 'contractBody', text: `${foundContract.contract_notes},`},
-
-						{style: 'sectionHeading', text: 'Product Image'},
-						{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}:
-					
-						*IMAGE HERE* `},
-						
-					// transfer of goods
-						{style: 'sectionHeading', text: 'Transfer of goods'},
-						{style: 'contractBody', 
-						 text: `The above property will be transferred on: ${foundContract.item_pickup_date.toDateString()}.
-						 		The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.`},
-						 
-					//signatures
-						{style: 'sectionHeading', text: 'Witnesses'},
-						{style: 'contractBody', text: 'IN WITNESS THEREOF, the parties execute this Bill of Sale', alignment:'left'},
-						{style: 'contractSignatures', 
-							alignment: 'left', 
-							text: ` ${foundContract.first_party_type} Signature: ${foundContract.first_party_signature},
-							${foundContract.second_party_type} Signature: ${foundContract.second_party_signature},
-						`},
-						
-			],
-
-			styles: {
-				header: {
-				  fontSize: 18,
-				  bold: true
-				},
-				contractTitle: {
-					fontSize: 12,
-					bold: true,
-					margin: [1,10,1,1],
-				},
-				
-				contractBody: {
-					fontSize: 9,
-					
-				},
-				contractSignatures: {
-					fontsize: 12,
-					bold: true,
-					margin:[1,5,1,1],
-				},
-				sectionHeading:{
-					fontSize:10,
-					bold: true,
-					decoration: 'underline',
-					margin:[1,2,1,1],
-				},
-			},
-			
-			footer: {
-				  text: 'Contract created using TradeOut® ', alignment: 'center', fontSize: 9 },
-		}
-
-		//generate pdf document
-		const binaryResult = await printer.createPdfKitDocument(dd, {});
+		const binaryResult = await generatePDF(req.user.id, req.params.id);
 		// send document back to client as file download
 		res.setHeader('Content-Type', 'application/pdf');
 		//change file name=contract name.pdf template literal with contract name
-		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
+		res.setHeader('Content-Disposition', `attachment; filename=${foundContract.contract_title}.pdf`);
 			binaryResult.pipe(res); // download to respsonse stream
 			binaryResult.end(); // end of the stream
 	} catch(err){

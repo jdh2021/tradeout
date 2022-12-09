@@ -84,24 +84,7 @@ function* finalizeContract(action) {
     }
 }
 
-function* generatePDF(action){
-    try{
-        const pdfDetails = yield axios.get(`/api/contract/make/pdf/${action.payload}`);
-    } catch (error) {
-        console.log('Error in generatePDF (saga)', error);
-        alert('Something went wrong fetching the selected contract details for pdf');
-    }
-}
 
-function* fetchPDFDetails(action){
-    try{
-        const pdfDetails = yield axios.get(`/api/contract/${action.payload}`);
-        yield put({ type: 'SET_CONTRACT_DETAILS', payload: pdfDetails.data});
-    } catch (error) {
-        console.log('Error in fetchPDFDetails (saga)', error);
-        alert('Something went wrong fetching the selected contract details for pdf');
-    }
-}
 
 
 function* contractSaga() {
@@ -111,8 +94,7 @@ function* contractSaga() {
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
     yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
     yield takeLatest('FINALIZE_CONTRACT', finalizeContract);
-    // yield takeLatest('GENERATE_PDF',generatePDF);
-    // yield takeLatest('FETCH_PDF_DETAILS',fetchPDFDetails);
+   
 
 }
 
