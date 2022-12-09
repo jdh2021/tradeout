@@ -33,17 +33,31 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 ## Usage
 
 ### Registering
+
 1. To register as a new user, click `Register` and enter an email, legal name, and password. 
 
 ### Logging In
+
 1. To log in, enter the email and password associated with the account and click `Log In`. 
 
 ### Creating a Contract
+
 1. To create a contract, click `New Contract` from the Dashboard. Select `Buyer` or `Seller` and click `Next`.
 2. Within Create New Contract, enter the required informaton in the fields marked with a `*` and any other relevant information. Click `Choose File` to optionally upload an image of the item being purchased or sold. Type the signature in the signature field. Click `Review Contract` to proceed. 
 3. Review the contract details. Make any changes by clicking `Edit Contract Details` or proceed by clicking `Recipient Contact Information`. 
 4. Within Send To Recipient, enter the email address of the other party in the contract. Click `Generate Contract Token` to generate a unique key that the recipient will receive to be able to securely view the contract. 
 5. Click `Create Contract and Send to Recipient` to send an email to the recipient letting them know a contract is pending. 
+
+### Receiving a Contract
+
+1. Click the link in the email sent from TradeOut to be taken to Recipient View. Recipient View shows the status of the contract. If pending, review the contract details and click `Accept` or `Decline`. (Note: Clicking `Decline` does not require a user account.)
+2. Clicking `Accept` requires user registration. Once registered, the contract appears in the Dashboard.
+
+### Accepting or Declining a Contract
+
+1. Clicking a contract card from the Dashboard shows its details. If a contract is pending and awaiting an action, a signature field and buttons will appear at the bottom of Contract Details. 
+2. To accept the terms of the contract, type the signature in the signature field and click `Sign and Finalize Contract`. 
+3. To decline a contract, click `Decline`.
 
 ## Deployment
 
@@ -54,7 +68,3 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 1. Create the necessary tables
 1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
 1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
