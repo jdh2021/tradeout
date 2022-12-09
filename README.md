@@ -18,6 +18,7 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 - [SendGrid](https://sendgrid.com)
+- [PDFMake](http://pdfmake.org/#/)
 
 ## Installation
 
