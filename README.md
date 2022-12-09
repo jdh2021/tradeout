@@ -59,12 +59,11 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 2. To accept the terms of the contract, type the signature in the signature field and click `Sign and Finalize Contract`. 
 3. To decline a contract, click `Decline`.
 
-## Deployment
+### Accessing a PDF for an Accepted Contract
 
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
+1. Click on an accepted contract card from Dashboard to view its details. 
+2. Click the link next to `Contract PDF` to access a PDF of the contract.
+
+## Built With
+
+Node.js | Express.js | React.js | Redux | Redux-Saga | JavaScript | PostgreSQL | Passport | Material UI | SendGrid | AWS S3 | PDFMake 
