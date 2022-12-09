@@ -22,7 +22,7 @@ const SendToRecipient = () => {
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
   const [tokenCreated, setTokenCreated] = useState(false);
-  const imageUpload = useSelector(store => store.contract.newContractDetails.item_image);
+  const imageUpload = useSelector(store => store.contract.newContractDetails.image_data);
 
   // date formatting for pickup date
   const pickupDate = new Date(newContractDetails.item_pickup_date);
@@ -44,23 +44,20 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
-  // Send image to server
-  const sendImageToServer = (event) => {
-    // event.preventDefault();
-    console.log('The image is ', imageUpload)
-    console.log('sending image to server')
-    dispatch({type: 'POST_IMAGE_TO_SERVER', payload: {}, fileToUpload: imageUpload})
-  }
 
   // dispatching newContractDetails
   const submitNewContract = () => {
-    console.log('in submitNewContract', newContractDetails);
-    if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-      alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
-      return;
-    }
-    //Dispatch Image to S3 Bucket
-    sendImageToServer();
+
+
+      console.log('in submitNewContract', newContractDetails);
+      if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
+        alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
+        return;
+      }
+      
+      // the SendGrid email server request is called from within the addNewContract saga
+      dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
+    
 
     // the SendGrid email server request is called from within the addNewContract saga
     // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});

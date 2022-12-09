@@ -97,7 +97,7 @@ const CreateContractReview = () => {
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Images:</Typography></TableCell>
                   {/* once image upload is enabled, the img src will be the uploaded image file */}
-                  <TableCell align="left"><img src={newContractDetails.item_image} alt="stereo" width="200"/></TableCell>
+                  <TableCell align="left"><img src={newContractDetails.item_preview}  width="200"/></TableCell>
                 </TableRow>
               </TableBody>
             </Table>

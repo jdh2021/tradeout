@@ -14,6 +14,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import ImageUpload from '../ImageUpload/ImageUpload';
+import { readAndCompressImage } from 'browser-image-resizer';
+
+
+const imageConfig = {
+  quality: 1.0,
+  maxHeight: 300,
+};
 
 const CreateContractDetails = () => {
 
@@ -47,7 +54,7 @@ const CreateContractDetails = () => {
   // validating that the required fields have a value
   const validateForm = () => {
     console.log('in validateForm');
-    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature || !newContractDetails.item_image) {
+    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature || !newContractDetails.item_preview) {
       alert('Please complete all required fields (those with a *).');
       return;
     } else {
@@ -73,11 +80,15 @@ const CreateContractDetails = () => {
   }
 
     //Handle Image Upload
-    const fileSelectedHandler = event  => {
+    const fileSelectedHandler = async (event)  => {
       console.log(event.target.files[0]);
+      const selectedFile = event.target.files[0];
       setImageUpload(event.target.files[0]);
+      const copyFile = new Blob([selectedFile], { type: selectedFile.type });
+      const resizedFile = await readAndCompressImage(copyFile, imageConfig);
+
       console.log('in fileSelectedHandler')
-      dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, item_image: event.target.files[0]}});
+      dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, image_data: selectedFile, item_preview: URL.createObjectURL(resizedFile)}});
 
     }
 
