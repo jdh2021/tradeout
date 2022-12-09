@@ -70,7 +70,7 @@ const SendToRecipient = () => {
   // autofill email for demo purposes
   const autofillEmail = () => {
     console.log('in autofillEmail');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'christmascactus@gmail.com'}});
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'jackjackg42@gmail.com'}});
   }
 
   return (
