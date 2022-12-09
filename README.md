@@ -56,12 +56,12 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 ### Accepting or Declining a Contract
 
 1. Clicking a contract card from the Dashboard shows its details. If a contract is pending and awaiting an action, a signature field and buttons will appear at the bottom of Contract Details. 
-2. To accept the terms of the contract, type the signature in the signature field and click `Sign and Finalize Contract`. 
-3. To decline a contract, click `Decline`.
+2. To accept the terms of a contract, type the signature in the signature field and click `Sign and Finalize Contract`. The contract will then appear under the Accepted heading in the Dashboard.
+3. To decline a contract, click `Decline`. The contract will then appear under the Declined heading in the Dashboard.
 
 ### Accessing a PDF for an Accepted Contract
 
-1. Click on an accepted contract card from Dashboard to view its details. 
+1. Click an accepted contract card from the Dashboard to view its details. 
 2. Click the link next to `Contract PDF` to access a PDF of the contract.
 
 ## Built With
