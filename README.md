@@ -20,6 +20,7 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - [SendGrid](https://sendgrid.com)
 
 ## Installation
+
 1. Create a new database named `tradeout`, and execute the queries from `database.sql` to create the needed tables. 
 2. Within a code editor, open a terminal window and install the dependencies by running: `npm install`.
 3. Create a `.env` file with values for the following variables:
