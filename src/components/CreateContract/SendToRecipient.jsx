@@ -79,7 +79,7 @@ const SendToRecipient = () => {
   // autofill email for demo purposes
   const autofillEmail = () => {
     console.log('in autofillEmail');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'christmascactus@gmail.com'}});
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'jackjackg42@gmail.com'}});
   }
 
   return (
@@ -111,10 +111,10 @@ const SendToRecipient = () => {
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.second_party_email}
-            onChange={handleChangeFor('secondPartyEmail')}
+            onChange={handleChangeFor('second_party_email')}
           />
           {/* used to autofill recipient email during demo */}
-          <div style={{width: 100}} onClick={autofillEmail}><h5>magic button</h5></div>
+          <div style={{width: 100, height: 100}} onClick={autofillEmail} />
         </Box>
         <br />
         <br />
@@ -140,7 +140,9 @@ const SendToRecipient = () => {
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
               {/* images will be the user-uploaded images once that functionality is implemented */}
+
               <img src={newContractDetails.item_image}/>
+
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>

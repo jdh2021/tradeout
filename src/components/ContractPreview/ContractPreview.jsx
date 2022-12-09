@@ -11,7 +11,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 
 // Basic functional component structure for React with default state
 // value setup. When making a new component be sure to replace the
@@ -42,7 +41,15 @@ function ContractPreview({contractDetails}) {
                 <TableContainer elevation={10} component={Paper} sx={{ width: 700 }}>
                     <Table>
                         <TableBody>
-
+                        {
+                            contractDetails.contract_status === 'accepted' ? 
+                            <TableRow>
+                                <TableCell sx={{ width: 150 }} align="left">
+                                <Typography>Contract PDF:</Typography></TableCell>
+                                <TableCell align="left"><Typography sx={{textDecoration: 'underline'}}>Contract PDF Link</Typography></TableCell>
+                            </TableRow> :
+                            <></>
+                        }
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
                             <Typography>Contract Title:</Typography></TableCell>
@@ -99,13 +106,13 @@ function ContractPreview({contractDetails}) {
 
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
-                            <Typography>Your Signature:</Typography></TableCell>
+                            <Typography>{contractDetails.first_party_type} Signature:</Typography></TableCell>
                             <TableCell align="left">{contractDetails.first_party_signature}</TableCell>
                         </TableRow>
 
                         <TableRow>
                             <TableCell sx={{ width: 150 }} align="left">
-                            <Typography>Second Party's Signature:</Typography></TableCell>
+                            <Typography>{contractDetails.second_party_type} Signature:</Typography></TableCell>
                             <TableCell align="left">{contractDetails.second_party_signature}</TableCell>
                         </TableRow>
 
@@ -115,8 +122,8 @@ function ContractPreview({contractDetails}) {
 
                             {/* once image upload is enabled, the img src will be the uploaded image file */}
                             <TableCell align="left">
-                            <img src="https://i.ebayimg.com/images/g/ZUkAAOSw0x1jd7sn/s-l500.jpg"
-                                alt="guitar"
+                            <img src="https://i.ebayimg.com/images/g/l3sAAOSweURjjW1j/s-l500.jpg"
+                                alt="red 2018 Honda Accord"
                                 width="200" /></TableCell>
                         </TableRow>
                         </TableBody>

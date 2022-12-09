@@ -91,13 +91,15 @@ const CreateContractReview = () => {
                   <TableCell align="left">{newContractDetails.contract_notes}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{width: 150}} align="left"><Typography>Your Signature:</Typography></TableCell>
+                  <TableCell sx={{width: 150}} align="left"><Typography>{newContractDetails.first_party_type} Signature:</Typography></TableCell>
                   <TableCell align="left">{newContractDetails.first_party_signature}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{width: 150}} align="left"><Typography>Images:</Typography></TableCell>
                   {/* once image upload is enabled, the img src will be the uploaded image file */}
+                  
                   <TableCell align="left"><img src={newContractDetails.item_preview}  width="200"/></TableCell>
+
                 </TableRow>
               </TableBody>
             </Table>

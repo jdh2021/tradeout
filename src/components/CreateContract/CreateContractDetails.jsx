@@ -67,15 +67,15 @@ const CreateContractDetails = () => {
     console.log('in autofillForm');
     dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {
       ...newContractDetails, 
-      contract_title: 'Car Purchase',
+      contract_title: 'Used Car Purchase',
       item_name: 'Honda Accord',
-      item_description: '2008, blue',
-      item_price: 1500,
+      item_description: 'year: 2018; color: red; odometer: 53,420 miles; avg. 30 mpg in the city',
+      item_price: 10000,
       item_pickup_location: 'St. Paul, MN',
-      item_pickup_date: '12/15/2022',
-      contract_deadline: '12/13/2022',
-      contract_notes: 'payment in cash, new tires as of October 2022, no know mechanical issues',
-      first_party_signature: 'Eliot Winter'
+      item_pickup_date: '12/20/2022',
+      contract_deadline: '12/18/2022',
+      contract_notes: 'payment in cash, new tires as of October 2022 (needed due to a series of punctures), no know mechanical issues',
+      first_party_signature: 'Bryn Nadziejka Waller'
     }});
   }
 
@@ -114,7 +114,7 @@ const CreateContractDetails = () => {
         </Breadcrumbs>
         <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
-        <div style={{width: 100}} onClick={autofillForm}><h5>magic button</h5></div>
+        <div style={{width: 100, height: 100}} onClick={autofillForm} />
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.first_party_type}.</Typography>
         <br />

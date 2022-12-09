@@ -73,7 +73,7 @@ function RecipientView() {
       <br />
       <div>
         {/* conditional checks that contract status is pending and renders Accept, Decline buttons */}
-        {contractDetails.contract_status === 'pending' ?
+        {contractDetails.contract_status === 'pending_second_party_response' ?
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               variant="contained"
