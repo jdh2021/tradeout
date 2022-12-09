@@ -196,9 +196,6 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 		const foundContract = results.rows[0];			
 		//contract values inserted into "content"
 		
-		const d = new Date()
-		const year = d.getFullYear() 
-		const date = d.getDate() 
 		const dd = {
 			pageSize:'LETTER',
 			content: 
@@ -212,7 +209,7 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 				 
 			// involved parties
 				{style: 'sectionHeading', text: 'Date of Bill Involved Parties'},
-				{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date} by and between ${foundContract.first_party_name}
+				{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date.toDateString()} by and between ${foundContract.first_party_name}
 				(hereinafter referred to as the "${foundContract.first_party_type}") and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`
 				},
 				
@@ -250,8 +247,9 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 						
 					// transfer of goods
 						{style: 'sectionHeading', text: 'Transfer of goods'},
-						{style: 'contractBody', text: `The above property will be transferred on: ${foundContract.item_pickup_date},
-						The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.`},
+						{style: 'contractBody', 
+						 text: `The above property will be transferred on: ${foundContract.item_pickup_date.toDateString()}.
+						 		The Seller and Buyer will meet in ${foundContract.item_pickup_location} to conduct the transaction for the above property.`},
 						 
 					//signatures
 						{style: 'sectionHeading', text: 'Witnesses'},
