@@ -144,7 +144,7 @@ router.put('/', async (req, res) => {
 						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
         pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
             console.log('/contract UPDATE success');
-			const binaryResult = generatePDF(req.user.id, req.body.id);
+			const binaryResult = await generatePDF(req.user.id, req.body.id);
 			// upload binaryResult to AWS
             res.sendStatus(200); // OK
         }).catch(error => {
@@ -177,7 +177,7 @@ const fonts = {
 	}
 };
   
-const PdfPrinter = require('pdfmake');
+  const PdfPrinter = require('pdfmake');
 const { style } = require('@mui/system');
 const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
   const printer = new PdfPrinter(fonts);
@@ -306,7 +306,7 @@ const generatePDF = async (userId, contractId) => {
 		// send document back to client as file download
 		res.setHeader('Content-Type', 'application/pdf');
 		//change file name=contract name.pdf template literal with contract name
-		res.setHeader('Content-Disposition', `attachment; filename=${foundContract.contract_title}.pdf`);
+		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
 			binaryResult.pipe(res); // download to respsonse stream
 			binaryResult.end(); // end of the stream
 	} catch(err){
