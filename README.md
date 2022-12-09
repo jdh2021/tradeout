@@ -1,13 +1,14 @@
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# TradeOut
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+## Description
 
-## Use the Template for This Repository (Don't Clone)
-
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account. Make the project `PUBLIC`!
-
+Conducting transactions in an online marketplace can be risky, and, unfortunately, scams and falsely advertised products are quite common. TradeOut is a platform that gives people greater transaction security by providing a quick and simple way to generate a digital contract between buyer and seller. Whether you’re the buyer or the seller, in TradeOut you can:
+  - Initiate a contract for a transaction, including uploading item images
+  - Send the contract to the other party
+  - Sign the contract once you agree with the terms
+  - Always access a copy of the final, signed contract
+  - View all accepted, pending, and declined contracts
 
 ## Prerequisites
 
