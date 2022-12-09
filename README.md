@@ -50,8 +50,8 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 
 ### Receiving a Contract
 
-1. Click the link in the email sent from TradeOut to be taken to Recipient View. Recipient View shows the status of the contract. If pending, review the contract details and click `Accept` or `Decline`. (Note: Clicking `Decline` does not require a user account.)
-2. Clicking `Accept` requires user registration. Once registered, the contract appears in the Dashboard.
+1. Click the link in the email sent from TradeOut to be taken to Recipient View. Recipient View shows the status of the contract. If pending, review the contract details and click `Accept` or `Decline`. (Note: Clicking `Decline` does not require an account.)
+2. Clicking `Accept` requires an account and will navigate to Registration. Once registered, the contract appears in the Dashboard.
 
 ### Accepting or Declining a Contract
 
