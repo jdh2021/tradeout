@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FinalizeContractDialog from './FinalizeContractDialog.jsx';
+import FinalizeSuccessDialog from './FinalizeSuccessDialog.jsx';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -29,6 +30,18 @@ function ContractDetails() {
 
   const handleClickCloseFinalize = () => {
     setOpenFinalize(false);
+  }
+
+  // variable and functions for FinalizeSuccessDialog
+  const [openFinalizeSuccess, setOpenFinalizeSuccess] = useState(false);
+
+  const handleClickOpenSuccess = () => {
+    setOpenFinalizeSuccess(true);
+  }
+
+  const handleClickCloseSuccess = () => {
+    setOpenFinalizeSuccess(false);
+    history.push('/dashboard');
   }
 
   useEffect(() => {
@@ -70,8 +83,7 @@ function ContractDetails() {
   // alerts user to successful contract finalization and navigates the user to /dashboard
   const userAlert = () => {
     console.log('in userAlert');
-    alert('Congratulations! This contract is now finalized. You can download a PDF of the final document by selecting this contract on your Dashboard.')
-    history.push('/dashboard');
+    handleClickOpenSuccess();
   }
 
   // prompts recipient to confirm before contract is declined
@@ -112,6 +124,10 @@ function ContractDetails() {
       <FinalizeContractDialog 
         handleClickCloseFinalize={handleClickCloseFinalize}
         open={openFinalize}
+      />
+      <FinalizeSuccessDialog 
+        open={openFinalizeSuccess}
+        handleClickCloseSuccess={handleClickCloseSuccess}
       />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Contract Details  </Typography>
