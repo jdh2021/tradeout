@@ -389,7 +389,7 @@ const sendPDFtoAWS = async (userId, fileName, data) => {
 	
 
 
-router.post
+
 
 
 module.exports = router;
