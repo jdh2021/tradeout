@@ -13,7 +13,7 @@ const ConfirmDeclineDialog = ({open, handleClickCloseConfirmDecline, declineCont
                     {"Are you sure you want to decline this contract?"}
                 </DialogTitle>
                 <DialogActions>
-                    <Button onClick={handleClickCloseConfirmDecline} variant="contained" color="purple">No</Button>
+                    <Button onClick={handleClickCloseConfirmDecline} variant="contained" color="purple" sx={{color: '#FFFFFF'}}>No</Button>
                     <Button onClick={declineContract} variant="contained" color="green">Yes</Button>
                 </DialogActions>
             </Dialog>

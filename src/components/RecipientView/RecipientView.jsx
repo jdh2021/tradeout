@@ -50,7 +50,6 @@ function RecipientView() {
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
     console.log('in acceptContract. Contract key is:', searchContractKey);
-    // alert('You\'ll now be routed to registration where you can register as a TradeOut user and accept this contract.');
     handleClickOpenAccepted();
   }
 
@@ -58,9 +57,6 @@ function RecipientView() {
   const confirmDecline = () => {
     console.log('in confirmDecline');
     handleClickOpenConfirmDecline();
-    // if (window.confirm('Are you sure you want to decline this contract?')) {
-    //   declineContract();
-    // }
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
