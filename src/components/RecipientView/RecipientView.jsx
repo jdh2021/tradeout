@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
 import RecipientViewAcceptDialog from './RecipientViewAcceptDialog.jsx';
+import ContractStatusUpdateDialog from './ContractStatusUpdateDialog.jsx';
 import ConfirmDeclineDialog from './ConfirmDeclineDialog.jsx';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -47,6 +48,18 @@ function RecipientView() {
     setOpenConfirmDecline(false);
   }
 
+  // variable and functions for ContractStatusUpdateDialog
+  const [openStatusUpdate, setOpenStatusUpdate] = useState(false);
+
+  const handleClickOpenStatusUpdate = () => {
+    console.log('in handleClickOpenStatusUpdate');
+    setOpenStatusUpdate(true);
+  }
+
+  const handleClickCloseStatusUpdate = () => {
+    setOpenStatusUpdate(false);
+  }
+
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
     console.log('in acceptContract. Contract key is:', searchContractKey);
@@ -79,7 +92,8 @@ function RecipientView() {
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
     dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
-    alert('Thank you! The contract has been declined.');
+    // alert('Thank you! The contract has been declined.');
+    handleClickOpenStatusUpdate();
   }
 
   return (
@@ -87,6 +101,7 @@ function RecipientView() {
       <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
         {contractDetails.contract_status}
       </Typography>
+      {/* dialog components that are triggered by user actions */}
       <RecipientViewAcceptDialog 
         open={openAccepted}
         handleClickCloseAccepted={handleClickCloseAccepted}
@@ -95,6 +110,10 @@ function RecipientView() {
         handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
         open={openConfirmDecline}
         declineContract={declineContract}
+      />
+      <ContractStatusUpdateDialog 
+        open={openStatusUpdate}
+        handleClickCloseStatusUpdate={handleClickCloseStatusUpdate}
       />
       <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
