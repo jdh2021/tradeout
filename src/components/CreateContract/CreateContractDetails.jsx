@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import CreateContractDetailsDialog from './CreateContractDetailsDialog.jsx';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
