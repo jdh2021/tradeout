@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import PartyTypeDialog from './PartyTypeDialog.jsx';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -23,6 +24,17 @@ const PartyType = () => {
 
   const [secondParty, setSecondParty] = useState('');
 
+  // variables and functions for form validation dialog called in handleChangeForSecondParty
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+      setOpen(true);
+  }
+
+  const handleClickClose = () => {
+      setOpen(false);
+  }
+
   // firstPartyType is set in newContractDetails reducer, secondParty is set to opposite of firstPartyType
   const handleChangeFor = (key) => (event) => {
     console.log('in handleChangeFor', event.target.value);
@@ -40,7 +52,8 @@ const PartyType = () => {
   const handleChangeForSecondParty = (contractDetail, partyType) => {
     console.log('in handleChangeForSecondParty', contractDetail, partyType);
     if (!newContractDetails.first_party_type) {
-      alert('Please select whether you are the buyer or seller.');
+      // alert('Please select whether you are the buyer or seller.');
+      handleClickOpen(); // displays PartyTypeDialog component
       return;
     }
     if (partyType === 'Buyer') {
@@ -72,6 +85,10 @@ const PartyType = () => {
             Submit Contract & Email Recipient
           </Typography>
         </Breadcrumbs>
+        <PartyTypeDialog 
+          open={open}
+          handleClickClose={handleClickClose}
+        />
         <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Are you a buyer or seller?</Typography>
         <br />
