@@ -35,14 +35,17 @@ function RecipientView() {
     history.push('/registration');
   }
 
-  // const handleClickOpenConfirmDecline = () => {
-  //   console.log('in handleClickOpenConfirmDecline');
-  //   setOpen(true);
-  // }
+  // variable and functions for ConfirmDeclineDialog
+  const [openConfirmDecline, setOpenConfirmDecline] = useState(false);
 
-  // const handleClickCloseConfirmDecline = () => {
-  //   setOpen(false);
-  // }
+  const handleClickOpenConfirmDecline = () => {
+    console.log('in handleClickOpenConfirmDecline');
+    setOpenConfirmDecline(true);
+  }
+
+  const handleClickCloseConfirmDecline = () => {
+    setOpenConfirmDecline(false);
+  }
 
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
@@ -54,9 +57,10 @@ function RecipientView() {
   // prompts recipient to confirm before contract is declined
   const confirmDecline = () => {
     console.log('in confirmDecline');
-    if (window.confirm('Are you sure you want to decline this contract?')) {
-      declineContract();
-    }
+    handleClickOpenConfirmDecline();
+    // if (window.confirm('Are you sure you want to decline this contract?')) {
+    //   declineContract();
+    // }
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
@@ -90,10 +94,11 @@ function RecipientView() {
         open={openAccepted}
         handleClickCloseAccepted={handleClickCloseAccepted}
       />
-      {/* <ConfirmDeclineDialog 
+      <ConfirmDeclineDialog 
         handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
-        open={open}
-      /> */}
+        open={openConfirmDecline}
+        declineContract={declineContract}
+      />
       <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
