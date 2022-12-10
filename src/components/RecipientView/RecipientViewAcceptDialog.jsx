@@ -4,7 +4,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const RecipientViewAcceptDialog = ({open, handleClickCloseAccepted}) => {
-    
     return  <>
                 <Dialog
                     open={open}

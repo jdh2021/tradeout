@@ -92,7 +92,6 @@ function RecipientView() {
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
     dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
-    // alert('Thank you! The contract has been declined.');
     handleClickOpenStatusUpdate();
   }
 
