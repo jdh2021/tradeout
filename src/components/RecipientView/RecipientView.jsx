@@ -21,22 +21,24 @@ function RecipientView() {
   }, [searchContractKey]);
 
   // variable and functions for RecipientViewAcceptDialog
-  const [acceptedOpen, setAcceptedOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpenAccepted = () => {
-    setAcceptedOpen(true);
+    console.log('in handleClickOpenAccepted');
+    setOpen(true);
   }
 
   const handleClickCloseAccepted = () => {
-    setAcceptedOpen(false);
+    setOpen(false);
+    dispatch({ type: 'SET_CONTRACT_KEY', payload: searchContractKey })
+    history.push('/registration');
   }
 
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
     console.log('in acceptContract. Contract key is:', searchContractKey);
-    alert('You\'ll now be routed to registration where you can register as a TradeOut user and accept this contract.');
-    dispatch({ type: 'SET_CONTRACT_KEY', payload: searchContractKey })
-    history.push('/registration');
+    // alert('You\'ll now be routed to registration where you can register as a TradeOut user and accept this contract.');
+    handleClickOpenAccepted();
   }
 
   // prompts recipient to confirm before contract is declined
@@ -75,7 +77,7 @@ function RecipientView() {
         {contractDetails.contract_status}
       </Typography>
       <RecipientViewAcceptDialog 
-        acceptedOpen={acceptedOpen}
+        open={open}
         handleClickCloseAccepted={handleClickCloseAccepted}
       />
       <br />
