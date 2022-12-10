@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
 import RecipientViewAcceptDialog from './RecipientViewAcceptDialog.jsx';
+import ConfirmDeclineDialog from './ConfirmDeclineDialog.jsx';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -21,18 +22,27 @@ function RecipientView() {
   }, [searchContractKey]);
 
   // variable and functions for RecipientViewAcceptDialog
-  const [open, setOpen] = useState(false);
+  const [openAccepted, setOpenAccepted] = useState(false);
 
   const handleClickOpenAccepted = () => {
     console.log('in handleClickOpenAccepted');
-    setOpen(true);
+    setOpenAccepted(true);
   }
 
   const handleClickCloseAccepted = () => {
-    setOpen(false);
+    setOpenAccepted(false);
     dispatch({ type: 'SET_CONTRACT_KEY', payload: searchContractKey })
     history.push('/registration');
   }
+
+  // const handleClickOpenConfirmDecline = () => {
+  //   console.log('in handleClickOpenConfirmDecline');
+  //   setOpen(true);
+  // }
+
+  // const handleClickCloseConfirmDecline = () => {
+  //   setOpen(false);
+  // }
 
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
@@ -77,9 +87,13 @@ function RecipientView() {
         {contractDetails.contract_status}
       </Typography>
       <RecipientViewAcceptDialog 
-        open={open}
+        open={openAccepted}
         handleClickCloseAccepted={handleClickCloseAccepted}
       />
+      {/* <ConfirmDeclineDialog 
+        handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
+        open={open}
+      /> */}
       <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
