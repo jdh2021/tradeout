@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const path = require('path');
 const S3Service = require('../services/S3Service');
+const crypto = require('crypto');
 
 // GET all contracts for logged in user
 router.get('/', (req, res) => {
@@ -138,26 +139,38 @@ router.put('/', async (req, res) => {
     console.log('Contract status is:', req.body.contract_status);
     console.log('is authenticated?', req.isAuthenticated());
     if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
-        console.log('User id is:', req.user.id);
-        const query =   `UPDATE "contract"
-						SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
-						FROM "user_contract"
-						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
-        pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
-            console.log('/contract UPDATE success');
-			const binaryResult =  generatePDF(req.user.id, req.body.id);
+		try {
+			console.log('/contract UPDATE success accepted');
+			const binaryResult = await generatePDF(req.user.id, req.body.id);
+			
 			// upload binaryResult to AWS
-            res.sendStatus(200); // OK
-        }).catch(error => {
+			// Creates a PDF named 1_RANDOM_contract.pd
+			const randomString = crypto.randomBytes(4).toString('hex');
+			console.log('convert stream to buffer')
+			binaryResult.end(); // end of the stream
+			const buffer = await streamToBuffer(binaryResult);
+			console.log('uploading to aws')
+			const contractUrl = await sendPDFtoAWS(req.body.id, `${randomString}_contract.pdf`, buffer); 
+			console.log(contractUrl);
+			console.log('User id is:', req.user.id);
+			// Update to include the contract url
+			const query =   `UPDATE "contract"
+							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3, "contract_receipt" = $6
+							FROM "user_contract"
+							WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
+			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id, contractUrl])
+
+			res.sendStatus(200); // OK
+		} catch (error) {
             console.log('Error in UPDATE contract by contract id:', error);
             res.sendStatus(500);
-        })
+        }
     } else if (req.body.contract_status === 'declined') { // contract recipient not required to be user to decline contract, and req.user.id isn't checked
         const queryText =   `UPDATE "contract"
                             SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
                             WHERE "id" = $4;`;
         pool.query(queryText, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id]).then(result => {
-            console.log('/contract UPDATE success');
+            console.log('/contract UPDATE success declined');
             res.sendStatus(200); // OK
         }).catch(error => { 
             console.log('Error in UPDATE contract by contract id:', error);
@@ -168,25 +181,57 @@ router.put('/', async (req, res) => {
     };
 });
 
+const streamToBuffer = (stream) => {
+	return new Promise((resolve, reject) => {
+		const data = [];
 
+
+
+		stream.on('end', () => {
+			console.log('buffer end')
+		resolve(Buffer.concat(data))
+		})
+
+		stream.on('finish', () => {
+			console.log('buffer finish')
+		resolve(Buffer.concat(data))
+		})
+
+		stream.on('close', () => {
+			console.log('buffer close')
+		resolve(Buffer.concat(data))
+		})
+
+		stream.on('error', (err) => {
+		reject(err)
+		})
+
+		stream.on('data', (chunk) => {
+			console.log(chunk);
+		data.push(chunk);
+		});
+
+	})
+}
 //PDF Generation
 //move this code into 'put' that updates the status to accepedted
-  router.get('/make/pdf/:id', async (req, res) => {
-	try {
+// Just for testing, will be removed later
+//   router.get('/make/pdf/:id', async (req, res) => {
+// 	try {
 
-		const binaryResult = await generatePDF(req.user.id, req.params.id);
-		// send document back to client as file download
-		res.setHeader('Content-Type', 'application/pdf');
-		//change file name=contract name.pdf template literal with contract name
-		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
-			binaryResult.pipe(res); // download to respsonse stream
-			binaryResult.end(); // end of the stream
-	} catch(err){
+// 		const binaryResult = await generatePDF(req.user.id, req.params.id);
+// 		// send document back to client as file download
+// 		res.setHeader('Content-Type', 'application/pdf');
+// 		//change file name=contract name.pdf template literal with contract name
+// 		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
+// 			binaryResult.pipe(res); // download to respsonse stream
+// 			binaryResult.end(); // end of the stream
+// 	} catch(err){
 		
-		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
-	}
+// 		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
+// 	}
 
-});
+// });
 //PDF creation
 const fonts = {
 	Roboto: {
@@ -202,7 +247,7 @@ const { style } = require('@mui/system');
 const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 const printer = new PdfPrinter(fonts);
 
-
+//fills pdf format with contract values
 const generatePDF = async (userId, contractId) => {
 	
 	const query =   `SELECT "contract".* FROM "contract"
@@ -216,26 +261,26 @@ const generatePDF = async (userId, contractId) => {
 	const foundContract = results.rows[0];			
 	//contract values inserted into "content"
 	const dd = {
-	pageSize:'LETTER',
-	content: 
-	[
-	//contract heading
-	{ style: 'header', alignment: 'center', text: 'Bill of Sale'  }, 
+		pageSize:'LETTER',
+		content: 
+		[
+		//contract heading
+		{ style: 'header', alignment: 'center', text: 'Bill of Sale'  }, 
 
-	// contract title
-	{style: 'contractTitle', alignment: 'center', text: 'Legal Contract for '},
-	{style: 'contractTitle', alignment: 'center', text: `${foundContract.contract_title}`, decoration: 'underline' },
+		// contract title
+		{style: 'contractTitle', alignment: 'center', text: 'Legal Contract for '},
+		{style: 'contractTitle', alignment: 'center', text: `${foundContract.contract_title}`, decoration: 'underline' },
 
-	// involved parties
-	{style: 'sectionHeading', text: 'Date of Bill Involved Parties'},
-	{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date.toDateString()} by and between ${foundContract.first_party_name}
-	(hereinafter referred to as the "${foundContract.first_party_type}") and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`
-	},
+		// involved parties
+		{style: 'sectionHeading', text: 'Date of Bill & Involved Parties'},
+		{style: 'contractBody', text : `THIS BILL OF SALE is executed on ${foundContract.item_pickup_date.toDateString()} by and between ${foundContract.first_party_name}
+		(hereinafter referred to as the "${foundContract.first_party_type}") and the ${foundContract.second_party_name} (hereinafter referred to as the "${foundContract.second_party_type}").`
+		},
 
-	// contract terms
-	{style: 'sectionHeading', text: 'Terms'},
-	{style: 'contractBody', 
-	text: 'The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property'},
+		// contract terms
+		{style: 'sectionHeading', text: 'Terms'},
+		{style: 'contractBody', 
+		text: 'The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property'},
 
 		{style: 'contractBody', text:`PROPERTY: ${foundContract.item_name},
 									PROPERTY DETAILS: ${foundContract.item_description}`},
@@ -314,20 +359,37 @@ const generatePDF = async (userId, contractId) => {
 		}
 
 	//generate pdf document
+	// const binaryResult = await printer.createPdfKitDocument(dd, {});
 	const binaryResult = await printer.createPdfKitDocument(dd, {});
 	return binaryResult;
 }
 
-const sendPDFtoAWS = async () => {
-	const s3 = S3Service.instance();
-	await s3.upload({
-		resourceId: Number(req.user.id),
-		fileName: `${foundContract.contract_title}`,
-		fileCategory: S3Service.FileCategories.Contacts,
-		data: req.files.fileToUpload.data,
-	});
-	
+const sendPDFtoAWS = async (userId, fileName, data) => {
+	try{
+		const s3 = S3Service.instance();
+		console.log('await s3.upload');
+		await s3.uploadPDF({
+			resourceId: Number(userId),
+			fileName: fileName,
+			fileCategory: S3Service.FileCategories.Contracts,
+			data: data,
+		});
+		const url = s3.toUrl({
+			resourceId: Number(userId),
+			fileCategory: S3Service.FileCategories.Contracts,
+			fileName: fileName
+		})
+		console.log('URL',url);
+		return url;
+	}catch(error){
+		console.log(error)
+		return 'error';
+	}
 }
+	
+
+
+router.post
 
 
 module.exports = router;
