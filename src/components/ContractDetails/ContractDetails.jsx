@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import FinalizeContractDialog from './FinalizeContractDialog.jsx';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-
 import Button from '@mui/material/Button';
-
 import Box from '@mui/material/Box';
 import ContractPreview from '../ContractPreview/ContractPreview';
 
@@ -20,6 +19,17 @@ function ContractDetails() {
   // const user = useSelector((store) => store.user)
 
   const [secondPartySignature, setSecondPartySignature] = useState('');
+
+  // variable and functions for FinalizeContractDialog
+  const [openFinalize, setOpenFinalize] = useState(false);
+
+  const handleClickOpenFinalize = () => {
+    setOpenFinalize(true);
+  }
+
+  const handleClickCloseFinalize = () => {
+    setOpenFinalize(false);
+  }
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId, checkForUserAction: checkForUserAction});
@@ -41,7 +51,7 @@ function ContractDetails() {
   const finalizeContract = () => {
     console.log('in finalizeContract, second party signature:', secondPartySignature);
     if (!secondPartySignature) {
-      alert('You must enter your signature in order to finalize this contract.');
+      handleClickOpenFinalize();
       return;
     }
     // dispatch to contract saga to update contract details in database
@@ -99,17 +109,17 @@ function ContractDetails() {
       {/* page heading. May be a better way to handle this but it will be useful for the user to see the contract status in the heading */}
       <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
         {contractDetails.contract_status} </Typography>
-
+      <FinalizeContractDialog 
+        handleClickCloseFinalize={handleClickCloseFinalize}
+        open={openFinalize}
+      />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Contract Details  </Typography>
       <br />
       <br />
-
-
       <ContractPreview 
         contractDetails={contractDetails} 
       />
-
       <br />
       <br />
         {
