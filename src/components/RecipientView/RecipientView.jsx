@@ -66,6 +66,7 @@ function RecipientView() {
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
   const declineContract = () => {
     console.log('in declineContract. Contract id to decline is:', contractDetails.id);
+    handleClickCloseConfirmDecline();
     dispatch({
       type: 'UPDATE_CONTRACT_STATUS',
       payload: {
