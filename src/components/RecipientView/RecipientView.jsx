@@ -20,6 +20,17 @@ function RecipientView() {
     dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
   }, [searchContractKey]);
 
+  // variable and functions for RecipientViewAcceptDialog
+  const [acceptedOpen, setAcceptedOpen] = useState(false);
+
+  const handleClickOpenAccepted = () => {
+    setAcceptedOpen(true);
+  }
+
+  const handleClickCloseAccepted = () => {
+    setAcceptedOpen(false);
+  }
+
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
     console.log('in acceptContract. Contract key is:', searchContractKey);
@@ -63,6 +74,10 @@ function RecipientView() {
       <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
         {contractDetails.contract_status}
       </Typography>
+      <RecipientViewAcceptDialog 
+        acceptedOpen={acceptedOpen}
+        handleClickCloseAccepted={handleClickCloseAccepted}
+      />
       <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
