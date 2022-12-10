@@ -144,7 +144,7 @@ router.put('/', async (req, res) => {
 						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
         pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
             console.log('/contract UPDATE success');
-			const binaryResult = await generatePDF(req.user.id, req.body.id);
+			const binaryResult =  generatePDF(req.user.id, req.body.id);
 			// upload binaryResult to AWS
             res.sendStatus(200); // OK
         }).catch(error => {
@@ -167,6 +167,25 @@ router.put('/', async (req, res) => {
     };
 });
 
+
+//PDF Generation
+//move this code into 'put' that updates the status to accepedted
+  router.get('/make/pdf/:id', async (req, res) => {
+	try {
+
+		const binaryResult = await generatePDF(req.user.id, req.params.id);
+		// send document back to client as file download
+		res.setHeader('Content-Type', 'application/pdf');
+		//change file name=contract name.pdf template literal with contract name
+		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
+			binaryResult.pipe(res); // download to respsonse stream
+			binaryResult.end(); // end of the stream
+	} catch(err){
+		
+		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
+	}
+
+});
 //PDF creation
 const fonts = {
 	Roboto: {
@@ -177,13 +196,13 @@ const fonts = {
 	}
 };
   
-  const PdfPrinter = require('pdfmake');
+const PdfPrinter = require('pdfmake');
 const { style } = require('@mui/system');
 const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
-  const printer = new PdfPrinter(fonts);
+const printer = new PdfPrinter(fonts);
 
 
-const generatePDF = async (userId, contractId) => {
+  const generatePDF = async (userId, contractId) => {
 	const query =   `SELECT "contract".* FROM "contract"
 		JOIN "user_contract" 
 		ON "user_contract"."contract_id"="contract"."id"
@@ -261,61 +280,42 @@ const generatePDF = async (userId, contractId) => {
 		
 	],
 
-	styles: {
-	header: {
-	fontSize: 18,
-	bold: true
-	},
-	contractTitle: {
-	fontSize: 12,
-	bold: true,
-	margin: [1,10,1,1],
-	},
+		styles: {
+		header: {
+		fontSize: 18,
+		bold: true
+		},
+		contractTitle: {
+		fontSize: 12,
+		bold: true,
+		margin: [1,10,1,1],
+		},
 
-	contractBody: {
-	fontSize: 9,
+		contractBody: {
+		fontSize: 9,
 
-	},
-	contractSignatures: {
-	fontsize: 12,
-	bold: true,
-	margin:[1,5,1,1],
-	},
-	sectionHeading:{
-	fontSize:10,
-	bold: true,
-	decoration: 'underline',
-	margin:[1,2,1,1],
-	},
-	},
+		},
+		contractSignatures: {
+		fontsize: 12,
+		bold: true,
+		margin:[1,5,1,1],
+		},
+		sectionHeading:{
+		fontSize:10,
+		bold: true,
+		decoration: 'underline',
+		margin:[1,2,1,1],
+		},
+		},
 
-	footer: {
-	text: 'Contract created using TradeOut® ', alignment: 'center', fontSize: 9 },
-	}
+		footer: {
+		text: 'Contract created using TradeOut® ', alignment: 'center', fontSize: 9 },
+		}
 
 	//generate pdf document
 	const binaryResult = await printer.createPdfKitDocument(dd, {});
 	return binaryResult;
 }
-//PDF Generation
-//move this code into 'put' that updates the status to accepedted
-  router.get('/make/pdf/:id', async (req, res) => {
-	try {
-
-		const binaryResult = await generatePDF(req.user.id, req.params.id);
-		// send document back to client as file download
-		res.setHeader('Content-Type', 'application/pdf');
-		//change file name=contract name.pdf template literal with contract name
-		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
-			binaryResult.pipe(res); // download to respsonse stream
-			binaryResult.end(); // end of the stream
-	} catch(err){
-		
-		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
-	}
-
-});
-
 
 
 module.exports = router;
