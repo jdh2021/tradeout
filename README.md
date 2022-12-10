@@ -1,121 +1,71 @@
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# TradeOut
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+## Description
 
-## Use the Template for This Repository (Don't Clone)
+Conducting transactions in an online marketplace can be risky, and, unfortunately, scams and falsely advertised products are quite common. TradeOut is a platform that gives people greater transaction security by providing a quick and simple way to generate a digital contract between buyer and seller. Whether you’re the buyer or the seller, in TradeOut you can:
+- Initiate a contract for a transaction, including uploading item images
+- Send the contract to the other party
+- Sign the contract once you agree with the terms
+- Always access a copy of the final, signed contract
+- View all accepted, pending, and declined contracts
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account. Make the project `PUBLIC`!
-
+## Screenshots
 
 ## Prerequisites
-
-Before you get started, make sure you have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
+- [SendGrid](https://sendgrid.com)
+- [PDFMake](http://pdfmake.org/#/)
 
-## Create database and table
+## Installation
 
-Create a new database called `prime_app` and create a `user` table:
-
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
-
-## Development Setup Instructions
-
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
+1. Create a new database named `tradeout`, and execute the queries from `database.sql` to create the needed tables. 
+2. Within a code editor, open a terminal window and install the dependencies by running: `npm install`.
+3. Create a `.env` file with values for the following variables:
   ```
-  SERVER_SESSION_SECRET=superDuperSecret
+  SERVER_SESSION_SECRET=random string containing more than eight characters
+  SENDGRID_API_KEY=key provided with SendGrid account
+  SENDGRID_EMAIL=verified sender email
   ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
+4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was built and designed for compatibility with Google Chrome. 
 
-## Debugging
+## Usage
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+### Registering
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+1. To register as a new user, click `Register` and enter an email, legal name, and password. 
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+### Logging In
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+1. To log in, enter the email and password associated with the account and click `Log In`. 
 
-## Testing Routes with Postman
+### Creating a Contract
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
+1. To create a contract, click `New Contract` from the Dashboard. Select `Buyer` or `Seller` and click `Next`.
+2. Within Create New Contract, enter the required informaton in the fields marked with a `*` and any other relevant information. Click `Choose File` to optionally upload an image of the item being purchased or sold. Type the signature in the signature field. Click `Review Contract` to proceed. 
+3. Review the contract details. Make any changes by clicking `Edit Contract Details` or proceed by clicking `Recipient Contact Information`. 
+4. Within Send To Recipient, enter the email address of the other party in the contract. Click `Generate Contract Token` to generate a unique key that the recipient will receive to be able to securely view the contract. 
+5. Click `Create Contract and Send to Recipient` to send an email to the recipient letting them know a contract is pending. 
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
+### Receiving a Contract
 
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
+1. Click the link in the email sent from TradeOut to be taken to Recipient View. Recipient View shows the status of the contract. If pending, review the contract details and click `Accept` or `Decline`. (Note: Clicking `Decline` does not require an account.)
+2. Clicking `Accept` requires an account and will navigate to Registration. Once registered, the contract appears in the Dashboard.
 
-After running the login route above, you can try any other route you've created that requires a logged in user!
+### Accepting or Declining a Contract
 
-## Production Build
+1. Clicking a contract card from the Dashboard shows its details. If a contract is pending and awaiting an action, a signature field and buttons will appear at the bottom of Contract Details. 
+2. To accept the terms of a contract, type the signature in the signature field and click `Sign and Finalize Contract`. The contract will then appear under the Accepted heading in the Dashboard.
+3. To decline a contract, click `Decline`. The contract will then appear under the Declined heading in the Dashboard.
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+### Accessing a PDF for an Accepted Contract
 
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
+1. Click an accepted contract card from the Dashboard to view its details. 
+2. Click the link next to `Contract PDF` to access a PDF of the contract.
 
-## Lay of the Land
+## Built With
 
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+Node.js | Express.js | React.js | Redux | Redux-Saga | JavaScript | PostgreSQL | Passport | Material UI | SendGrid | AWS S3 | PDFMake 

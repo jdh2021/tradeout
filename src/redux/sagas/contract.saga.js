@@ -34,17 +34,36 @@ function* fetchRecipientContract(action) {
     }     
 }
 
+
+// item_image is the image path (on AWS)
+// image_data is the selected file data (before uploading)
+// item_preview is the local image preview
 function* addNewContract(action) {
     // payload is the newContractDetails object
     // SendGrid request will be called after successful new contract post
     try {
-        console.log('in addNewContract (saga)', action.payload);
-        yield axios.post('/api/contract', action.payload);
+        console.log('in uploadImage (saga)', action.payload);
+        const submissionData = Object.assign({}, action.payload);
+        if (action.fileToUpload) {
+            const selectedFile = action.fileToUpload;
+            const fileName = encodeURIComponent(selectedFile.name);
+            const fileType = encodeURIComponent(selectedFile.type);
+            const fileSize = encodeURIComponent(selectedFile.size);
+            const formData = new FormData();
+            formData.append('fileToUpload', selectedFile);
+            const imageResponse = yield axios.post(`/api/s3/image?name=${fileName}&type=${fileType}&size=${fileSize}`, formData);
+            submissionData.item_image = imageResponse.data.imagePath;
+            console.log(submissionData.item_image);
+        }
+
+        console.log('in addNewContract (saga)', submissionData);
+        yield axios.post('/api/contract', submissionData);
         yield put ({type: 'FETCH_CONTRACTS'});
         // SendGrid email request:
-
-        yield axios.post('/api/sendgrid', action.payload);
+        console.log('sending to sendGrid',action.userAlert);
+        yield axios.post('/api/sendgrid', submissionData);
         // user is told the contract post and email were successful
+        console.log('resetting user contract details');
 
         // yield axios.post('/api/sendgrid', action.payload);
         // clearing contract details from newContractDetails reducer

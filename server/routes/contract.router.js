@@ -261,7 +261,7 @@ const printer = new PdfPrinter(fonts);
 		{style: 'sectionHeading', text: 'Product Image'},
 		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}:
 
-		*IMAGE HERE* `},
+		${foundContract.item_image} `},
 		
 	// transfer of goods
 		{style: 'sectionHeading', text: 'Transfer of goods'},

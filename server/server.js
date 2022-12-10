@@ -11,7 +11,12 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const contractRouter = require('./routes/contract.router');
 const recipientContractRouter = require('./routes/recipient.router');
-const sendgridRouter = require('./routes/sendgrid.router')
+const sendgridRouter = require('./routes/sendgrid.router');
+const s3Router = require('./routes/s3.router');
+const fileUpload = require('express-fileupload');
+
+// Accept photo uploads
+app.use(fileUpload());
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,6 +34,7 @@ app.use('/api/user', userRouter);
 app.use('/api/contract', contractRouter);
 app.use('/api/recipient', recipientContractRouter);
 app.use('/api/sendgrid', sendgridRouter)
+app.use('/api/s3', s3Router)
 
 // Serve static files
 app.use(express.static('build'));
