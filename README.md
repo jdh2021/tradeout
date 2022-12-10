@@ -18,6 +18,7 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 - [SendGrid](https://sendgrid.com)
+- [AWS S3](https://aws.amazon.com/s3/)
 - [PDFMake](http://pdfmake.org/#/)
 
 ## Installation
@@ -29,6 +30,10 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
   SERVER_SESSION_SECRET=random string containing more than eight characters
   SENDGRID_API_KEY=key provided with SendGrid account
   SENDGRID_EMAIL=verified sender email
+  AWS_ACCESS_KEY_ID=access key id from AWS
+  AWS_SECRET_ACCESS_KEY=secret access key from AWS
+  AWS_REGION=your AWS region
+  S3_BUCKET_NAME=your AWS S3 bucket name
   ```
 4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was built and designed for compatibility with Google Chrome. 
 
