@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const path = require('path');
+const S3Service = require('../services/S3Service');
 
 // GET all contracts for logged in user
 router.get('/', (req, res) => {
@@ -202,7 +203,8 @@ const { lightBlue, blueGrey, blue, red } = require('@mui/material/colors');
 const printer = new PdfPrinter(fonts);
 
 
-  const generatePDF = async (userId, contractId) => {
+const generatePDF = async (userId, contractId) => {
+	
 	const query =   `SELECT "contract".* FROM "contract"
 		JOIN "user_contract" 
 		ON "user_contract"."contract_id"="contract"."id"
@@ -213,7 +215,6 @@ const printer = new PdfPrinter(fonts);
 	console.log(results.rows)
 	const foundContract = results.rows[0];			
 	//contract values inserted into "content"
-
 	const dd = {
 	pageSize:'LETTER',
 	content: 
@@ -315,6 +316,17 @@ const printer = new PdfPrinter(fonts);
 	//generate pdf document
 	const binaryResult = await printer.createPdfKitDocument(dd, {});
 	return binaryResult;
+}
+
+const sendPDFtoAWS = async () => {
+	const s3 = S3Service.instance();
+	await s3.upload({
+		resourceId: Number(req.user.id),
+		fileName: `${foundContract.contract_title}`,
+		fileCategory: S3Service.FileCategories.Contacts,
+		data: req.files.fileToUpload.data,
+	});
+	
 }
 
 
