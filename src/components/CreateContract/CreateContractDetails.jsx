@@ -30,6 +30,17 @@ const CreateContractDetails = () => {
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const [imageUpload, setImageUpload] = useState(null);
 
+  // form validation dialog variables and functions
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+      setOpen(true);
+  }
+
+  const handleClickClose = () => {
+      setOpen(false);
+  }
+
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
     console.log('in handleChangeFor');
@@ -113,6 +124,10 @@ const CreateContractDetails = () => {
             Submit Contract & Email Recipient
           </Typography>
         </Breadcrumbs>
+        <CreateContractDetailsDialog 
+          handleClickClose={handleClickClose}
+          open={open}
+        />
         <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <div style={{width: 100, height: 100}} onClick={autofillForm} />
