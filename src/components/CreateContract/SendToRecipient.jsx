@@ -22,6 +22,7 @@ const SendToRecipient = () => {
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const user = useSelector((store) => store.user);
   const [tokenCreated, setTokenCreated] = useState(false);
+  const imageUpload = useSelector(store => store.contract.newContractDetails.image_data);
 
   // date formatting for pickup date
   const pickupDate = new Date(newContractDetails.item_pickup_date);
@@ -43,15 +44,23 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
+
   // dispatching newContractDetails
   const submitNewContract = () => {
-    console.log('in submitNewContract', newContractDetails);
-    if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-      alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
-      return;
-    }
+
+
+      console.log('in submitNewContract', newContractDetails);
+      if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
+        alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
+        return;
+      }
+      
+      // the SendGrid email server request is called from within the addNewContract saga
+      dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
+    
+
     // the SendGrid email server request is called from within the addNewContract saga
-    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
+    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
 
   // success alert
@@ -70,7 +79,7 @@ const SendToRecipient = () => {
   // autofill email for demo purposes
   const autofillEmail = () => {
     console.log('in autofillEmail');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'christmascactus@gmail.com'}});
+    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'jackjackg42@gmail.com'}});
   }
 
   return (
@@ -131,7 +140,9 @@ const SendToRecipient = () => {
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
               {/* images will be the user-uploaded images once that functionality is implemented */}
-              <img src="https://i.ebayimg.com/images/g/l3sAAOSweURjjW1j/s-l500.jpg" alt= "red 2018 Honda Accord" width="200"/>
+
+              <img src={newContractDetails.item_image}/>
+
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>

@@ -13,12 +13,21 @@ import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import ImageUpload from '../ImageUpload/ImageUpload';
+import { readAndCompressImage } from 'browser-image-resizer';
+
+
+const imageConfig = {
+  quality: 1.0,
+  maxHeight: 300,
+};
 
 const CreateContractDetails = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
+  const [imageUpload, setImageUpload] = useState(null);
 
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
@@ -45,7 +54,7 @@ const CreateContractDetails = () => {
   // validating that the required fields have a value
   const validateForm = () => {
     console.log('in validateForm');
-    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature) {
+    if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature || !newContractDetails.item_preview) {
       alert('Please complete all required fields (those with a *).');
       return;
     } else {
@@ -69,6 +78,19 @@ const CreateContractDetails = () => {
       first_party_signature: 'Bryn Nadziejka Waller'
     }});
   }
+
+    //Handle Image Upload
+    const fileSelectedHandler = async (event)  => {
+      console.log(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      setImageUpload(event.target.files[0]);
+      const copyFile = new Blob([selectedFile], { type: selectedFile.type });
+      const resizedFile = await readAndCompressImage(copyFile, imageConfig);
+
+      console.log('in fileSelectedHandler')
+      dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, image_data: selectedFile, item_preview: URL.createObjectURL(resizedFile)}});
+
+    }
 
   return (
     <div>
@@ -155,10 +177,11 @@ const CreateContractDetails = () => {
           </Grid>
           <br />
           <Grid item>
-            {/* the upload button does not work */}
-            {/* <Button variant="contained">Upload Item Image</Button> */}
+           
             <h4>Upload Item Image</h4>
-            <input type="file" name="picture"></input>
+            <input type="file" name="picture" accept="image/*" onChange={fileSelectedHandler}></input>
+            {/* <ImageUpload /> */}
+
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
