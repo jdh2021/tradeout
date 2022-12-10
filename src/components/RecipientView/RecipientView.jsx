@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
+import RecipientViewAcceptDialog from './RecipientViewAcceptDialog.jsx';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
