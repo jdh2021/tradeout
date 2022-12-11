@@ -56,7 +56,7 @@ const SendToRecipient = () => {
     setOpenTokenDetails(false);
   }
 
-// variable and functions for ContractTokenDialog
+// variable and functions for ContractSubmitSuccessDialog
 const [openSubmitSuccess, setOpenSubmitSuccess] = useState(false);
 
 const handleClickOpenSubmitSuccess = () => {
@@ -90,14 +90,12 @@ const handleClickCloseSubmitSuccess = () => {
     }
     // the SendGrid email server request is called from within the addNewContract saga
     dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
-    // the SendGrid email server request is called from within the addNewContract saga
-    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
 
   // success alert
   const userAlert = () => {
     console.log('in userAlert');
-    alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
+    handleClickOpenSubmitSuccess();
     // history.push('/dashboard');
   }
 
@@ -141,7 +139,10 @@ const handleClickCloseSubmitSuccess = () => {
           open={openTokenDetails}
           handleClickCloseTokenDetails={handleClickCloseTokenDetails}
         />
-        <ContractSubmitSuccessDialog />     
+        <ContractSubmitSuccessDialog 
+          open={openSubmitSuccess}
+          handleClickCloseSubmitSuccess={handleClickCloseSubmitSuccess}
+        />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
@@ -179,10 +180,7 @@ const handleClickCloseSubmitSuccess = () => {
             <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the {newContractDetails.first_party_type}:</Typography>
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
-              {/* images will be the user-uploaded images once that functionality is implemented */}
-
               <img src={newContractDetails.item_preview}/>
-
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
@@ -217,7 +215,6 @@ const handleClickCloseSubmitSuccess = () => {
             </Button>
             <Button 
               variant="contained"
-              // add onClick function that dispatches to new contract POST saga
               onClick={submitNewContract}
               sx={{marginLeft: 1, width: 200}}
             >
