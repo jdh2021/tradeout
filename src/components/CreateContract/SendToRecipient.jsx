@@ -104,17 +104,16 @@ const SendToRecipient = () => {
         </Breadcrumbs>     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography variant="h3">Send to Recipient:</Typography>
+          {/* used to autofill recipient email during demo */}
+          <Typography variant="h3" onClick={autofillEmail}>Send to Recipient:</Typography>
           <TextField
             required
-            sx={{width: 300, marginLeft: 2}}
+            sx={{width: 350, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.second_party_email}
             onChange={handleChangeFor('second_party_email')}
           />
-          {/* used to autofill recipient email during demo */}
-          <div style={{width: 100, height: 100}} onClick={autofillEmail} />
         </Box>
         <br />
         <br />
@@ -157,7 +156,7 @@ const SendToRecipient = () => {
       </Container>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={() => setContractKey('contract_key', token)} sx={{mr: 2}}>Generate Contract Token*</Button>
+        <Button variant="contained" color="grey" onClick={() => setContractKey('contract_key', token)} sx={{mr: 2, color: 'white'}}>Generate Contract Token*</Button>
         {
           tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
           <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
@@ -171,7 +170,8 @@ const SendToRecipient = () => {
             <Button 
               variant="contained"
               onClick={() => history.push('/create-contract-review')}
-              sx={{marginRight: 1, width: 200}}
+              sx={{marginRight: 1, width: 200, color: 'white'}}
+              color="purple"
             >
               Review Contract Details
             </Button>
@@ -180,6 +180,7 @@ const SendToRecipient = () => {
               // add onClick function that dispatches to new contract POST saga
               onClick={submitNewContract}
               sx={{marginLeft: 1, width: 200}}
+              color="green"
             >
               Create Contract and Send to Recipient
             </Button>
