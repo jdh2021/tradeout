@@ -39,11 +39,13 @@ router.get('/:id', (req, res) => {
 
     if (req.isAuthenticated()) {
        
-        const query =   `SELECT "contract".* FROM "contract"
-                        JOIN "user_contract" 
-                        ON "user_contract"."contract_id"="contract"."id"
-                        WHERE "user_contract"."user_id" = $1 
-                        AND "user_contract"."contract_id" = $2;`;
+        const query =   `SELECT "contract".*, "photo"."item_image" FROM "contract"
+						JOIN "user_contract" 
+						ON "user_contract"."contract_id"="contract"."id"
+						JOIN "photo"
+						ON "photo"."contract_id"="contract"."id"
+						WHERE "user_contract"."user_id" = $1
+						AND "user_contract"."contract_id" = $2;`;
         
         pool.query(query, [req.user.id, req.params.id]) // user and contract id passed 
             .then(result => {
@@ -307,8 +309,10 @@ const generatePDF = async (userId, contractId) => {
 		{style: 'contractBody', text: `${foundContract.contract_notes},`},
 
 		{style: 'sectionHeading', text: 'Product Image'},
-		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}, 
-		image link: ${foundContract.item_image} `},
+		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}`}, 
+		`${foundContract.item_image}`,
+		
+		
 		
 	// transfer of goods
 		{style: 'sectionHeading', text: 'Transfer of goods'},
