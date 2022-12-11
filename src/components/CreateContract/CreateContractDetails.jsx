@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import CreateContractDetailsDialog from './CreateContractDetailsDialog.jsx';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -29,6 +30,17 @@ const CreateContractDetails = () => {
   const newContractDetails = useSelector(store => store.contract.newContractDetails);
   const [imageUpload, setImageUpload] = useState(null);
 
+  // form validation dialog variables and functions
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+      setOpen(true);
+  }
+
+  const handleClickClose = () => {
+      setOpen(false);
+  }
+
   // onChange in a textfield, the key value is set in the newContractDetails reducer
   const handleChangeFor = (key) => (event) => {
     console.log('in handleChangeFor');
@@ -55,7 +67,8 @@ const CreateContractDetails = () => {
   const validateForm = () => {
     console.log('in validateForm');
     if (!newContractDetails.contract_title || !newContractDetails.item_name || !newContractDetails.item_description || !newContractDetails.item_price || !newContractDetails.item_pickup_location || !newContractDetails.item_pickup_date || !newContractDetails.first_party_signature || !newContractDetails.item_preview) {
-      alert('Please complete all required fields (those with a *).');
+      // alert('Please complete all required fields (those with a *).');
+      handleClickOpen();
       return;
     } else {
       history.push('/create-contract-review');
@@ -112,6 +125,10 @@ const CreateContractDetails = () => {
             Submit Contract & Email Recipient
           </Typography>
         </Breadcrumbs>
+        <CreateContractDetailsDialog 
+          handleClickClose={handleClickClose}
+          open={open}
+        />
         <br />
         <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <div style={{width: 100, height: 100}} onClick={autofillForm} />
@@ -178,7 +195,7 @@ const CreateContractDetails = () => {
           <br />
           <Grid item>
            
-            <h4>Upload Item Image</h4>
+            <h4>Upload Item Image*</h4>
             <input type="file" name="picture" accept="image/*" onChange={fileSelectedHandler}></input>
             {/* <ImageUpload /> */}
 
