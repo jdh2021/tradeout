@@ -250,11 +250,13 @@ const printer = new PdfPrinter(fonts);
 //fills pdf format with contract values
 const generatePDF = async (userId, contractId) => {
 	
-	const query =   `SELECT "contract".* FROM "contract"
-		JOIN "user_contract" 
-		ON "user_contract"."contract_id"="contract"."id"
-		WHERE "user_contract"."user_id" = $1 
-		AND "user_contract"."contract_id" = $2;`;
+	const query =   `SELECT "contract".*, "photo"."item_image" FROM "contract"
+					JOIN "user_contract" 
+					ON "user_contract"."contract_id"="contract"."id"
+					JOIN "photo"
+					ON "photo"."contract_id"="contract"."id"
+					WHERE "user_contract"."user_id" = $1
+					AND "user_contract"."contract_id" = $2;` ;
 
 	const results = await pool.query(query, [userId, contractId]) // user and contract id passed 
 	console.log(results.rows)
@@ -305,9 +307,8 @@ const generatePDF = async (userId, contractId) => {
 		{style: 'contractBody', text: `${foundContract.contract_notes},`},
 
 		{style: 'sectionHeading', text: 'Product Image'},
-		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}:
-
-		${foundContract.item_image} `},
+		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}, 
+		image link: ${foundContract.item_image} `},
 		
 	// transfer of goods
 		{style: 'sectionHeading', text: 'Transfer of goods'},
