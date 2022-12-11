@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import EmailTokenValidationDialog from './EmailTokenValidationDialog.jsx';
 import ContractTokenDialog from './ContractTokenDialog.jsx';
+import ContractSubmitSuccessDialog from './ContractSubmitSucessDialog.jsx';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -55,6 +56,18 @@ const SendToRecipient = () => {
     setOpenTokenDetails(false);
   }
 
+// variable and functions for ContractTokenDialog
+const [openSubmitSuccess, setOpenSubmitSuccess] = useState(false);
+
+const handleClickOpenSubmitSuccess = () => {
+  setOpenSubmitSuccess(true);
+}
+
+const handleClickCloseSubmitSuccess = () => {
+  setOpenSubmitSuccess(false);
+  history.push('/dashboard');
+}
+
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
     console.log('in setContractKey', key, value);
@@ -85,13 +98,12 @@ const SendToRecipient = () => {
   const userAlert = () => {
     console.log('in userAlert');
     alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
-    history.push('/dashboard');
+    // history.push('/dashboard');
   }
 
   // explanation of what the contract token is used for
   const contractTokenAlert = () => {
     console.log('in contractTokenAlert');
-    // alert('The contract token is a unique key that is associated with this contract. The recipient will receive an email with a link to view the details of this contract. The contract token is used in that link to ensure that they access this document securely.')
     handleClickOpenTokenDetails();
   }
 
@@ -128,7 +140,8 @@ const SendToRecipient = () => {
         <ContractTokenDialog 
           open={openTokenDetails}
           handleClickCloseTokenDetails={handleClickCloseTokenDetails}
-        />     
+        />
+        <ContractSubmitSuccessDialog />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
