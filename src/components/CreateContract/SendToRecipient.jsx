@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import EmailTokenValidationDialog from './EmailTokenValidationDialog.jsx';
+import ContractTokenDialog from './ContractTokenDialog.jsx';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -43,6 +44,17 @@ const SendToRecipient = () => {
     setOpenEmailTokenValidation(false);
   }
 
+  // variable and functions for ContractTokenDialog
+  const [openTokenDetails, setOpenTokenDetails] = useState(false);
+
+  const handleClickOpenTokenDetails = () => {
+    setOpenTokenDetails(true);
+  }
+
+  const handleClickCloseTokenDetails = () => {
+    setOpenTokenDetails(false);
+  }
+
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
     console.log('in setContractKey', key, value);
@@ -60,7 +72,6 @@ const SendToRecipient = () => {
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
     if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-      // alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
       handleClickOpenEmailToken();
       return;
     }
@@ -112,7 +123,8 @@ const SendToRecipient = () => {
         <EmailTokenValidationDialog 
           open={openEmailTokenValidation}
           handleClickCloseEmailToken={handleClickCloseEmailToken}
-        />     
+        />
+        <ContractTokenDialog />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
