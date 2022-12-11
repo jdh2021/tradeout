@@ -78,6 +78,32 @@ class S3Service {
         return s3Res;
     }
 
+    async uploadPDF({
+        resourceId,
+        fileName,
+        fileCategory,
+        fileSize = S3Service.FileSize.Original,
+        data,
+        acl = 'bucket-owner-full-control',
+    }) {
+        const s3Key = this._resourceToKey({
+            resourceId, fileName, fileCategory, fileSize,
+        });
+
+        // Upload to S3
+        // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property
+        const s3Res = await this.s3Client.upload({
+            Bucket: this.s3Bucket,
+            Key: s3Key,
+            Body: data,
+            ContentType: 'application/pdf',
+            ACL: acl,
+        }).promise();
+
+        // { Location, ETag, Bucket, Key }
+        return s3Res;
+    }
+
     _resourceToKey({
         resourceId,
         fileCategory,

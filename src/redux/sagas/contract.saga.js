@@ -103,6 +103,9 @@ function* finalizeContract(action) {
     }
 }
 
+
+
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
@@ -110,6 +113,8 @@ function* contractSaga() {
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
     yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
     yield takeLatest('FINALIZE_CONTRACT', finalizeContract);
+   
+
 }
 
 export default contractSaga;
