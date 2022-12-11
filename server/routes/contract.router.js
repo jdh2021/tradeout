@@ -312,6 +312,7 @@ const generatePDF = async (userId, contractId) => {
 		{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}`}, 
 
 		{style: 'sectionHeading', text: 'Link to download property image'},
+
 		`${foundContract.item_image}`,
 		
 		
