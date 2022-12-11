@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import EmailTokenValidationDialog from './EmailTokenValidationDialog.jsx';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -31,6 +32,17 @@ const SendToRecipient = () => {
   // unqiue random string for contract_key
   const token = cryptoRandomString({ length: 40, type: 'hex' });
 
+  // variable and functions for EmailTokenValidationDialog
+  const [openEmailTokenValidation, setOpenEmailTokenValidation] = useState(false);
+
+  const handleClickOpenEmailToken = () => {
+    setOpenEmailTokenValidation(true);
+  }
+
+  const handleClickCloseEmailToken = () => {
+    setOpenEmailTokenValidation(false);
+  }
+
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
     console.log('in setContractKey', key, value);
@@ -44,21 +56,15 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
-
   // dispatching newContractDetails
   const submitNewContract = () => {
-
-
-      console.log('in submitNewContract', newContractDetails);
-      if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-        alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
-        return;
-      }
-      
-      // the SendGrid email server request is called from within the addNewContract saga
-      dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
-    
-
+    console.log('in submitNewContract', newContractDetails);
+    if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
+      alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
+      return;
+    }
+    // the SendGrid email server request is called from within the addNewContract saga
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
     // the SendGrid email server request is called from within the addNewContract saga
     // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
   }
@@ -101,7 +107,8 @@ const SendToRecipient = () => {
             <SendIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Submit Contract & Email Recipient
           </Typography>
-        </Breadcrumbs>     
+        </Breadcrumbs>
+        <EmailTokenValidationDialog />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
@@ -186,7 +193,6 @@ const SendToRecipient = () => {
           </Box>
     </div>
   );
-
 }
 
 export default SendToRecipient;
