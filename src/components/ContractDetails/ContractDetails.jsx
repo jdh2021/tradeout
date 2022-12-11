@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FinalizeContractDialog from './FinalizeContractDialog.jsx';
 import FinalizeSuccessDialog from './FinalizeSuccessDialog.jsx';
+import ConfirmDeclineDialog from '../RecipientView/ConfirmDeclineDialog.jsx';
+import ContractStatusUpdateDialog from '../RecipientView/ContractStatusUpdateDialog.jsx';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -41,6 +43,31 @@ function ContractDetails() {
 
   const handleClickCloseSuccess = () => {
     setOpenFinalizeSuccess(false);
+    history.push('/dashboard');
+  }
+
+  // variable and functions for ConfirmDeclineDialog
+  const [openConfirmDecline, setOpenConfirmDecline] = useState(false);
+
+  const handleClickOpenConfirmDecline = () => {
+    console.log('in handleClickOpenConfirmDecline');
+    setOpenConfirmDecline(true);
+  }
+
+  const handleClickCloseConfirmDecline = () => {
+    setOpenConfirmDecline(false);
+  }
+
+  // variable and functions for ContractStatusUpdateDialog
+  const [openStatusUpdate, setOpenStatusUpdate] = useState(false);
+
+  const handleClickOpenStatusUpdate = () => {
+    console.log('in handleClickOpenStatusUpdate');
+    setOpenStatusUpdate(true);
+  }
+
+  const handleClickCloseStatusUpdate = () => {
+    setOpenStatusUpdate(false);
     history.push('/dashboard');
   }
 
@@ -89,9 +116,7 @@ function ContractDetails() {
   // prompts recipient to confirm before contract is declined
   const confirmDecline = () => {
     console.log('in confirmDecline');
-    if (window.confirm('Are you sure you want to decline this contract?')) {
-      declineContract();
-    }
+    handleClickOpenConfirmDecline();
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
@@ -112,8 +137,8 @@ function ContractDetails() {
   // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
-    alert('Thank you! The contract has been declined.');
-    history.push('/dashboard');
+    handleClickCloseConfirmDecline();
+    handleClickOpenStatusUpdate();
   }
 
   return (
@@ -128,6 +153,15 @@ function ContractDetails() {
       <FinalizeSuccessDialog 
         open={openFinalizeSuccess}
         handleClickCloseSuccess={handleClickCloseSuccess}
+      />
+      <ConfirmDeclineDialog 
+        handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
+        open={openConfirmDecline}
+        declineContract={declineContract}
+      />
+      <ContractStatusUpdateDialog 
+        open={openStatusUpdate}
+        handleClickCloseStatusUpdate={handleClickCloseStatusUpdate}
       />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Contract Details  </Typography>
