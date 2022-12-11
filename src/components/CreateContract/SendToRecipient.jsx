@@ -60,7 +60,8 @@ const SendToRecipient = () => {
   const submitNewContract = () => {
     console.log('in submitNewContract', newContractDetails);
     if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-      alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
+      // alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
+      handleClickOpenEmailToken();
       return;
     }
     // the SendGrid email server request is called from within the addNewContract saga
@@ -108,7 +109,10 @@ const SendToRecipient = () => {
             Submit Contract & Email Recipient
           </Typography>
         </Breadcrumbs>
-        <EmailTokenValidationDialog />     
+        <EmailTokenValidationDialog 
+          open={openEmailTokenValidation}
+          handleClickCloseEmailToken={handleClickCloseEmailToken}
+        />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
