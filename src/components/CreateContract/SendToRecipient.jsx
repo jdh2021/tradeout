@@ -141,7 +141,7 @@ const SendToRecipient = () => {
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
               {/* images will be the user-uploaded images once that functionality is implemented */}
 
-              <img src={newContractDetails.item_image}/>
+              <img src={newContractDetails.item_preview}/>
 
             </Box>
             <br />
