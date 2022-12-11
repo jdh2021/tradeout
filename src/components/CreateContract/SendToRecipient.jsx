@@ -91,7 +91,8 @@ const SendToRecipient = () => {
   // explanation of what the contract token is used for
   const contractTokenAlert = () => {
     console.log('in contractTokenAlert');
-    alert('The contract token is a unique key that is associated with this contract. The recipient will receive an email with a link to view the details of this contract. The contract token is used in that link to ensure that they access this document securely.')
+    // alert('The contract token is a unique key that is associated with this contract. The recipient will receive an email with a link to view the details of this contract. The contract token is used in that link to ensure that they access this document securely.')
+    handleClickOpenTokenDetails();
   }
 
   // autofill email for demo purposes
@@ -124,7 +125,10 @@ const SendToRecipient = () => {
           open={openEmailTokenValidation}
           handleClickCloseEmailToken={handleClickCloseEmailToken}
         />
-        <ContractTokenDialog />     
+        <ContractTokenDialog 
+          open={openTokenDetails}
+          handleClickCloseTokenDetails={handleClickCloseTokenDetails}
+        />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           <Typography variant="h3">Send to Recipient:</Typography>
