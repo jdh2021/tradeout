@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FinalizeContractDialog from './FinalizeContractDialog.jsx';
 import FinalizeSuccessDialog from './FinalizeSuccessDialog.jsx';
+import ConfirmDeclineDialog from '../RecipientView/ConfirmDeclineDialog.jsx';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -42,6 +43,18 @@ function ContractDetails() {
   const handleClickCloseSuccess = () => {
     setOpenFinalizeSuccess(false);
     history.push('/dashboard');
+  }
+
+  // variable and functions for ConfirmDeclineDialog
+  const [openConfirmDecline, setOpenConfirmDecline] = useState(false);
+
+  const handleClickOpenConfirmDecline = () => {
+    console.log('in handleClickOpenConfirmDecline');
+    setOpenConfirmDecline(true);
+  }
+
+  const handleClickCloseConfirmDecline = () => {
+    setOpenConfirmDecline(false);
   }
 
   useEffect(() => {
@@ -89,9 +102,7 @@ function ContractDetails() {
   // prompts recipient to confirm before contract is declined
   const confirmDecline = () => {
     console.log('in confirmDecline');
-    if (window.confirm('Are you sure you want to decline this contract?')) {
-      declineContract();
-    }
+    handleClickOpenConfirmDecline();
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
@@ -128,6 +139,11 @@ function ContractDetails() {
       <FinalizeSuccessDialog 
         open={openFinalizeSuccess}
         handleClickCloseSuccess={handleClickCloseSuccess}
+      />
+      <ConfirmDeclineDialog 
+        handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
+        open={openConfirmDecline}
+        declineContract={declineContract}
       />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Contract Details  </Typography>
