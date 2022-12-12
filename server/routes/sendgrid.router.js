@@ -18,9 +18,9 @@ router.post('/', async (req, res) => {
         const msg = {
             to: secondPartyEmail, // Change to your recipient
             from: process.env.SENDGRID_EMAIL, // Change to your verified sender
-            subject: 'Sending with SendGrid is Fun',
-            text: `${contractKey}`,
-            html: `<a href="http://localhost:3000/#/recipient-view/${contractKey}">Click here</a> to view your contract.
+            subject: 'Contract To View On TradeOut',
+            text: `Link to view contract http://localhost:3000/#/recipient-view/${contractKey}`,
+            html: `<a href="http://localhost:3000/#/recipient-view/${contractKey}">Click here</a> to view your contract on TradeOut.
             <strong>Here is your contract code</strong>
             <p>${contractKey}</p>
             `
@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
         })
     } else {
         console.log(`Code http://localhost:3000/#/recipient-view/${contractKey}`);
+        res.send(200); // success for testing purposes without SendGrid credentials
     }
 
 })
