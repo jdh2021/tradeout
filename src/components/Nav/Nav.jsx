@@ -12,17 +12,19 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
+import logo from '../Nav/tradeout-logo.svg';
+
 function Nav() {
   const user = useSelector((store) => store.user);
 
   const drawerWidth = 240;
 
   return (
-    <AppBar position="sticky" className="nav" style={{backgroundColor:'#4BC975'}}>
+    <AppBar position="sticky" className="nav" style={{backgroundColor:'#414141'}}>
       <Toolbar disableGutters>
         <Box container sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Link to="/dashboard">
-          <img src="images/tradeout_logo.jpg" alt="tradeout logo" width='175' height='125' style={{margin: 10, borderRadius: 4}}/>
+          <img src={logo} alt="tradeout logo"  height='50' style={{margin: 24, borderRadius: 4}}/>
         </Link>
         <div>
           {/* If no user is logged in, show these links */}
