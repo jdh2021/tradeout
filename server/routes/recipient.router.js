@@ -6,7 +6,9 @@ const router = express.Router();
 router.get('/:id', (req, res) => {
     console.log('in /api/recipient GET contract by contract key');
     console.log('contract key is:', req.params.id);
-    const queryText = `SELECT * FROM "contract"
+    const queryText =   `SELECT "contract".*, "photo"."item_image" FROM "contract"
+                        JOIN "photo"
+                        ON "photo"."contract_id"="contract"."id"
                         WHERE "contract"."contract_key" = $1;`;
     pool.query(queryText, [req.params.id]).then(result => {
         if (result.rows.length > 0) {
