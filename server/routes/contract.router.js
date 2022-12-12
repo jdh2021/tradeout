@@ -10,10 +10,12 @@ router.get('/', (req, res) => {
     console.log('in /api/contract GET. user id is:', req.user.id);
     console.log('is authenticated?', req.isAuthenticated());
     if (req.isAuthenticated()) {
-        const queryText =   `SELECT "contract".* FROM "contract"
-                            JOIN "user_contract" ON "user_contract"."contract_id"="contract"."id"
-                            WHERE "user_contract"."user_id" = $1
-                            ORDER BY "contract"."contract_created_at" DESC;`;
+        const queryText =   `SELECT "contract".*, "photo"."item_image" FROM "contract"
+							JOIN "user_contract" 
+							ON "user_contract"."contract_id"="contract"."id"
+							JOIN "photo"
+							ON "photo"."contract_id"="contract"."id"
+							WHERE "user_contract"."user_id" = $1;`
         pool.query(queryText, [req.user.id]).then(result => {
             if (result.rows.length > 0) {
                 res.send(result.rows);

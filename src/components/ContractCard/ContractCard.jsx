@@ -32,7 +32,7 @@ function ContractCard({contract}) {
             <CardMedia
               component="img"
               height="140"
-              image="https://images.theconversation.com/files/349961/original/file-20200728-29-6nb8o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop"
+              image={contract.item_image}
               alt="green iguana"
             />
             <CardContent>
