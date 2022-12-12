@@ -27,13 +27,18 @@ function ContractCard({contract}) {
   return (
     <div>
 
-        <Card sx={{ width: 300, height: 300, margin:3}} onClick={() => selectedContract(contract)}>
+        <Card className="card" onClick={() => selectedContract(contract)} sx={{
+       maxWidth: 345,
+       color: "#2b2b2b",
+       borderRadius: "20px",
+       boxShadow: "0 1px 20px rgb(0, 0, 0, 0.1)",
+       margin: "15px"
+       }}>
           <CardActionArea>
             <CardMedia
               component="img"
               height="140"
               image={contract.item_image}
-              alt="green iguana"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">

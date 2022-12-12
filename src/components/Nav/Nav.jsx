@@ -20,13 +20,13 @@ function Nav() {
   const drawerWidth = 240;
 
   return (
-    <AppBar position="sticky" className="nav" style={{backgroundColor:'#414141'}}>
+    <AppBar position="sticky" className="nav" style={{backgroundColor:'#2b2b2b'}}>
       <Toolbar disableGutters>
         <Box container sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Link to="/dashboard">
           <img src={logo} alt="tradeout logo"  height='50' style={{margin: 24, borderRadius: 4}}/>
         </Link>
-        <div>
+        <div sx={{display: 'flex', alignItems: 'right'}}>
           {/* If no user is logged in, show these links */}
           {!user.id && (
             // If there's no user, show login/registration links
