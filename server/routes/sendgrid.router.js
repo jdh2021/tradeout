@@ -18,8 +18,8 @@ router.post('/', async (req, res) => {
         const msg = {
             to: secondPartyEmail, // Change to your recipient
             from: process.env.SENDGRID_EMAIL, // Change to your verified sender
-            subject: 'Contract to View on TradeOut',
-            text: `${contractKey}`,
+            subject: 'Contract To View On TradeOut',
+            text: `Link to view contract http://localhost:3000/#/recipient-view/${contractKey}`,
             html: `<a href="http://localhost:3000/#/recipient-view/${contractKey}">Click here</a> to view your contract.
             <strong>Here is your contract code</strong>
             <p>${contractKey}</p>
