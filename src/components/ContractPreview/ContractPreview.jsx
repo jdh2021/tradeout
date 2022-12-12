@@ -46,7 +46,9 @@ function ContractPreview({contractDetails}) {
                             <TableRow>
                                 <TableCell sx={{ width: 150 }} align="left">
                                 <Typography>Contract PDF:</Typography></TableCell>
-                                <TableCell align="left"><Typography sx={{textDecoration: 'underline'}}>Contract PDF Link</Typography></TableCell>
+                                    <TableCell align="left">
+                                        <Button target="_blank" rel="noopener noreferrer" variant="contained" color="green" href={contractDetails.contract_receipt} sx={{textDecoration: 'underline'}}>View Contract PDF</Button>
+                                    </TableCell>
                             </TableRow> :
                             <></>
                         }

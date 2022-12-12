@@ -18,8 +18,6 @@ function ContractDetails() {
   const contractDetails = useSelector(store => store.contract.selectedContract)
   const { contractId } = useParams();
   const user = useSelector(store => store.user);
-  // need user reducer in the case we need to pull out the user's email? 
-  // const user = useSelector((store) => store.user)
 
   const [secondPartySignature, setSecondPartySignature] = useState('');
 
@@ -143,9 +141,6 @@ function ContractDetails() {
 
   return (
     <div>
-      {/* page heading. May be a better way to handle this but it will be useful for the user to see the contract status in the heading */}
-      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        {contractDetails.contract_status} </Typography>
       <FinalizeContractDialog 
         handleClickCloseFinalize={handleClickCloseFinalize}
         open={openFinalize}
@@ -163,9 +158,8 @@ function ContractDetails() {
         open={openStatusUpdate}
         handleClickCloseStatusUpdate={handleClickCloseStatusUpdate}
       />
-      <Typography variant="h3" sx={{ textAlign: "center" }}>
-        Contract Details  </Typography>
-      <br />
+      <Typography variant="h3" sx={{ textAlign: "center" }}>Contract Details</Typography>
+      <Typography variant="h5" sx={{ textAlign: "center" }}>Status: {contractDetails.contract_status} </Typography>
       <br />
       <ContractPreview 
         contractDetails={contractDetails} 
@@ -189,14 +183,15 @@ function ContractDetails() {
                               variant="contained"
                               onClick={finalizeContract}
                               sx={{ marginRight: 1, width: 200, height: 60 }}
+                              color='green'
                             >
                               Sign and Finalize Contract
                             </Button>
                             <Button
                               variant="contained"
-                              color="error"
+                              color="grey"
                               onClick={confirmDecline}
-                              sx={{ marginLeft: 1, width: 200, height: 60 }}
+                              sx={{ marginLeft: 1, width: 200, height: 60, color: 'white' }}
                             >
                               Decline Contract
                             </Button> 
