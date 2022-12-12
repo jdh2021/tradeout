@@ -33,7 +33,7 @@ function Dashboard() {
           {userContracts.map(contract => {
             //renders accepted contracts
             if (contract.contract_status === 'accepted')
-              return  <Grid item>
+              return  <Grid item key={contract.id}>
                         <ContractCard contract={contract} key={contract.id}/>
                       </Grid>
           })}
@@ -44,7 +44,7 @@ function Dashboard() {
           {userContracts.map(contract => {
             //renders pending contracts
             if (contract.contract_status === 'pending_second_party_response')
-              return  <Grid item> 
+              return  <Grid item key={contract.id}> 
                         <ContractCard contract={contract} key={contract.id}/>
                       </Grid>
           })}
@@ -56,7 +56,7 @@ function Dashboard() {
           {userContracts.map(contract => {
             //renders declined contracts
             if (contract.contract_status === 'declined')
-              return  <Grid item>
+              return  <Grid item key={contract.id}>
                         <ContractCard contract={contract} key={contract.id}/>
                       </Grid>
           })}
