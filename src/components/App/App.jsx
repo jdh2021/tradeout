@@ -55,6 +55,9 @@ function App() {
       },
       purple: {
         main: '#6622CC',
+      },
+      grey: {
+        main: '#5A5A5A',
       }
     }
   });
@@ -67,7 +70,7 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={colorTheme}>
         <Router>
-          <div>
+          <div className="Main-content">
             <Nav />
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/dashboard */}
@@ -236,8 +239,8 @@ function App() {
                 <h1>404</h1>
               </Route>
             </Switch>
-            <Footer />
-          </div>
+            </div>
+          <Footer />
         </Router>
       </ThemeProvider>
     </LocalizationProvider>

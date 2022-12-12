@@ -1,5 +1,10 @@
-footer {
-  margin-top: 80px;
-  padding: 20px;
+.Footer-container {
+  height: 100px;
+  line-height: 100px;
   text-align: center;
+}
+
+.Footer-container span {
+  vertical-align: bottom;
+  line-height: 75px;
 }

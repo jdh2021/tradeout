@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import FinalizeContractDialog from './FinalizeContractDialog.jsx';
+import FinalizeSuccessDialog from './FinalizeSuccessDialog.jsx';
+import ConfirmDeclineDialog from '../RecipientView/ConfirmDeclineDialog.jsx';
+import ContractStatusUpdateDialog from '../RecipientView/ContractStatusUpdateDialog.jsx';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-
 import Button from '@mui/material/Button';
-
 import Box from '@mui/material/Box';
 import ContractPreview from '../ContractPreview/ContractPreview';
 
@@ -16,10 +18,56 @@ function ContractDetails() {
   const contractDetails = useSelector(store => store.contract.selectedContract)
   const { contractId } = useParams();
   const user = useSelector(store => store.user);
-  // need user reducer in the case we need to pull out the user's email? 
-  // const user = useSelector((store) => store.user)
 
   const [secondPartySignature, setSecondPartySignature] = useState('');
+
+  // variable and functions for FinalizeContractDialog
+  const [openFinalize, setOpenFinalize] = useState(false);
+
+  const handleClickOpenFinalize = () => {
+    setOpenFinalize(true);
+  }
+
+  const handleClickCloseFinalize = () => {
+    setOpenFinalize(false);
+  }
+
+  // variable and functions for FinalizeSuccessDialog
+  const [openFinalizeSuccess, setOpenFinalizeSuccess] = useState(false);
+
+  const handleClickOpenSuccess = () => {
+    setOpenFinalizeSuccess(true);
+  }
+
+  const handleClickCloseSuccess = () => {
+    setOpenFinalizeSuccess(false);
+    history.push('/dashboard');
+  }
+
+  // variable and functions for ConfirmDeclineDialog
+  const [openConfirmDecline, setOpenConfirmDecline] = useState(false);
+
+  const handleClickOpenConfirmDecline = () => {
+    console.log('in handleClickOpenConfirmDecline');
+    setOpenConfirmDecline(true);
+  }
+
+  const handleClickCloseConfirmDecline = () => {
+    setOpenConfirmDecline(false);
+  }
+
+  // variable and functions for ContractStatusUpdateDialog
+  const [openStatusUpdate, setOpenStatusUpdate] = useState(false);
+
+  const handleClickOpenStatusUpdate = () => {
+    console.log('in handleClickOpenStatusUpdate');
+    setOpenStatusUpdate(true);
+  }
+
+  const handleClickCloseStatusUpdate = () => {
+    setOpenStatusUpdate(false);
+    history.push('/dashboard');
+  }
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CONTRACT_DETAILS', payload: contractId, checkForUserAction: checkForUserAction});
@@ -41,7 +89,7 @@ function ContractDetails() {
   const finalizeContract = () => {
     console.log('in finalizeContract, second party signature:', secondPartySignature);
     if (!secondPartySignature) {
-      alert('You must enter your signature in order to finalize this contract.');
+      handleClickOpenFinalize();
       return;
     }
     // dispatch to contract saga to update contract details in database
@@ -60,16 +108,13 @@ function ContractDetails() {
   // alerts user to successful contract finalization and navigates the user to /dashboard
   const userAlert = () => {
     console.log('in userAlert');
-    alert('Congratulations! This contract is now finalized. You can download a PDF of the final document by selecting this contract on your Dashboard.')
-    history.push('/dashboard');
+    handleClickOpenSuccess();
   }
 
   // prompts recipient to confirm before contract is declined
   const confirmDecline = () => {
     console.log('in confirmDecline');
-    if (window.confirm('Are you sure you want to decline this contract?')) {
-      declineContract();
-    }
+    handleClickOpenConfirmDecline();
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
@@ -90,26 +135,35 @@ function ContractDetails() {
   // passed as part of declineContract, contract by key re-renders in RecipientView with updated status and alerts recipient of successful decline
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
-    alert('Thank you! The contract has been declined.');
-    history.push('/dashboard');
+    handleClickCloseConfirmDecline();
+    handleClickOpenStatusUpdate();
   }
 
   return (
     <div>
-      {/* page heading. May be a better way to handle this but it will be useful for the user to see the contract status in the heading */}
-      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        {contractDetails.contract_status} </Typography>
-
-      <Typography variant="h3" sx={{ textAlign: "center" }}>
-        Contract Details  </Typography>
+      <FinalizeContractDialog 
+        handleClickCloseFinalize={handleClickCloseFinalize}
+        open={openFinalize}
+      />
+      <FinalizeSuccessDialog 
+        open={openFinalizeSuccess}
+        handleClickCloseSuccess={handleClickCloseSuccess}
+      />
+      <ConfirmDeclineDialog 
+        handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
+        open={openConfirmDecline}
+        declineContract={declineContract}
+      />
+      <ContractStatusUpdateDialog 
+        open={openStatusUpdate}
+        handleClickCloseStatusUpdate={handleClickCloseStatusUpdate}
+      />
+      <Typography variant="h3" sx={{ textAlign: "center" }}>Contract Details</Typography>
+      <Typography variant="h5" sx={{ textAlign: "center" }}>Status: {contractDetails.contract_status} </Typography>
       <br />
-      <br />
-
-
       <ContractPreview 
         contractDetails={contractDetails} 
       />
-
       <br />
       <br />
         {
@@ -129,14 +183,15 @@ function ContractDetails() {
                               variant="contained"
                               onClick={finalizeContract}
                               sx={{ marginRight: 1, width: 200, height: 60 }}
+                              color='green'
                             >
                               Sign and Finalize Contract
                             </Button>
                             <Button
                               variant="contained"
-                              color="error"
+                              color="grey"
                               onClick={confirmDecline}
-                              sx={{ marginLeft: 1, width: 200, height: 60 }}
+                              sx={{ marginLeft: 1, width: 200, height: 60, color: 'white' }}
                             >
                               Decline Contract
                             </Button> 

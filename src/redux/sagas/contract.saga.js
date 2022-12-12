@@ -94,6 +94,7 @@ function* finalizeContract(action) {
     try {
         console.log('in finalizeContract (saga). Contract object to update is:', action.payload);
         yield axios.put('/api/contract', action.payload);
+        yield axios.put('/api/contract/pdf', action.payload)
         // trigger PDF generation, payload is the selected contract's id
         // yield put ({type: 'GENERATE_PDF', payload: action.payload.id});
         action.userAlert();
@@ -103,6 +104,9 @@ function* finalizeContract(action) {
     }
 }
 
+
+
+
 function* contractSaga() {
     yield takeLatest('FETCH_CONTRACTS', fetchContracts);
     yield takeLatest('FETCH_CONTRACT_DETAILS', fetchContractDetails);
@@ -110,6 +114,8 @@ function* contractSaga() {
     yield takeLatest('ADD_NEW_CONTRACT', addNewContract);
     yield takeLatest('UPDATE_CONTRACT_STATUS', updateContractStatus);
     yield takeLatest('FINALIZE_CONTRACT', finalizeContract);
+   
+
 }
 
 export default contractSaga;

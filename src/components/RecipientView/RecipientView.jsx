@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import ContractPreview from '../ContractPreview/ContractPreview';
+import RecipientViewAcceptDialog from './RecipientViewAcceptDialog.jsx';
+import ContractStatusUpdateDialog from './ContractStatusUpdateDialog.jsx';
+import ConfirmDeclineDialog from './ConfirmDeclineDialog.jsx';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -19,25 +22,60 @@ function RecipientView() {
     dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
   }, [searchContractKey]);
 
+  // variable and functions for RecipientViewAcceptDialog
+  const [openAccepted, setOpenAccepted] = useState(false);
+
+  const handleClickOpenAccepted = () => {
+    console.log('in handleClickOpenAccepted');
+    setOpenAccepted(true);
+  }
+
+  const handleClickCloseAccepted = () => {
+    setOpenAccepted(false);
+    dispatch({ type: 'SET_CONTRACT_KEY', payload: searchContractKey })
+    history.push('/registration');
+  }
+
+  // variable and functions for ConfirmDeclineDialog
+  const [openConfirmDecline, setOpenConfirmDecline] = useState(false);
+
+  const handleClickOpenConfirmDecline = () => {
+    console.log('in handleClickOpenConfirmDecline');
+    setOpenConfirmDecline(true);
+  }
+
+  const handleClickCloseConfirmDecline = () => {
+    setOpenConfirmDecline(false);
+  }
+
+  // variable and functions for ContractStatusUpdateDialog
+  const [openStatusUpdate, setOpenStatusUpdate] = useState(false);
+
+  const handleClickOpenStatusUpdate = () => {
+    console.log('in handleClickOpenStatusUpdate');
+    setOpenStatusUpdate(true);
+  }
+
+  const handleClickCloseStatusUpdate = () => {
+    setOpenStatusUpdate(false);
+  }
+
   // navigates contract recipient to registration and stores contract key in reducer when "accept" is clicked
   const acceptContract = () => {
     console.log('in acceptContract. Contract key is:', searchContractKey);
-    alert('You\'ll now be routed to registration where you can register as a TradeOut user and accept this contract.');
-    dispatch({ type: 'SET_CONTRACT_KEY', payload: searchContractKey })
-    history.push('/registration');
+    handleClickOpenAccepted();
   }
 
   // prompts recipient to confirm before contract is declined
   const confirmDecline = () => {
     console.log('in confirmDecline');
-    if (window.confirm('Are you sure you want to decline this contract?')) {
-      declineContract();
-    }
+    handleClickOpenConfirmDecline();
   };
 
   // dispatches 'UPDATE_CONTRACT_STATUS' with payload of contract object and function handleContractStatusUpdate
   const declineContract = () => {
     console.log('in declineContract. Contract id to decline is:', contractDetails.id);
+    handleClickCloseConfirmDecline();
     dispatch({
       type: 'UPDATE_CONTRACT_STATUS',
       payload: {
@@ -54,19 +92,32 @@ function RecipientView() {
   const handleContractStatusUpdate = () => {
     console.log('in handleContractStatusUpdate');
     dispatch({ type: 'FETCH_RECIPIENT_CONTRACT', payload: searchContractKey });
-    alert('Thank you! The contract has been declined.');
+    handleClickOpenStatusUpdate();
   }
 
   return (
     <div>
-      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        {contractDetails.contract_status}
-      </Typography>
+      {/* dialog components that are triggered by user actions */}
+      <RecipientViewAcceptDialog 
+        open={openAccepted}
+        handleClickCloseAccepted={handleClickCloseAccepted}
+      />
+      <ConfirmDeclineDialog 
+        handleClickCloseConfirmDecline={handleClickCloseConfirmDecline}
+        open={openConfirmDecline}
+        declineContract={declineContract}
+      />
+      <ContractStatusUpdateDialog 
+        open={openStatusUpdate}
+        handleClickCloseStatusUpdate={handleClickCloseStatusUpdate}
+      />
       <br />
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
       </Typography>
-      <br />
+      <Typography variant="h5" sx={{ textAlign: "center" }}>
+        Status: {contractDetails.contract_status}
+      </Typography>
       <br />
       <ContractPreview contractDetails={contractDetails} />
       <br />
@@ -79,13 +130,15 @@ function RecipientView() {
               variant="contained"
               onClick={acceptContract}
               sx={{ marginRight: 1, width: 200 }}
+              color="green"
             >
               Accept
             </Button>
             <Button
               variant="contained"
               onClick={confirmDecline}
-              sx={{ marginLeft: 1, width: 200 }}
+              sx={{ marginLeft: 1, width: 200, color: 'white' }}
+              color="grey"
             >
               Decline
             </Button>

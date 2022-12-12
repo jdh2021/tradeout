@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import EmailTokenValidationDialog from './EmailTokenValidationDialog.jsx';
+import ContractTokenDialog from './ContractTokenDialog.jsx';
+import ContractSubmitSuccessDialog from './ContractSubmitSucessDialog.jsx';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -31,6 +34,40 @@ const SendToRecipient = () => {
   // unqiue random string for contract_key
   const token = cryptoRandomString({ length: 40, type: 'hex' });
 
+  // variable and functions for EmailTokenValidationDialog
+  const [openEmailTokenValidation, setOpenEmailTokenValidation] = useState(false);
+
+  const handleClickOpenEmailToken = () => {
+    setOpenEmailTokenValidation(true);
+  }
+
+  const handleClickCloseEmailToken = () => {
+    setOpenEmailTokenValidation(false);
+  }
+
+  // variable and functions for ContractTokenDialog
+  const [openTokenDetails, setOpenTokenDetails] = useState(false);
+
+  const handleClickOpenTokenDetails = () => {
+    setOpenTokenDetails(true);
+  }
+
+  const handleClickCloseTokenDetails = () => {
+    setOpenTokenDetails(false);
+  }
+
+// variable and functions for ContractSubmitSuccessDialog
+const [openSubmitSuccess, setOpenSubmitSuccess] = useState(false);
+
+const handleClickOpenSubmitSuccess = () => {
+  setOpenSubmitSuccess(true);
+}
+
+const handleClickCloseSubmitSuccess = () => {
+  setOpenSubmitSuccess(false);
+  history.push('/dashboard');
+}
+
   // defining the value of contract_key in newContractDetails reducer
   const setContractKey = (key, value) => {
     console.log('in setContractKey', key, value);
@@ -44,36 +81,28 @@ const SendToRecipient = () => {
     dispatch({ type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, [key]: event.target.value}});
   }
 
-
   // dispatching newContractDetails
   const submitNewContract = () => {
-
-
-      console.log('in submitNewContract', newContractDetails);
-      if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
-        alert('Please make sure you have entered the recipient email AND have clicked the "Generate Contract Token" button.');
-        return;
-      }
-      
-      // the SendGrid email server request is called from within the addNewContract saga
-      dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
-    
-
+    console.log('in submitNewContract', newContractDetails);
+    if (!newContractDetails.second_party_email || !newContractDetails.contract_key) {
+      handleClickOpenEmailToken();
+      return;
+    }
     // the SendGrid email server request is called from within the addNewContract saga
-    // dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, userAlert: userAlert});
+    dispatch({type: 'ADD_NEW_CONTRACT', payload: newContractDetails, fileToUpload: imageUpload, userAlert: userAlert});
   }
 
   // success alert
   const userAlert = () => {
     console.log('in userAlert');
-    alert('Your contact has been created, and the recipient has been sent an email inviting them to view the contract details.');
-    history.push('/dashboard');
+    handleClickOpenSubmitSuccess();
+    // history.push('/dashboard');
   }
 
   // explanation of what the contract token is used for
   const contractTokenAlert = () => {
     console.log('in contractTokenAlert');
-    alert('The contract token is a unique key that is associated with this contract. The recipient will receive an email with a link to view the details of this contract. The contract token is used in that link to ensure that they access this document securely.')
+    handleClickOpenTokenDetails();
   }
 
   // autofill email for demo purposes
@@ -101,20 +130,31 @@ const SendToRecipient = () => {
             <SendIcon sx={{ mr: 0.5, color: '#6622CC' }} />
             Submit Contract & Email Recipient
           </Typography>
-        </Breadcrumbs>     
+        </Breadcrumbs>
+        <EmailTokenValidationDialog 
+          open={openEmailTokenValidation}
+          handleClickCloseEmailToken={handleClickCloseEmailToken}
+        />
+        <ContractTokenDialog 
+          open={openTokenDetails}
+          handleClickCloseTokenDetails={handleClickCloseTokenDetails}
+        />
+        <ContractSubmitSuccessDialog 
+          open={openSubmitSuccess}
+          handleClickCloseSubmitSuccess={handleClickCloseSubmitSuccess}
+        />     
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography variant="h3">Send to Recipient:</Typography>
+          {/* used to autofill recipient email during demo */}
+          <Typography variant="h3" onClick={autofillEmail}>Send to Recipient:</Typography>
           <TextField
             required
-            sx={{width: 300, marginLeft: 2}}
+            sx={{width: 350, marginLeft: 2}}
             helperText="Enter Recipient's Email"
             label="example@gmail.com"
             value={newContractDetails.second_party_email}
             onChange={handleChangeFor('second_party_email')}
           />
-          {/* used to autofill recipient email during demo */}
-          <div style={{width: 100, height: 100}} onClick={autofillEmail} />
         </Box>
         <br />
         <br />
@@ -139,10 +179,7 @@ const SendToRecipient = () => {
             <Typography sx={{textAlign: 'center'}}>"AS IS" images of the above property provided by the {newContractDetails.first_party_type}:</Typography>
             <br />
             <Box sx={{display: 'flex', justifyContent: 'center', p: 2, border: '1px solid grey' }}>
-              {/* images will be the user-uploaded images once that functionality is implemented */}
-
-              <img src={newContractDetails.item_image}/>
-
+              <img src={newContractDetails.item_preview}/>
             </Box>
             <br />
             <Typography sx={{textAlign: 'center'}}>The above property will be transferred on: {formattedPickupDate}</Typography>
@@ -157,7 +194,7 @@ const SendToRecipient = () => {
       </Container>
       <br />
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="contained" color="secondary" onClick={() => setContractKey('contract_key', token)} sx={{mr: 2}}>Generate Contract Token*</Button>
+        <Button variant="contained" color="grey" onClick={() => setContractKey('contract_key', token)} sx={{mr: 2, color: 'white'}}>Generate Contract Token*</Button>
         {
           tokenCreated ? <Typography sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>Token created!</Typography> : 
           <Typography sx={{width: 200, display:"flex", alignItems:"center", justifyContent:"center"}}>
@@ -171,22 +208,22 @@ const SendToRecipient = () => {
             <Button 
               variant="contained"
               onClick={() => history.push('/create-contract-review')}
-              sx={{marginRight: 1, width: 200}}
+              sx={{marginRight: 1, width: 200, color: 'white'}}
+              color="purple"
             >
               Review Contract Details
             </Button>
             <Button 
               variant="contained"
-              // add onClick function that dispatches to new contract POST saga
               onClick={submitNewContract}
               sx={{marginLeft: 1, width: 200}}
+              color="green"
             >
               Create Contract and Send to Recipient
             </Button>
           </Box>
     </div>
   );
-
 }
 
 export default SendToRecipient;
