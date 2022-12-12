@@ -30,7 +30,7 @@ function ContractCard({contract}) {
         <Card className="card" onClick={() => selectedContract(contract)} sx={{
        maxWidth: 345,
        color: "#2b2b2b",
-       borderRadius: "20px",
+       borderRadius: "15px",
        boxShadow: "0 1px 20px rgb(0, 0, 0, 0.1)",
        margin: "15px"
        }}>
