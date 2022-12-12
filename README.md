@@ -28,14 +28,16 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 3. Create a `.env` file with values for the following variables:
   ```
   SERVER_SESSION_SECRET=random string containing more than eight characters
+
   SENDGRID_API_KEY=key provided with SendGrid account
   SENDGRID_EMAIL=verified sender email
+
   AWS_ACCESS_KEY_ID=access key id from AWS
   AWS_SECRET_ACCESS_KEY=secret access key from AWS
   AWS_REGION=your AWS region
   S3_BUCKET_NAME=your AWS S3 bucket name
   ```
-4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was built and designed for compatibility with Google Chrome. 
+4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was tested and designed for compatibility with Google Chrome. 
 
 ## Usage
 
@@ -50,7 +52,7 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 ### Creating a Contract
 
 1. To create a contract, click `New Contract` from the Dashboard. Select `Buyer` or `Seller` and click `Next`.
-2. Within Create New Contract, enter the required informaton in the fields marked with a `*` and any other relevant information. Click `Choose File` to optionally upload an image of the item being purchased or sold. Type the signature in the signature field. Click `Review Contract` to proceed. 
+2. Within Create New Contract, enter the required informaton in the fields marked with a `*` and any other relevant information. Click `Choose File` to upload an image of the item being purchased or sold. Type the signature in the signature field. Click `Review Contract` to proceed. 
 3. Review the contract details. Make any changes by clicking `Edit Contract Details` or proceed by clicking `Recipient Contact Information`. 
 4. Within Send To Recipient, enter the email address of the other party in the contract. Click `Generate Contract Token` to generate a unique key that the recipient will receive to be able to securely view the contract. 
 5. Click `Create Contract and Send to Recipient` to send an email to the recipient letting them know a contract is pending. 
