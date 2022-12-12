@@ -141,28 +141,21 @@ router.put('/', async (req, res) => {
     console.log('Contract status is:', req.body.contract_status);
     console.log('is authenticated?', req.isAuthenticated());
     if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
+		const db = await pool.connect();
 		try {
-			console.log('/contract UPDATE success accepted');
-			const binaryResult = await generatePDF(req.user.id, req.body.id);
+			await db.query('BEGIN');
 			
-			// upload binaryResult to AWS
-			// Creates a PDF named 1_RANDOM_contract.pd
-			const randomString = crypto.randomBytes(4).toString('hex');
-			console.log('convert stream to buffer')
-			binaryResult.end(); // end of the stream
-			const buffer = await streamToBuffer(binaryResult);
-			console.log('uploading to aws')
-			const contractUrl = await sendPDFtoAWS(req.body.id, `${randomString}_contract.pdf`, buffer); 
-			console.log(contractUrl);
 			console.log('User id is:', req.user.id);
 			// Update to include the contract url
 			const query =   `UPDATE "contract"
-							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3, "contract_receipt" = $6
+							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3 
 							FROM "user_contract"
 							WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
-			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id, contractUrl])
+			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id])
+			console.log(query,'updated status to accepted')
 
 			res.sendStatus(200); // OK
+		
 		} catch (error) {
             console.log('Error in UPDATE contract by contract id:', error);
             res.sendStatus(500);
