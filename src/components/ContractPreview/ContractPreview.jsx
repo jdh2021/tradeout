@@ -122,7 +122,7 @@ function ContractPreview({contractDetails}) {
 
                             {/* once image upload is enabled, the img src will be the uploaded image file */}
                             <TableCell align="left">
-                            <img src="https://i.ebayimg.com/images/g/l3sAAOSweURjjW1j/s-l500.jpg"
+                            <img src={contractDetails.item_image}
                                 alt="red 2018 Honda Accord"
                                 width="200" /></TableCell>
                         </TableRow>
