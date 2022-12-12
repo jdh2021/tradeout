@@ -55,6 +55,9 @@ function App() {
       },
       purple: {
         main: '#6622CC',
+      },
+      grey: {
+        main: '#5A5A5A',
       }
     }
   });

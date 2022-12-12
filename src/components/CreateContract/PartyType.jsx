@@ -113,7 +113,7 @@ const PartyType = () => {
           </Grid>
           <Grid item>
             {/* when user clicks 'Next' button, the secondPartyType is set and user is pushed to CreateContractDetails */}
-            <Button variant="contained" onClick={() => handleChangeForSecondParty('second_party_type', secondParty)}>Next</Button>
+            <Button variant="contained" color="green" onClick={() => handleChangeForSecondParty('second_party_type', secondParty)}>Next</Button>
           </Grid>
         </Grid>     
     </div>

@@ -97,9 +97,6 @@ function RecipientView() {
 
   return (
     <div>
-      <Typography variant="h5" color="secondary" sx={{ textAlign: "center" }}>
-        {contractDetails.contract_status}
-      </Typography>
       {/* dialog components that are triggered by user actions */}
       <RecipientViewAcceptDialog 
         open={openAccepted}
@@ -118,7 +115,9 @@ function RecipientView() {
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         Recipient View
       </Typography>
-      <br />
+      <Typography variant="h5" sx={{ textAlign: "center" }}>
+        Status: {contractDetails.contract_status}
+      </Typography>
       <br />
       <ContractPreview contractDetails={contractDetails} />
       <br />
@@ -131,13 +130,15 @@ function RecipientView() {
               variant="contained"
               onClick={acceptContract}
               sx={{ marginRight: 1, width: 200 }}
+              color="green"
             >
               Accept
             </Button>
             <Button
               variant="contained"
               onClick={confirmDecline}
-              sx={{ marginLeft: 1, width: 200 }}
+              sx={{ marginLeft: 1, width: 200, color: 'white' }}
+              color="grey"
             >
               Decline
             </Button>

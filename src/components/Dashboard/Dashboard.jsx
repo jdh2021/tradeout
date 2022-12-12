@@ -25,7 +25,7 @@ function Dashboard() {
     <Container>
         <Typography variant="h3">Hello, {user.email}</Typography>
         <br />
-        <Button variant="contained" onClick={() => {history.push(`/party-type`)}}>New Contract</Button>
+        <Button variant="contained" color="green" onClick={() => {history.push(`/party-type`)}}>New Contract</Button>
         <br />
         <br />
         <Typography variant="h5">Accepted Contracts</Typography>

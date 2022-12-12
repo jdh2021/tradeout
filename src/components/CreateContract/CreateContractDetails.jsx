@@ -130,8 +130,7 @@ const CreateContractDetails = () => {
           open={open}
         />
         <br />
-        <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
-        <div style={{width: 100, height: 100}} onClick={autofillForm} />
+        <Typography variant="h3" sx={{textAlign: "center"}} onClick={autofillForm}>Create New Contract</Typography>
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.first_party_type}.</Typography>
         <br />
@@ -194,11 +193,8 @@ const CreateContractDetails = () => {
           </Grid>
           <br />
           <Grid item>
-           
-            <h4>Upload Item Image*</h4>
+            <Typography variant="h6">Upload Item Image*</Typography>
             <input type="file" name="picture" accept="image/*" onChange={fileSelectedHandler}></input>
-            {/* <ImageUpload /> */}
-
           </Grid>
           <br />
           <Grid item sx={{width: 400}}>
@@ -217,7 +213,8 @@ const CreateContractDetails = () => {
             <Button 
               variant="contained"
               onClick={(event) => history.push('/party-type')}
-              sx={{marginRight: 1, width: 200}}
+              sx={{marginRight: 1, width: 200, color: 'white'}}
+              color="purple"
             >
               Edit Party Type
             </Button>
@@ -226,6 +223,7 @@ const CreateContractDetails = () => {
               variant="contained"
               onClick={validateForm}
               sx={{marginLeft: 1, width: 200}}
+              color="green"
             >
               Review Contract
             </Button>

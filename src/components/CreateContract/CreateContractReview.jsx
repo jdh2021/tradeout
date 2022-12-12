@@ -111,7 +111,8 @@ const CreateContractReview = () => {
             <Button 
               variant="contained"
               onClick={(event) => history.push('/create-contract-details')}
-              sx={{marginRight: 1, width: 200}}
+              sx={{marginRight: 1, width: 200, color: 'white'}}
+              color="purple"
             >
               Edit Contract Details
             </Button>
@@ -120,6 +121,7 @@ const CreateContractReview = () => {
               variant="contained"
               onClick={(event) => history.push('/send-to-recipient')}
               sx={{marginLeft: 1, width: 200}}
+              color="green"
             >
               Recipient Contact Information
             </Button>
