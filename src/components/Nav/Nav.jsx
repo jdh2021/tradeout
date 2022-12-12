@@ -20,7 +20,7 @@ function Nav() {
   return (
     <AppBar position="sticky" className="nav" style={{backgroundColor:'#4BC975'}}>
       <Toolbar disableGutters>
-        <Box container sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+        <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Link to="/dashboard">
           <img src="images/tradeout_logo.jpg" alt="tradeout logo" width='175' height='125' style={{margin: 10, borderRadius: 4}}/>
         </Link>
