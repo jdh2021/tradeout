@@ -94,6 +94,7 @@ function* finalizeContract(action) {
     try {
         console.log('in finalizeContract (saga). Contract object to update is:', action.payload);
         yield axios.put('/api/contract', action.payload);
+        yield axios.put('/api/contract/pdf', action.payload)
         // trigger PDF generation, payload is the selected contract's id
         // yield put ({type: 'GENERATE_PDF', payload: action.payload.id});
         action.userAlert();

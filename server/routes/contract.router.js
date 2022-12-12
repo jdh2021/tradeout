@@ -141,28 +141,21 @@ router.put('/', async (req, res) => {
     console.log('Contract status is:', req.body.contract_status);
     console.log('is authenticated?', req.isAuthenticated());
     if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
+		const db = await pool.connect();
 		try {
-			console.log('/contract UPDATE success accepted');
-			const binaryResult = await generatePDF(req.user.id, req.body.id);
+			await db.query('BEGIN');
 			
-			// upload binaryResult to AWS
-			// Creates a PDF named 1_RANDOM_contract.pd
-			const randomString = crypto.randomBytes(4).toString('hex');
-			console.log('convert stream to buffer')
-			binaryResult.end(); // end of the stream
-			const buffer = await streamToBuffer(binaryResult);
-			console.log('uploading to aws')
-			const contractUrl = await sendPDFtoAWS(req.body.id, `${randomString}_contract.pdf`, buffer); 
-			console.log(contractUrl);
 			console.log('User id is:', req.user.id);
 			// Update to include the contract url
 			const query =   `UPDATE "contract"
-							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3, "contract_receipt" = $6
+							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3, "contract_receipt" = $4
 							FROM "user_contract"
-							WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
-			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id, contractUrl])
+							WHERE "user_contract"."user_id" = $5 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $6;`;
+			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.contract_receipt, req.user.id, req.body.id])
+			console.log('updated status to accepted')
 
 			res.sendStatus(200); // OK
+		
 		} catch (error) {
             console.log('Error in UPDATE contract by contract id:', error);
             res.sendStatus(500);
@@ -183,11 +176,14 @@ router.put('/', async (req, res) => {
     };
 });
 
+/*******************************************
+ * PDF GENERATION
+ *******************************************/
+
+//converts PDF binaryresult data to stream
 const streamToBuffer = (stream) => {
 	return new Promise((resolve, reject) => {
 		const data = [];
-
-
 
 		stream.on('end', () => {
 			console.log('buffer end')
@@ -215,26 +211,7 @@ const streamToBuffer = (stream) => {
 
 	})
 }
-//PDF Generation
-//move this code into 'put' that updates the status to accepedted
-// Just for testing, will be removed later
-//   router.get('/make/pdf/:id', async (req, res) => {
-// 	try {
-
-// 		const binaryResult = await generatePDF(req.user.id, req.params.id);
-// 		// send document back to client as file download
-// 		res.setHeader('Content-Type', 'application/pdf');
-// 		//change file name=contract name.pdf template literal with contract name
-// 		res.setHeader('Content-Disposition', 'attachment; filename=product.pdf');
-// 			binaryResult.pipe(res); // download to respsonse stream
-// 			binaryResult.end(); // end of the stream
-// 	} catch(err){
-		
-// 		res.send('<h2>There was an error displaying the PDF document.</h2>Error message: ' + err.message);
-// 	}
-
-// });
-//PDF creation
+//Fonts needed for PDF formatting
 const fonts = {
 	Roboto: {
 		normal: path.join(__dirname, '../fonts/Roboto-Regular.ttf'),
@@ -328,7 +305,7 @@ const generatePDF = async (userId, contractId) => {
 			{style: 'contractSignatures', 
 				alignment: 'left', 
 				text: ` ${foundContract.first_party_type} Signature: ${foundContract.first_party_signature},
-				${foundContract.second_party_type} Signature: ${foundContract.second_party_signature},
+				${foundContract.second_party_type} Signature: ${foundContract.second_party_signature}
 			`},
 			
 		],
@@ -393,8 +370,48 @@ const sendPDFtoAWS = async (userId, fileName, data) => {
 		return 'error';
 	}
 }
+//Handles PDF conversion, creates a URL and stores in AWS S3.
+router.put('/pdf', async (req, res) => {
+    console.log('in /api/contract/pdf  UPDATE PDF RECEIPT. Contract object to update is:', req.body);
+    console.log('Contract status is:', req.body.contract_status);
+    console.log('is authenticated?', req.isAuthenticated());
+    if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
+		try {
+			console.log('/contract/pdf begin PDF generation');
+			const binaryResult = await generatePDF(req.user.id, req.body.id);
 	
+			// Creates a PDF named 1_RANDOM_contract.pd
+			const randomString = crypto.randomBytes(4).toString('hex');
+			console.log('convert stream to buffer')
+			binaryResult.end(); // end of the stream. The stream needs and end otherwise function stops here and won't send an error
+			const buffer = await streamToBuffer(binaryResult);
+			console.log('uploading to aws')
+			// upload binaryResult to AWS
+			//contractUrl is the pdf link stored in s3
+			const contractUrl = await sendPDFtoAWS(req.body.id, `${randomString}_contract.pdf`, buffer); 
+			console.log(contractUrl);
+			console.log('User id is:', req.user.id);
+			// Update to include the contract url = contract receipt
+			const query =   `UPDATE "contract"
+							SET  "contract_receipt" = $1
+							FROM "user_contract"
+							WHERE "user_contract"."user_id" = $2 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $3;`;
+			await pool.query(query, [contractUrl, req.user.id, req.body.id, ])
 
+			res.sendStatus(200); // OK
+		
+		} catch (error) {
+            console.log('Error in /PDF contract generation', error);
+            res.sendStatus(500);
+        }
+    } else { // if a user isn't logged in and contract status is anything except 'declined', update to contract status is forbidden
+        res.sendStatus(403); // 403 forbidden (must log in) 
+    };
+});
+
+/*******************************************
+ * END OF PDF GENERATION CODE
+ *******************************************/
 
 
 
