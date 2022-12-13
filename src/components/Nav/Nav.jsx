@@ -12,24 +12,26 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import NotificationsActiveRoundedIcon from '@mui/icons-material/NotificationsActiveRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
+import logo from '../Nav/tradeout-logo.svg';
+
 function Nav() {
   const user = useSelector((store) => store.user);
 
   const drawerWidth = 240;
 
   return (
-    <AppBar position="sticky" className="nav" style={{backgroundColor:'#4BC975'}}>
+    <AppBar position="sticky" className="nav" style={{backgroundColor:'#2b2b2b'}}>
       <Toolbar disableGutters>
-        <Box container sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+        <Box sx={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Link to="/dashboard">
-          <img src="images/tradeout_logo.jpg" alt="tradeout logo" width='175' height='125' style={{margin: 10, borderRadius: 4}}/>
+          <img src={logo} alt="tradeout logo"  height='50' style={{margin: 24, borderRadius: 4}}/>
         </Link>
-        <div>
+        <div sx={{display: 'flex', justifyContent: 'flex-end'}}>
           {/* If no user is logged in, show these links */}
           {!user.id && (
             // If there's no user, show login/registration links
             <Link className="navLink" to="/login">
-              <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><LoginRoundedIcon sx={{mr: 1}}/>Login / Register</Typography>
+              <Typography sx={{display: 'flex', alignItems: 'center' }} variant="h6"><LoginRoundedIcon sx={{mr: 1}}/>Login / Register</Typography>
             </Link>
           )}
 
