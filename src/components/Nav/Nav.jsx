@@ -26,12 +26,12 @@ function Nav() {
         <Link to="/dashboard">
           <img src={logo} alt="tradeout logo"  height='50' style={{margin: 24, borderRadius: 4}}/>
         </Link>
-        <div sx={{display: 'flex', alignItems: 'right'}}>
+        <div sx={{display: 'flex', justifyContent: 'flex-end'}}>
           {/* If no user is logged in, show these links */}
           {!user.id && (
             // If there's no user, show login/registration links
             <Link className="navLink" to="/login">
-              <Typography sx={{display: 'flex', alignItems: 'center'}} variant="h6"><LoginRoundedIcon sx={{mr: 1}}/>Login / Register</Typography>
+              <Typography sx={{display: 'flex', alignItems: 'center' }} variant="h6"><LoginRoundedIcon sx={{mr: 1}}/>Login / Register</Typography>
             </Link>
           )}
 
