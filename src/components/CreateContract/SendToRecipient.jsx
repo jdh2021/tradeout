@@ -162,7 +162,7 @@ const handleClickCloseSubmitSuccess = () => {
           <Paper elevation={10} sx={{width: 700, padding: 4, display: 'flex', flexDirection: 'column'}}>
             <Typography sx={{textAlign: 'center'}}>Legal Contract for {newContractDetails.contract_title}</Typography>
             <Typography variant="h6" sx={{textAlign: 'center'}}>Bill of Sale</Typography>
-            <Typography sx={{textAlign: 'center'}}>THIS BILL OF SALE is executed on {newContractDetails.item_pickup_date} by and between {user.legal_name} (hereinafter referred to as the "{newContractDetails.first_party_type}")</Typography>
+            <Typography sx={{textAlign: 'center'}}>THIS BILL OF SALE is executed on {formattedPickupDate} by and between {user.legal_name} (hereinafter referred to as the "{newContractDetails.first_party_type}")</Typography>
             <Typography sx={{textAlign: 'center'}}>and RECIPIENT LEGAL NAME (hereinafter referred to as the "{newContractDetails.second_party_type}").</Typography>
             <br />
             <Typography sx={{textAlign: 'center'}}>The Seller hereby agrees to transfer to the Buyer all rights of the Seller in the following property:</Typography>
