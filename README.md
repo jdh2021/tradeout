@@ -11,6 +11,35 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - View all accepted, pending, and declined contracts
 
 ## Screenshots
+<h4 align="center">Create a Contract</h4>
+<div align="center">
+ <img src="public/images/01createcontract.png" width=400 />
+</div>
+
+<h4 align="center">Review a New Contract</h4>
+<div align="center">
+ <img src="public/images/02reviewcontract.png" width=400 />
+</div>
+
+<h4 align="center">Send a Contract to a Recipient</h4>
+<div align="center">
+ <img src="public/images/03sendtorecipient.png" width=400 />
+</div>
+
+<h4 align="center">Review a Contract as the Recipient</h4>
+<div align="center">
+ <img src="public/images/04secondpartyreview.png" width=400 />
+</div>
+
+<h4 align="center">User Dashboard</h4>
+<div align="center">
+ <img src="public/images/05dashboard.png" width=400 />
+</div>
+
+<h4 align="center">View the PDF of an Accepted Contract</h4>
+<div align="center">
+ <img src="public/images/06acceptedcontractpdf.png" width=400 />
+</div>
 
 ## Prerequisites
 
