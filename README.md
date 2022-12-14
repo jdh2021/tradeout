@@ -66,8 +66,8 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
   AWS_REGION=your AWS region
   S3_BUCKET_NAME=your AWS S3 bucket name
   ```
-   Note: [This tutorial](https://www.youtube.com/watch?v=yGYeYJpRWPM) by Sam Meech-Ward can be referenced to create the S3 bucket with correct access levels.
-4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was tested and designed for compatibility with Google Chrome. 
+4. Note: [This tutorial](https://www.youtube.com/watch?v=yGYeYJpRWPM) by Sam Meech-Ward can be referenced to create the S3 bucket with correct access levels.
+5. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was tested and designed for compatibility with Google Chrome. 
 
 ## Usage
 
