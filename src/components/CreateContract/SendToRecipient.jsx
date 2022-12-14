@@ -105,12 +105,6 @@ const handleClickCloseSubmitSuccess = () => {
     handleClickOpenTokenDetails();
   }
 
-  // autofill email for demo purposes
-  const autofillEmail = () => {
-    console.log('in autofillEmail');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {...newContractDetails, second_party_email: 'jackjackg42@gmail.com'}});
-  }
-
   return (
     <div>
         <Breadcrumbs sx={{display: 'flex', justifyContent: 'center'}} separator="|">
@@ -146,7 +140,7 @@ const handleClickCloseSubmitSuccess = () => {
         <br />
         <Box sx={{display: 'flex', justifyContent: 'center'}}>
           {/* used to autofill recipient email during demo */}
-          <Typography variant="h3" onClick={autofillEmail}>Send to Recipient:</Typography>
+          <Typography variant="h3">Send to Recipient:</Typography>
           <TextField
             required
             sx={{width: 350, marginLeft: 2}}
