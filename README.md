@@ -11,6 +11,35 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - View all accepted, pending, and declined contracts
 
 ## Screenshots
+<h4 align="center">Create a Contract</h4>
+<div align="center">
+ <img src="public/images/01createcontract.png" width=400 />
+</div>
+
+<h4 align="center">Review a New Contract</h4>
+<div align="center">
+ <img src="public/images/02reviewcontract.png" width=400 />
+</div>
+
+<h4 align="center">Send a Contract to a Recipient</h4>
+<div align="center">
+ <img src="public/images/03sendtorecipient.png" width=400 />
+</div>
+
+<h4 align="center">Review a Contract as the Recipient</h4>
+<div align="center">
+ <img src="public/images/04secondpartyreview.png" width=400 />
+</div>
+
+<h4 align="center">User Dashboard</h4>
+<div align="center">
+ <img src="public/images/05dashboard.png" width=400 />
+</div>
+
+<h4 align="center">View the PDF of an Accepted Contract</h4>
+<div align="center">
+ <img src="public/images/06acceptedcontractpdf.png" width=400 />
+</div>
 
 ## Prerequisites
 
@@ -37,7 +66,8 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
   AWS_REGION=your AWS region
   S3_BUCKET_NAME=your AWS S3 bucket name
   ```
-4. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was tested and designed for compatibility with Google Chrome. 
+4. Note: [This tutorial](https://www.youtube.com/watch?v=yGYeYJpRWPM) by Sam Meech-Ward can be referenced to create the S3 bucket with correct access levels.
+5. Run `npm run server` to start the server in one terminal window. Open a second terminal window, and run `npm run client` to start the client. The application will open at `localhost:3000/#/dashboard` in the browser. TradeOut was tested and designed for compatibility with Google Chrome. 
 
 ## Usage
 
@@ -71,7 +101,7 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 ### Accessing a PDF for an Accepted Contract
 
 1. Click an accepted contract card from the Dashboard to view its details. 
-2. Click the link next to `Contract PDF` to access a PDF of the contract.
+2. Click the `View Contract PDF` button to access the finalized PDF of the contract.
 
 ## Built With
 
