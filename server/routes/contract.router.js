@@ -291,7 +291,10 @@ const generatePDF = async (userId, contractId) => {
 			{style: 'sectionHeading', text: 'Product Image'},
 			{style: 'contractBody', text:`AS IS" image of the property provided by the ${foundContract.first_party_type}`}, 
 
-			{style: 'sectionHeading', text: 'Link to download property image'},  { text: 'DOWNLOAD PICTURE', link: `${foundContract.item_image}`},
+			{style:'pictureLink', text: 'DOWNLOAD PICTURE', link: `${foundContract.item_image}`},
+
+			{text: 'scan QR code'},
+			{ qr: `${foundContract.item_image}`, fit: '100' },
 			
 
 		// transfer of goods
@@ -312,31 +315,41 @@ const generatePDF = async (userId, contractId) => {
 		],
 
 			styles: {
-			header: {
-			fontSize: 18,
-			bold: true
-			},
-			contractTitle: {
-			fontSize: 12,
-			bold: true,
-			margin: [1,10,1,1],
-			},
+				header: {
+					fontSize: 18,
+					bold: true
+				},
+				contractTitle: {
+					fontSize: 12,
+					bold: true,
+					margin: [1,10,1,1],
+				},
 
-			contractBody: {
-			fontSize: 9,
+				contractBody: {
+					fontSize: 9,
 
-			},
-			contractSignatures: {
-			fontsize: 12,
-			bold: true,
-			margin:[1,5,1,1],
-			},
-			sectionHeading:{
-			fontSize:10,
-			bold: true,
-			decoration: 'underline',
-			margin:[1,2,1,1],
-			},
+				},
+				contractSignatures: {
+					fontsize: 12,
+					bold: true,
+					margin:[1,5,1,1],
+				},
+				
+				sectionHeading:{
+					fontSize:10,
+					bold: true,
+					decoration: 'underline',
+					margin:[1,2,1,1],
+				},
+
+				pictureLink:{
+					fontSize:10,
+					bold: true,
+					color:'blue',
+					decoration: 'underline',
+					margin:[1,2,1,1],
+				},
+				
 			},
 
 			footer: {
