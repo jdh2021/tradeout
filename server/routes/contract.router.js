@@ -140,36 +140,30 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE contract status
-router.put('/', async (req, res) => {
+// UPDATE contract status
+router.put('/', (req, res) => {
     console.log('in /api/contract UPDATE. Contract object to update is:', req.body);
     console.log('Contract status is:', req.body.contract_status);
     console.log('is authenticated?', req.isAuthenticated());
     if (req.isAuthenticated()) { // if contract status is accepted or declined and user is logged in, req.user.id is checked.
-		const db = await pool.connect();
-		try {
-			await db.query('BEGIN');
-			
-			console.log('User id is:', req.user.id);
-			// Update to include the contract url
-			const query =   `UPDATE "contract"
-							SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3, "contract_receipt" = $4
-							FROM "user_contract"
-							WHERE "user_contract"."user_id" = $5 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $6;`;
-			await pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.contract_receipt, req.user.id, req.body.id])
-			console.log('updated status to accepted')
-
-			res.sendStatus(200); // OK
-		
-		} catch (error) {
+        console.log('User id is:', req.user.id);
+        const query =   `UPDATE "contract"
+						SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
+						FROM "user_contract"
+						WHERE "user_contract"."user_id" = $4 AND "user_contract"."contract_id"="contract"."id" AND "contract"."id" = $5;`;
+        pool.query(query, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.user.id, req.body.id]).then(result => {
+            console.log('/contract UPDATE success');
+            res.sendStatus(200); // OK
+        }).catch(error => {
             console.log('Error in UPDATE contract by contract id:', error);
             res.sendStatus(500);
-        }
+        })
     } else if (req.body.contract_status === 'declined') { // contract recipient not required to be user to decline contract, and req.user.id isn't checked
         const queryText =   `UPDATE "contract"
                             SET "contract_status" = $1, "contract_approval" = $2, "second_party_signature" = $3
                             WHERE "id" = $4;`;
         pool.query(queryText, [req.body.contract_status, req.body.contract_approval, req.body.second_party_signature, req.body.id]).then(result => {
-            console.log('/contract UPDATE success declined');
+            console.log('/contract UPDATE success');
             res.sendStatus(200); // OK
         }).catch(error => { 
             console.log('Error in UPDATE contract by contract id:', error);
