@@ -75,23 +75,6 @@ const CreateContractDetails = () => {
     }
   }
 
-  // filling the form textfields for demo purposes
-  const autofillForm = () => {
-    console.log('in autofillForm');
-    dispatch({type: 'SET_NEW_CONTRACT_DETAILS', payload: {
-      ...newContractDetails, 
-      contract_title: 'Used Car Purchase',
-      item_name: 'Honda Accord',
-      item_description: 'year: 2018; color: red; odometer: 53,420 miles; avg. 30 mpg in the city',
-      item_price: 10000,
-      item_pickup_location: 'St. Paul, MN',
-      item_pickup_date: '12/20/2022',
-      contract_deadline: '12/18/2022',
-      contract_notes: 'payment in cash, new tires as of October 2022 (needed due to a series of punctures), no know mechanical issues',
-      first_party_signature: 'Bryn Nadziejka Waller'
-    }});
-  }
-
     //Handle Image Upload
     const fileSelectedHandler = async (event)  => {
       console.log(event.target.files[0]);
@@ -130,7 +113,7 @@ const CreateContractDetails = () => {
           open={open}
         />
         <br />
-        <Typography variant="h3" sx={{textAlign: "center"}} onClick={autofillForm}>Create New Contract</Typography>
+        <Typography variant="h3" sx={{textAlign: "center"}}>Create New Contract</Typography>
         <br />
         <Typography variant="h6" sx={{textAlign: "center"}}>You are the {newContractDetails.first_party_type}.</Typography>
         <br />
