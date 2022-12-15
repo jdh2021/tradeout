@@ -10,6 +10,8 @@ Conducting transactions in an online marketplace can be risky, and, unfortunatel
 - Always access a copy of the final, signed contract
 - View all accepted, pending, and declined contracts
 
+Check out the deployed app [here] (https://tradeout.herokuapp.com/)! (Note: image upload has been disabled.)
+
 ## Screenshots
 <h4 align="center">Create a Contract</h4>
 <div align="center">
