@@ -4,8 +4,8 @@ const router = express.Router();
 
 // GET contract by contract key sent to recipient email. user not required to be logged in.
 router.get('/:id', (req, res) => {
-    console.log('in /api/recipient GET contract by contract key');
-    console.log('contract key is:', req.params.id);
+    // console.log('in /api/recipient GET contract by contract key');
+    // console.log('contract key is:', req.params.id);
     const queryText =   `SELECT "contract".*, "photo"."item_image" FROM "contract"
                         JOIN "photo"
                         ON "photo"."contract_id"="contract"."id"

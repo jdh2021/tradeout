@@ -12,8 +12,8 @@ if (process.env.SENDGRID_API_KEY) {
 router.post('/', async (req, res) => {
     const contractKey = req.body.contract_key;
     const secondPartyEmail = req.body.second_party_email;
-    console.log(req.body.second_party_email, 'secondPartyEmail')
-    console.log(req.body.contract_key)
+    // console.log(req.body.second_party_email, 'secondPartyEmail')
+    // console.log(req.body.contract_key)
     if (process.env.SENDGRID_EMAIL) {
         const msg = {
             to: secondPartyEmail, // Change to your recipient
@@ -29,8 +29,8 @@ router.post('/', async (req, res) => {
         sgMail
         .send(msg)
         .then((response) => {
-            console.log(response[0].statusCode)
-            console.log(response[0].headers)
+            // console.log(response[0].statusCode)
+            // console.log(response[0].headers)
             res.send(200);
         })
         .catch((error) => {

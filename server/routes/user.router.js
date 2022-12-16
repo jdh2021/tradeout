@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', async (req, res, next) => {
-  console.log('in /api/user POST. Contract key (if non-empty string) is:', req.body.contractKey);
+  // console.log('in /api/user POST. Contract key (if non-empty string) is:', req.body.contractKey);
   // const username = req.body.username
   const email = req.body.email;
   const legalName = req.body.legalName;
@@ -45,13 +45,13 @@ router.post('/register', async (req, res, next) => {
                               WHERE "contract"."contract_key" = $1;`;
       const contract = await pool.query(selectContract, [contractKey])
       const contractId = contract.rows[0].id;
-      console.log('contractId is:', contractId);
+      // console.log('contractId is:', contractId);
       // insert into "user" table to add user, return user id
       const insertUser = `INSERT INTO "user" (email, legal_name, password)
                           VALUES ($1, $2, $3) RETURNING "id";`;
       const result = await pool.query(insertUser, [email, legalName, password]);
       const userId = result.rows[0].id;
-      console.log('userId is:', result.rows[0].id);
+      // console.log('userId is:', result.rows[0].id);
       // update "contract" table and set second_party_name to legal name entered by contract recipient
       await pool.query(`UPDATE "contract" SET "second_party_name" = $1 WHERE "contract_key" = $2;`, [legalName, contractKey]);
       // insert into "user_contract" table with returned values of user id and contract id
